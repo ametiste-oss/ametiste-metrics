@@ -22,8 +22,8 @@ public class StatsDMetricAggregator implements MetricsAggregator {
 	}
 
 	@Override
-	public void time(String toSend, long startTime, long endTime) {
-		client.time(toSend, (int) (endTime - startTime));
+	public void event(String toSend, int value) {
+		client.time(toSend, value);
 
 	}
 

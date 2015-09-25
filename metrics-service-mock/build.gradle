@@ -1,0 +1,6 @@
+
+dependencies {
+    compile project(":metrics-service")
+
+    compile "junit:junit:${junitVersion}"
+}

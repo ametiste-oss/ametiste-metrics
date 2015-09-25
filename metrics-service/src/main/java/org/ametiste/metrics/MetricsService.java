@@ -23,11 +23,21 @@ public interface MetricsService {
     void increment(String metricId, int incrementValue);
 
     /**
-     * Updates time for metric with id metricId
+     * Creates event in time with lower and higher values for metricId.
      * @param metricId identifier of metric
-     * @param startTime logged event start time
-     * @param endTime logged event end time
+     * @param startValue logged event start time
+     * @param endValue logged event end time
      */
-	void updateTime(String metricId, long startTime, long endTime);
+    @Deprecated
+	void createEvent(String metricId, long startValue, long endValue);
+
+    /**
+     * Creates event in time with eventValue for metricId.
+     * Can be used to register definite values in time or events with time values
+     * (time of method call)
+     * @param metricId identifier of metric
+     * @param eventValue logged event start time
+     */
+    void createEvent(String metricId, int eventValue);
 
 }

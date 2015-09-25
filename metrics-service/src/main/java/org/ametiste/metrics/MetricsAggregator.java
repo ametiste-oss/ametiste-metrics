@@ -10,7 +10,7 @@ public interface MetricsAggregator {
 
 	void increment(String metricName);
 
-	void time(String metricName, long startTime, long endTime);
+	void event(String metricName, int evenValue);
 
     void increment(String metricName, int inc);
 }

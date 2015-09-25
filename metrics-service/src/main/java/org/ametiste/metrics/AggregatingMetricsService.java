@@ -66,8 +66,13 @@ public class AggregatingMetricsService implements MetricsService {
      * @param endTime logged event end time
      */
     @Override
-	public void updateTime(String metricId, long startTime, long endTime) {
+	public void createEvent(String metricId, long startTime, long endTime) {
 		router.getAggregatorsForMetric(metricId).forEach(metricAggregator -> metricAggregator.time(resolve(metricId), startTime, endTime));
+
+	}
+
+	@Override
+	public void createEvent(String metricId, int eventValue) {
 
 	}
 
