@@ -1,0 +1,12 @@
+description = "Aspect-driven metric source support."
+
+dependencies {
+
+    compile project(":metrics-service")
+    compile project(":metrics-annotations")
+
+    compile "org.springframework:spring-expression:${springVersion}"
+    compile 'org.aspectj:aspectjrt:1.7.2'
+    compile 'org.aspectj:aspectjweaver:1.7.2'
+
+}

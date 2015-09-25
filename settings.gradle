@@ -5,4 +5,5 @@ include 'metrics-statsd'
 include 'metrics-service-mock'
 include 'metrics-jmx'
 include 'metrics-annotations'
+include 'metrics-aop'
 

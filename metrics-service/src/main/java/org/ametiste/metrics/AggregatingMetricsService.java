@@ -67,7 +67,8 @@ public class AggregatingMetricsService implements MetricsService {
      */
     @Override
 	public void createEvent(String metricId, long startTime, long endTime) {
-		router.getAggregatorsForMetric(metricId).forEach(metricAggregator -> metricAggregator.time(resolve(metricId), startTime, endTime));
+		router.getAggregatorsForMetric(metricId).forEach(metricAggregator ->
+				metricAggregator.event(resolve(metricId),  (int)(endTime- startTime)));
 
 	}
 

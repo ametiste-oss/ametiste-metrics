@@ -25,6 +25,9 @@ public @interface Countable {
 	 */
 	String nameSuffixExpression() default "";
 
-	// TODO possible to add delta for metric
+	/**
+	 * Delta of increment, default is 1
+	 */
+	int value() default 1;
 
 }
