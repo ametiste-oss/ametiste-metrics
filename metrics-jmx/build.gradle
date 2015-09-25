@@ -1,0 +1,5 @@
+
+dependencies {
+    compile project(":metrics-service")
+    compile("io.dropwizard.metrics:metrics-core:3.1.2")
+}
