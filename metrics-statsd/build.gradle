@@ -1,0 +1,4 @@
+dependencies {
+    compile project(":statsd-client")
+    compile project(":metrics-service")
+}

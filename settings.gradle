@@ -1,3 +1,5 @@
 rootProject.name = 'ametiste-metrics'
 include 'metrics-service'
+include 'statsd-client'
+include 'metrics-statsd'
 
