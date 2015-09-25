@@ -42,16 +42,14 @@ public class ChronableAspect {
 
 	}
 
-	public void setService(MetricsService service) {
+	public ChronableAspect(MetricsService service, IdentifierResolver resolver, ExpressionParser parser) {
+
+		if(service == null || resolver == null || parser ==null) {
+			throw new IllegalArgumentException("MetricsService, IdentifierResolver and ExpressionParser cant be null, however one of it is null");
+		}
 		this.service = service;
-	}
-
-	public void setParser(ExpressionParser parser) {
-		this.parser = parser;
-	}
-
-	public void setResolver(IdentifierResolver resolver) {
 		this.resolver = resolver;
+		this.parser = parser;
 	}
 
 	@Pointcut(value = "@annotation(chron)", argNames = "chron")
