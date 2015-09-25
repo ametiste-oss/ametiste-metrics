@@ -8,4 +8,5 @@ include 'metrics-annotations'
 include 'metrics-aop'
 include 'metrics-boot'
 include 'metrics-filter'
+include 'metrics-filter-boot'
 
