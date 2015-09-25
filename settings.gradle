@@ -7,4 +7,5 @@ include 'metrics-jmx'
 include 'metrics-annotations'
 include 'metrics-aop'
 include 'metrics-boot'
+include 'metrics-filter'
 
