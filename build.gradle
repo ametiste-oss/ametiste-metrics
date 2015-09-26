@@ -3,10 +3,11 @@ subprojects {
 
     apply plugin: 'maven'
     apply plugin: 'java'
+    apply plugin: 'maven-publish'
 
     group 'org.ametiste.metrics'
 
-    version '0.1.0-SNAPSHOT'
+    version '0.1.0-RELEASE'
 
     sourceCompatibility=1.8
     targetCompatibility=1.8
@@ -17,7 +18,12 @@ subprojects {
         junitVersion = '4.11'
         mockitoVersion = '1.9.5'
         sl4jVersion = '1.7.2'
+
+        bintray_vcsUrl = 'https://github.com/ametiste-oss/ametiste-metrics.git'
     }
+
+    apply from: "https://raw.githubusercontent.com/ametiste-oss/ametiste-bintray-gradle/master/bintray-ext-ame-oss.gradle"
+    apply from: "https://raw.githubusercontent.com/ametiste-oss/ametiste-bintray-gradle/master/bintray-ext.gradle"
 
     repositories {
         mavenCentral()
