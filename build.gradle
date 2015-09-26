@@ -7,7 +7,7 @@ subprojects {
 
     group 'org.ametiste.metrics'
 
-    version '0.1.0-RELEASE'
+    version '0.1.0-RC'
 
     sourceCompatibility=1.8
     targetCompatibility=1.8

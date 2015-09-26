@@ -1,3 +1,10 @@
+plugins {
+    id "com.jfrog.bintray" version "1.3.1"
+}
+
+apply from: "https://raw.githubusercontent.com/ametiste-oss/ametiste-bintray-gradle/master/bintray.gradle"
+
+
 ext {
     springBootVersion="1.2.5.RELEASE"
 }
