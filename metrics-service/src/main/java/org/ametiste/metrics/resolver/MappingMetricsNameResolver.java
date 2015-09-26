@@ -4,7 +4,7 @@ import java.util.Map;
 
 /**
  * Implementation with explicit mapping of id to name resolve entries
- * @inheritDoc}
+ * {@inheritDoc}
  * @since 0.1.0
  * @author ametiste
  */

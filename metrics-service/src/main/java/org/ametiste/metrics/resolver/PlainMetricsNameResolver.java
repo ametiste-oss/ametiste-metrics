@@ -2,7 +2,7 @@ package org.ametiste.metrics.resolver;
 
 /**
  * Always resolves name from id without modifications
- * @inheritDoc}
+ * {@inheritDoc}
  * @since 0.1.0
  * @author ametiste
  */
