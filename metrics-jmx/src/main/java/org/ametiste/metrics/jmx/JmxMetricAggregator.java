@@ -1,4 +1,4 @@
-package org.ametiste.metric.jmx;
+package org.ametiste.metrics.jmx;
 
 import com.codahale.metrics.JmxReporter;
 import com.codahale.metrics.MetricRegistry;
