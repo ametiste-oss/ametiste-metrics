@@ -52,10 +52,7 @@ public class ChronableAspectTest {
 	public void setUp() {
 
 		MockitoAnnotations.initMocks(this);
-		chronableAspect = new ChronableAspect();
-		chronableAspect.setParser(parser);
-		chronableAspect.setResolver(resolver);
-		chronableAspect.setService(service);
+		chronableAspect = new ChronableAspect(service, resolver, parser);
 
 	}
 
