@@ -1,4 +1,4 @@
-package com.dph.metric.boot.configuration;
+package org.ametiste.metrics.boot.configuration;
 
 import org.ametiste.metrics.MetricsService;
 import org.ametiste.metrics.aop.*;

@@ -1,6 +1,6 @@
 package org.ametiste.metrics.filter.boot.configuration;
 
-import com.dph.metric.boot.configuration.MetricsServiceConfiguration;
+import org.ametiste.metrics.boot.configuration.MetricsServiceConfiguration;
 import org.ametiste.metrics.MetricsService;
 import org.ametiste.metrics.filter.RequestCountFilter;
 import org.ametiste.metrics.resolver.MetricsNameResolver;

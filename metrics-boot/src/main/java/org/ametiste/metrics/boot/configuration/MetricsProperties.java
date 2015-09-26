@@ -1,4 +1,4 @@
-package com.dph.metric.boot.configuration;
+package org.ametiste.metrics.boot.configuration;
 
 import org.ametiste.metrics.statsd.client.ErrorMode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
