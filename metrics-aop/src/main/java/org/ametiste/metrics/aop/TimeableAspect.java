@@ -1,6 +1,7 @@
 package org.ametiste.metrics.aop;
 
 import org.ametiste.metrics.MetricsService;
+import org.ametiste.metrics.annotations.MetricsMode;
 import org.ametiste.metrics.annotations.Timeable;
 import org.ametiste.metrics.annotations.composite.Timeables;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -53,7 +54,8 @@ public class TimeableAspect {
         long endTime = System.currentTimeMillis();
 
         for(Timeable timeable: timeables.value()) {
-            this.saveTime(timeable, pjp, object, (int)(endTime - startTime));
+            AspectContext context = new AspectContext(pjp.getArgs(), pjp.getTarget(), object);
+            this.saveTime(timeable, context, (int)(endTime - startTime));
         }
 
 
@@ -63,18 +65,32 @@ public class TimeableAspect {
 	@Around("countTime(timeable)")
 	public Object processTiming(ProceedingJoinPoint pjp, Timeable timeable) throws Throwable {
 
-		long startTime = System.currentTimeMillis();
-		Object object = pjp.proceed();
-		long endTime = System.currentTimeMillis();
+        long endTime;
+        Object object;
 
-        this.saveTime(timeable, pjp, object, (int)(endTime - startTime));
+		long startTime = System.currentTimeMillis();
+        try {
+            object = pjp.proceed();
+            endTime = System.currentTimeMillis();
+        }
+        catch (Exception e) {
+            if(timeable.mode().equals(MetricsMode.ERROR_PRONE)) {
+                endTime = System.currentTimeMillis();
+                AspectContext context = new AspectContext(pjp.getArgs(), pjp.getTarget());
+
+                this.saveTime(timeable, context, (int)(endTime - startTime));
+            }
+            throw e;
+        }
+
+        AspectContext context = new AspectContext(pjp.getArgs(), pjp.getTarget(), object);
+        this.saveTime(timeable, context, (int)(endTime - startTime));
 		return object;
 	}
 
 
-    public void saveTime(Timeable timeable, ProceedingJoinPoint pjp, Object returned, int eventTime) {
+    public void saveTime(Timeable timeable, AspectContext context, int eventTime) {
 
-        AspectContext context = new AspectContext(pjp.getArgs(), pjp.getTarget(), returned);
         String name;
         try {
             name = resolver.getTargetIdentifier(timeable.name(), timeable.nameSuffixExpression(), context);

@@ -26,4 +26,11 @@ public @interface Timeable {
 	 */
 	String nameSuffixExpression() default "";
 
+	/**
+	 * Defines whether method execution time should be registered in exceptional case or not. Default is {@link MetricsMode#ERROR_FREE}
+	 * that registers metric only in normal method execution.
+	 * {@link Timeable#nameSuffixExpression()} should be used with caution when {@link MetricsMode#ERROR_PRONE} because
+	 * metric context does not include result of method execution while registers error.
+	 */
+	MetricsMode mode() default MetricsMode.ERROR_FREE;
 }
