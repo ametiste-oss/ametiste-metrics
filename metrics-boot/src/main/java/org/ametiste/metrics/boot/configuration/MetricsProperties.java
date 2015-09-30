@@ -39,8 +39,8 @@ public class MetricsProperties {
 
     public static class Statsd {
 
-        private String host;
-        private int port;
+        private String host = "localhost";
+        private int port=8125;
         private ErrorMode mode = ErrorMode.MODERATE;
 
         public String getHost() {
@@ -70,7 +70,7 @@ public class MetricsProperties {
 
     public static class Jmx {
 
-        private String domain = "com.dph.metrics";
+        private String domain = "org.ametiste.metrics";
 
         public String getDomain() {
             return domain;
