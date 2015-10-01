@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableConfigurationProperties(MetricsProperties.class)
-@ConditionalOnProperty(prefix="org.ametiste.metrics.yammer", name = "enabled", matchIfMissing = true)
+@ConditionalOnProperty(prefix="org.ametiste.metrics.jmx", name = "enabled", matchIfMissing = true)
 public class JmxConfiguration {
 
     @Autowired
