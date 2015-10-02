@@ -10,7 +10,7 @@ public class MetricsProperties {
 
     private Statsd statsd = new Statsd();
     private Jmx jmx = new Jmx();
-    private String prefix;
+    private String prefix="";
 
     public Statsd getStatsd() {
         return statsd;
