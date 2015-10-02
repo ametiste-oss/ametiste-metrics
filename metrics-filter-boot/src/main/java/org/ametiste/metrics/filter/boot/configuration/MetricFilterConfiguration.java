@@ -3,7 +3,7 @@ package org.ametiste.metrics.filter.boot.configuration;
 import org.ametiste.metrics.boot.configuration.MetricsServiceConfiguration;
 import org.ametiste.metrics.MetricsService;
 import org.ametiste.metrics.filter.RequestCountFilter;
-import org.ametiste.metrics.resolver.MetricsNameResolver;
+import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 
@@ -15,10 +15,10 @@ public class MetricFilterConfiguration {
     private MetricsService metricsService;
 
     @Autowired
-    private MetricsNameResolver timingResolver;
+    private MetricsIdentifierResolver timingResolver;
 
     @Autowired
-    private MetricsNameResolver countResolver;
+    private MetricsIdentifierResolver countResolver;
 
     @Bean
     public RequestCountFilter metricTimingFilter() {

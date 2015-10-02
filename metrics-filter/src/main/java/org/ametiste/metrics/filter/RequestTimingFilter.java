@@ -10,7 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import org.ametiste.metrics.MetricsService;
-import org.ametiste.metrics.resolver.MetricsNameResolver;
+import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
 
 /**
  * Filter for intercepting request and registering request total processing time metric
@@ -20,10 +20,10 @@ import org.ametiste.metrics.resolver.MetricsNameResolver;
  */
 public class RequestTimingFilter implements Filter {
 
-	private final MetricsNameResolver resolver;
+	private final MetricsIdentifierResolver resolver;
 	private final MetricsService service;
 
-	public RequestTimingFilter(MetricsService service, MetricsNameResolver resolver) {
+	public RequestTimingFilter(MetricsService service, MetricsIdentifierResolver resolver) {
 		this.service = service;
 		this.resolver = resolver;
 	}

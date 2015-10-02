@@ -1,7 +1,7 @@
 package org.ametiste.metrics.filter.boot.configuration;
 
-import org.ametiste.metrics.resolver.MetricsNameResolver;
-import org.ametiste.metrics.resolver.PathMetricNameResolver;
+import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
+import org.ametiste.metrics.resolver.PathMetricsIdentifierResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,12 +11,12 @@ import java.util.Collections;
 public class MetricResolverConfiguration {
 
     @Bean(name =  "timingResolver")
-    public MetricsNameResolver timingResolver() {
-        return new PathMetricNameResolver(Collections.emptyList(), "unsorted_timing_requests");
+    public MetricsIdentifierResolver timingResolver() {
+        return new PathMetricsIdentifierResolver(Collections.emptyList(), "unsorted_timing_requests");
     }
 
     @Bean(name =  "countResolver")
-    public MetricsNameResolver countResolver() {
-        return new PathMetricNameResolver(Collections.emptyList(), "unsorted_count_requests");
+    public MetricsIdentifierResolver countResolver() {
+        return new PathMetricsIdentifierResolver(Collections.emptyList(), "unsorted_count_requests");
     }
 }

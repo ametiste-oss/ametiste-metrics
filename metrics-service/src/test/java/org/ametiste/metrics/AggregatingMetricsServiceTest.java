@@ -1,6 +1,6 @@
 package org.ametiste.metrics;
 
-import org.ametiste.metrics.resolver.MetricsNameResolver;
+import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
 import org.ametiste.metrics.router.AggregatorsRouter;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class AggregatingMetricsServiceTest {
 
     private  AggregatingMetricsService aggregatingMetricsService ;
     private final AggregatorsRouter aggregatorsRouter = mock(AggregatorsRouter.class);
-    private final MetricsNameResolver resolver = mock(MetricsNameResolver.class);
+    private final MetricsIdentifierResolver resolver = mock(MetricsIdentifierResolver.class);
 
     @Before
     public void setUp() throws Exception {

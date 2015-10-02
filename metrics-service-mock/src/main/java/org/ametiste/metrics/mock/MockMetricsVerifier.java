@@ -46,7 +46,7 @@ public class MockMetricsVerifier {
      * to provide more clear failure trace, however this method success guarantees success of mentioned one
      * @return verify chain
      */
-    public MockMetricsVerifier incrementCall() {
+    public MockMetricsVerifier increment() {
         assertTrue("Metric with name '" + name + "' was expected to be registered as incremental, but wasnt", container.hasValueWithTypeAndName(MetricsType.INCR, name));
         return this;
     }
@@ -54,11 +54,11 @@ public class MockMetricsVerifier {
     /**
      * Verifies metric with requested name was registered as incremental one, with definite
      * number of calls, not checking values registered. Can be used in serial call after
-     * {@link MockMetricsVerifier#registered()}, {@link MockMetricsVerifier#incrementCall()}
+     * {@link MockMetricsVerifier#registered()}, {@link MockMetricsVerifier#increment()}
      * to provide more clear failure trace, however this method success guarantees success of mentioned ones
      * @return verify chain
      */
-    public MockMetricsVerifier incrementCall(int times) {
+    public MockMetricsVerifier increment(int times) {
         assertTrue("Metric with name '" + name + "' was expected to be registered as incremental " + times + " times, but actually was registered "
                 + container.getCountForValue(MetricsType.INCR, name) + " times" ,
                 container.hasValueWithTypeAndNameAndCount(MetricsType.INCR, name, times));
@@ -68,12 +68,12 @@ public class MockMetricsVerifier {
     /**
      * Verifies metric with requested name was registered as incremental one, with definite
      * number of calls, with list of values provided. Can be used in serial call after
-     * {@link MockMetricsVerifier#registered()}, {@link MockMetricsVerifier#incrementCall()}
-     * and {@link MockMetricsVerifier#incrementCall(int)} to provide more clear failure trace,
+     * {@link MockMetricsVerifier#registered()}, {@link MockMetricsVerifier#increment()}
+     * and {@link MockMetricsVerifier#increment(int)} to provide more clear failure trace,
      * however this method success guarantees success of mentioned ones.
      * Ends verify chain
      */
-    public void incrementCall(List<Long> values) {
+    public void increment(List<Long> values) {
         assertTrue("Metric with name '" + name + "'  was expected to be registered as incremental with values " + values + " , but actually was registered with values "
                 + container.getValuesForValue(MetricsType.INCR, name), container.hasValueWithTypeAndNameAndValues(MetricsType.INCR, name, values));
     }
@@ -84,7 +84,7 @@ public class MockMetricsVerifier {
      * to provide more clear failure trace, however this method success guarantees success of mentioned one
      * @return verify chain
      */
-    public MockMetricsVerifier valueIncrementCall() {
+    public MockMetricsVerifier valueIncrement() {
         assertTrue("Metric with name '" + name + "' was expected to be registered as value incremental, but wasnt", container.hasValueWithTypeAndName(MetricsType.INCR_VALUE, name));
         return this;
     }
@@ -92,11 +92,11 @@ public class MockMetricsVerifier {
     /**
      * Verifies metric with requested name was registered as increment for delta value, with definite
      * number of calls, not checking values registered. Can be used in serial call after
-     * {@link MockMetricsVerifier#registered()}, {@link MockMetricsVerifier#valueIncrementCall()}
+     * {@link MockMetricsVerifier#registered()}, {@link MockMetricsVerifier#valueIncrement()}
      * to provide more clear failure trace, however this method success guarantees success of mentioned ones
      * @return verify chain
      */
-    public MockMetricsVerifier valueIncrementCall(int times) {
+    public MockMetricsVerifier valueIncrement(int times) {
         assertTrue("Metric with name '" + name + "' was expected to be registered as value incremental " + times + " times, but actually was registered "
                 + container.getCountForValue(MetricsType.INCR_VALUE, name) + " times", container.hasValueWithTypeAndNameAndCount(MetricsType.INCR_VALUE, name, times));
         return this;
@@ -105,12 +105,12 @@ public class MockMetricsVerifier {
     /**
      * Verifies metric with requested name was registered as increment for delta value with definite
      * number of calls, with list of values provided. Can be used in serial call after
-     * {@link MockMetricsVerifier#registered()}, {@link MockMetricsVerifier#valueIncrementCall()}
-     * and {@link MockMetricsVerifier#valueIncrementCall(int)}  to provide more clear failure trace,
+     * {@link MockMetricsVerifier#registered()}, {@link MockMetricsVerifier#valueIncrement()}
+     * and {@link MockMetricsVerifier#valueIncrement(int)}  to provide more clear failure trace,
      * however this method success guarantees success of mentioned ones.
      * Ends verify chain
      */
-    public void  valueIncrementCall(List<Long> values) {
+    public void valueIncrement(List<Long> values) {
         assertTrue("Metric with name '" + name + "' was expected to be registered as value incremental with values " + values + " , but actually was registered with values "
                 + container.getValuesForValue(MetricsType.INCR_VALUE, name), container.hasValueWithTypeAndNameAndValues(MetricsType.INCR_VALUE, name, values));
     }

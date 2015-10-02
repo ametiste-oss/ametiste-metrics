@@ -16,19 +16,19 @@ public class StatsDMetricAggregator implements MetricsAggregator {
 	}
 
 	@Override
-	public void increment(String metricName) {
-		client.increment(metricName);
+	public void increment(String metricId) {
+		client.increment(metricId);
 
 	}
 
 	@Override
-	public void event(String toSend, int value) {
-		client.time(toSend, value);
+	public void event(String metricId, int value) {
+		client.time(metricId, value);
 
 	}
 
     @Override
-    public void increment(String metricName, int inc) {
-        client.increment(metricName, inc);
+    public void increment(String metricId, int inc) {
+        client.increment(metricId, inc);
     }
 }

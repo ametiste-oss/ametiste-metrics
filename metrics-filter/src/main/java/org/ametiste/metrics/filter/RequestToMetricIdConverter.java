@@ -1,6 +1,6 @@
 package org.ametiste.metrics.filter;
 
-import org.ametiste.metrics.resolver.MetricsNameResolver;
+import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -13,13 +13,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class RequestToMetricIdConverter {
 
-    public static String convert(ServletRequest request, MetricsNameResolver resolver) throws ServletException{
+    public static String convert(ServletRequest request, MetricsIdentifierResolver resolver) throws ServletException{
 
         if (!(request instanceof HttpServletRequest)) {
             throw new ServletException("Filter only supports HTTP requests");
         }
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        return  resolver.getMetricName(httpRequest.getPathInfo());
+        return  resolver.resolveMetricId(httpRequest.getPathInfo());
 
     }
 }

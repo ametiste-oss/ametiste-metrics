@@ -1,6 +1,7 @@
 package org.ametiste.metrics.router;
 
 import org.ametiste.metrics.MetricsAggregator;
+import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
 
 import java.util.List;
 
@@ -13,13 +14,13 @@ import java.util.List;
 public interface AggregatorsRouter {
 
 	/**
-	 * Defines list of {@link MetricsAggregator} that may accept metric with name metricName.
+	 * Defines list of {@link MetricsAggregator} that may accept metric with id metricIdentifier.
 	 * Metrics allow configuration with different routes for specific metrics
-	 * @param metricName - name of metric for that route is defined. Note: name of metric means
-	 *   already resolved one, in case if {@link org.ametiste.metrics.resolver.MetricsNameResolver}
-	 *   had a match for metric identifier, name might be different from identifier
-	 * @return list of  {@link MetricsAggregator} that accept metric with name metricName
+	 * @param metricIdentifier - identifier of metric for that route is defined. Note: id is
+	 *   already resolved one, in case if {@link MetricsIdentifierResolver}
+	 *   had a match for metric identifier, id might be different from initial name
+	 * @return list of  {@link MetricsAggregator} that accept metric with id metricIdentifier
 	 */
-	List<MetricsAggregator> getAggregatorsForMetric(String metricName);
+	List<MetricsAggregator> getAggregatorsForMetric(String metricIdentifier);
 
 }

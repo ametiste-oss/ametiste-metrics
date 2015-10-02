@@ -1,7 +1,7 @@
 package org.ametiste.metrics.filter;
 
 import org.ametiste.metrics.MetricsService;
-import org.ametiste.metrics.resolver.MetricsNameResolver;
+import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
 
 import java.io.IOException;
 
@@ -20,10 +20,10 @@ import javax.servlet.ServletResponse;
  */
 public class RequestCountFilter implements Filter {
 
-	private final MetricsNameResolver resolver;
+	private final MetricsIdentifierResolver resolver;
 	private final MetricsService service;
 
-	public RequestCountFilter(MetricsService service, MetricsNameResolver resolver) {
+	public RequestCountFilter(MetricsService service, MetricsIdentifierResolver resolver) {
 		this.service = service;
 		this.resolver = resolver;
 	}

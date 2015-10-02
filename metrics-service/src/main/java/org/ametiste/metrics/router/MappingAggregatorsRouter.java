@@ -3,13 +3,14 @@ package org.ametiste.metrics.router;
 import org.ametiste.metrics.MetricsAggregator;
 import org.ametiste.metrics.container.ListContainer;
 import org.ametiste.metrics.container.MapContainer;
+import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
 
 import java.util.List;
 import java.util.Map;
 
 /**
  * {@link AggregatorsRouter} implementation based on {@link MapContainer}
- * Metric names in routing map may contain wildcards.
+ * Metric ids in routing map may contain wildcards.
  * Routing map should contain route with key "__default".
  * Its possible to have only "__default" route.
  * @since 0.1.0
@@ -41,21 +42,21 @@ public class MappingAggregatorsRouter implements AggregatorsRouter {
 	 * "metric.that.needs*" and "*"
 	 * when "metric.is.to.be.routed" matches only "*" of those route keys
 	 *
-	 * @param metricName - name of metric for that route is defined. Note: name of metric means
-	 *   already resolved one, in case if {@link org.ametiste.metrics.resolver.MetricsNameResolver}
-	 *   had a match for metric identifier, name might be different from identifier
-	 * @return - list of  {@link MetricsAggregator} that accept metric with name metricName
-	 * if metricName didnt match any specific routes, default route aggregators are returned.
+	 * @param metricIdentifier - id of metric for that route is defined. Note: id is
+	 *   already resolved one, in case if {@link MetricsIdentifierResolver}
+	 *   had a match for metric identifier, identifier might be different from initial name
+	 * @return - list of  {@link MetricsAggregator} that accept metric with id metricIdentifier
+	 * if metricIdentifier didnt match any specific routes, default route aggregator list is returned.
 	 */
 	@Override
-	public List<MetricsAggregator> getAggregatorsForMetric(String metricName) {
-		if (aggregatorsMap.containsKey(metricName)) {
-			return aggregatorsMap.get(metricName).loadList();
+	public List<MetricsAggregator> getAggregatorsForMetric(String metricIdentifier) {
+		if (aggregatorsMap.containsKey(metricIdentifier)) {
+			return aggregatorsMap.get(metricIdentifier).loadList();
 		} else {
 			if (hasWildCards) {
 				for (String key : aggregatorsMap.keySet()) {
 					if (key.contains("*")) {
-						if (metricName.startsWith(key.replace("*", ""))) {
+						if (metricIdentifier.startsWith(key.replace("*", ""))) {
 							return aggregatorsMap.get(key).loadList();
 						}
 					}

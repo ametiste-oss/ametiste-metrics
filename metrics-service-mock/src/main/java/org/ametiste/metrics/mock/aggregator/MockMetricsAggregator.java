@@ -30,9 +30,9 @@ public class MockMetricsAggregator implements MetricsAggregator {
      * {@inheritDoc}
      */
     @Override
-    public void increment(String metricName) {
+    public void increment(String metricId) {
         checkIfAlreadyVerified();
-        container.addValue(MetricsType.INCR, metricName, 1);
+        container.addValue(MetricsType.INCR, metricId, 1);
     }
 
     /**
@@ -40,9 +40,9 @@ public class MockMetricsAggregator implements MetricsAggregator {
      * {@inheritDoc}
      */
     @Override
-    public void event(String metricName, int value) {
+    public void event(String metricId, int value) {
         checkIfAlreadyVerified();
-        container.addValue(MetricsType.TIME, metricName, value);
+        container.addValue(MetricsType.TIME, metricId, value);
     }
 
     /**
@@ -50,9 +50,9 @@ public class MockMetricsAggregator implements MetricsAggregator {
      * {@inheritDoc}
      */
     @Override
-    public void increment(String metricName, int inc) {
+    public void increment(String metricId, int inc) {
         checkIfAlreadyVerified();
-        container.addValue(MetricsType.INCR_VALUE, metricName, inc);
+        container.addValue(MetricsType.INCR_VALUE, metricId, inc);
     }
 
     /**

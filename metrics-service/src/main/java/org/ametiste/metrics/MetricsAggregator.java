@@ -8,9 +8,9 @@ package org.ametiste.metrics;
  */
 public interface MetricsAggregator {
 
-	void increment(String metricName);
+	void increment(String metricId);
 
-	void event(String metricName, int evenValue);
+	void event(String metricId, int evenValue);
 
-    void increment(String metricName, int inc);
+    void increment(String metricId, int inc);
 }

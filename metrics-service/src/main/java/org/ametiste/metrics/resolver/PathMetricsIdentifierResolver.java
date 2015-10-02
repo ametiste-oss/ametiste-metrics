@@ -11,18 +11,18 @@ import java.util.Map;
  * @author ametiste
  * @since 0.1.0
  */
-public class PathMetricNameResolver implements MetricsNameResolver {
+public class PathMetricsIdentifierResolver implements MetricsIdentifierResolver {
 
 	private final Map<String, String> pathsToId;
-    private final String defaultName;
+    private final String defaultIdentifier;
 
     /**
      *
      * @param paths list of paths for separate requests metrics count
-     * @param defaultName metric name for all requests that dont match one of paths
+     * @param defaultIdentifier metric identifier for all requests that dont match one of paths
      */
-    public PathMetricNameResolver(List<String> paths, String defaultName) {
-        this.defaultName = defaultName;
+    public PathMetricsIdentifierResolver(List<String> paths, String defaultIdentifier) {
+        this.defaultIdentifier = defaultIdentifier;
         pathsToId = new HashMap<>();
 		for (String path : paths) {
             pathsToId.put(path, this.fitName(path));
@@ -34,10 +34,10 @@ public class PathMetricNameResolver implements MetricsNameResolver {
 	}
 
 	@Override
-	public String getMetricName(String metricIdentifier) {
-		if (pathsToId.containsKey(metricIdentifier))
-			return pathsToId.get(metricIdentifier);
-		return defaultName;
+	public String resolveMetricId(String metricName) {
+		if (pathsToId.containsKey(metricName))
+			return pathsToId.get(metricName);
+		return defaultIdentifier;
 	}
 
 }

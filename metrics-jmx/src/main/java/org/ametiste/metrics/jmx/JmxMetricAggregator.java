@@ -7,7 +7,7 @@ import org.ametiste.metrics.MetricsAggregator;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Metric aggregator for jmx, recommended for developer needs
+ * Metric aggregator for jmx
  * @author ametiste
  * @since 0.1.0
  */
@@ -23,18 +23,18 @@ public class JmxMetricAggregator implements MetricsAggregator {
     }
 
     @Override
-    public void increment(String metricName) {
-        metrics.counter(metricName).inc();
+    public void increment(String metricId) {
+        metrics.counter(metricId).inc();
     }
 
     @Override
-    public void event(String metricName, int value) {
-        metrics.timer(metricName).update(value, TimeUnit.MILLISECONDS);
+    public void event(String metricId, int value) {
+        metrics.timer(metricId).update(value, TimeUnit.MILLISECONDS);
     }
 
     @Override
-    public void increment(String metricName, int inc) {
-        metrics.counter(metricName).inc(inc);
+    public void increment(String metricId, int inc) {
+        metrics.counter(metricId).inc(inc);
     }
 
     public void destroy() {
