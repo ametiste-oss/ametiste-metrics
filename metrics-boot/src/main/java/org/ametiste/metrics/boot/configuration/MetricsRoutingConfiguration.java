@@ -1,6 +1,7 @@
 package org.ametiste.metrics.boot.configuration;
 
 import org.ametiste.metrics.MetricsAggregator;
+import org.ametiste.metrics.NullMetricsAggregator;
 import org.ametiste.metrics.container.ListContainer;
 import org.ametiste.metrics.container.MapContainer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,10 @@ public class MetricsRoutingConfiguration {
     @Bean
     public ListContainer aggregatorsContainer() {
         return new ListContainer(aggregators);
+    }
+
+    @Bean
+    public MetricsAggregator nullAggregator() {
+        return  new NullMetricsAggregator();
     }
 }

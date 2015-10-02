@@ -52,9 +52,4 @@ public class MetricsServiceConfiguration {
         return new IdentifierResolver(spelParser());
     }
 
-    @Bean
-    public MetricsAggregator nullAggregator() {
-        return  new NullMetricsAggregator();
-    }
-
 }
