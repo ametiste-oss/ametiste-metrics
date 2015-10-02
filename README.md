@@ -10,9 +10,9 @@ Ametiste metrics is a library for easy metrics registration from any point of cl
     * [Usage example](#usage-example)
     * [Glossary](#glossary)
     * [Binaries](#binaries)
-        * [Usage snippets:](#usage-snippets)
-          * [Gradle:](#gradle)
-          * [Maven:](#maven)
+        * [Usage snippets](#usage-snippets)
+          * [Gradle](#gradle)
+          * [Maven](#maven)
       * [Metrics service with spring boot](#metrics-service-with-spring-boot)
       * [Metrics service without aop support](#metrics-service-without-aop-support)
       * [Metrics service with aop support](#metrics-service-with-aop-support)
@@ -24,7 +24,7 @@ Ametiste metrics is a library for easy metrics registration from any point of cl
     * [Identifier resolving](#identifier-resolving)
     * [Metrics routing](#metrics-routing)
     * [Integration Testing](#integration-testing)
-          * [Usage snippet:](#usage-snippet)
+          * [Usage snippet](#usage-snippet)
 
 ##Usage example
 
@@ -50,7 +50,7 @@ public void justAMethod(String parameter) {
 }
 ```
 
-For further annotation usage details view **Annotations** and **Annotations examples**
+For further annotation usage details view [Annotations usage](#annotations-usage) and [Annotation examples](#annotation-examples)
 
 Metrics library can be used directly, without annotations, by injecting metrics service to client code.
 
@@ -65,9 +65,9 @@ Metrics library can be used directly, without annotations, by injecting metrics 
 ##Binaries
 All mentioned dependencies is accessible at bintray central.
 
-####Usage snippets:
+####Usage snippets
 
-#####Gradle:
+#####Gradle
 
 ```
 repositories {
@@ -77,7 +77,7 @@ repositories {
 compile "org.ametiste.metrics:metrics-boot:${metricsVersion}"
 ```
 
-#####Maven:
+#####Maven
 
 ```
 <repositories>
@@ -102,7 +102,7 @@ Aspects and metric service should be configured to start metrics annotations usa
 
 ###Metrics service with spring boot
 
-Adding `'org.ametiste.metrics:metrics-boot:{metricsVersion}'` dependency in classpath of spring boot project provides it with default most commonly used configuration, and if autoconfiguration is enabled, it requires no further actions for usage. For more details view **Optional customization** and **Default configuration further tuning** sections
+Adding `'org.ametiste.metrics:metrics-boot:{metricsVersion}'` dependency in classpath of spring boot project provides it with default most commonly used configuration, and if autoconfiguration is enabled, it requires no further actions for usage. For more details view [Optional properties customisation] (#optional-properties-customisation) and [Default configuration further tuning] (#default-configuration-further-tuning) sections
 
 ###Metrics service without aop support
 
@@ -148,7 +148,7 @@ org.ametiste.metrics.jmx.domain=mymetrics
 ##Default configuration further tuning
 
 Default metrics service implementation is AggregatingMetricsService, and it is confgured with only default router and two mentioned aggregators. Changing routing and extend aggregators is possible by redefining *metricRoutingMap* and/or *aggregatorsList* beans. 
-Its important to remember that *metricRoutingMap* map should contain *"__default"* route key, even if it points to empty aggregators list. More information about metrics routing and identifier resolving is at **Identifier resolving** and **Metrics routing sections**
+Its important to remember that *metricRoutingMap* map should contain *"__default"* route key, even if it points to empty aggregators list. More information about metrics routing and identifier resolving is at [Identifier resolving](#identifier-resolving) and [Metrics routing](#metrics-routing)
 
 ##Annotations usage
 
