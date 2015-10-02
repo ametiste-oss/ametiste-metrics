@@ -4,6 +4,28 @@
 
 Ametiste metrics is a library for easy metrics registration from any point of client code.
 
+## Table Of Contents
+  * [Ametiste metrics library](#ametiste-metrics-library)
+    * [Overview](#overview)
+    * [Usage example](#usage-example)
+    * [Glossary](#glossary)
+    * [Binaries](#binaries)
+        * [Usage snippets:](#usage-snippets)
+          * [Gradle:](#gradle)
+          * [Maven:](#maven)
+      * [Metrics service with spring boot](#metrics-service-with-spring-boot)
+      * [Metrics service without aop support](#metrics-service-without-aop-support)
+      * [Metrics service with aop support](#metrics-service-with-aop-support)
+      * [Child projects and libraries with only annotations required](#child-projects-and-libraries-with-only-annotations-required)
+    * [Optional properties customisation](#optional-properties-customisation)
+    * [Default configuration further tuning](#default-configuration-further-tuning)
+    * [Annotations usage](#annotations-usage)
+    * [Annotation examples](#annotation-examples)
+    * [Identifier resolving](#identifier-resolving)
+    * [Metrics routing](#metrics-routing)
+    * [Integration Testing](#integration-testing)
+          * [Usage snippet:](#usage-snippet)
+
 ##Usage example
 
 To register a metric for a method, one of following annotations may be applied to it:
