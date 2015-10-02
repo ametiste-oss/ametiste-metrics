@@ -169,7 +169,7 @@ Context that expressions are evaluated on contains:
 
 **result** - result of method execution. Should be used with caution since ErrorCountable, Chronable with exception defined and all of annotations for void methods have null as result, and usage of it in such cases leads to NPE
 
-##Annotation examples:
+##Annotation examples
 
 Parameter-dependent count metric, with parameter="cat" passed in method registers metric with name "my.neat.metric.cat", while with parameter="dog", metric is registered with name "my.neat.metric.dog"
 ```java
