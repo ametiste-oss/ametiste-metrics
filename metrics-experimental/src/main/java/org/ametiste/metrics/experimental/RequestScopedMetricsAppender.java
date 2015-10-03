@@ -34,6 +34,7 @@ public class RequestScopedMetricsAppender extends HandlerInterceptorAdapter {
         }
 
         requestScopedMetricsAggregator.consumeMetrics(
+                // TODO: need parameter to define header name
                 (k, v) -> response.addHeader("Ame-Request-Metric", k + "=" + v)
         );
 
