@@ -1,12 +1,12 @@
-//plugins {
-//    id "com.jfrog.bintray" version "1.3.1"
-//}
-//
-//apply from: "https://raw.githubusercontent.com/ametiste-oss/ametiste-bintray-gradle/master/bintray.gradle"
+plugins {
+    id "com.jfrog.bintray" version "1.3.1"
+}
+
+apply from: "https://raw.githubusercontent.com/ametiste-oss/ametiste-bintray-gradle/master/bintray.gradle"
 
 dependencies {
     compile "javax.servlet:javax.servlet-api:3.0.1"
-    //compile "javax.servlet:servlet-api:2.5"
     compile "org.springframework:spring-webmvc:${springVersion}"
     compile project(":metrics-service")
+    compile project(":metrics-boot")
 }
