@@ -16,6 +16,7 @@ import java.util.Map;
 public class MetricsRoutingConfiguration {
 
     @Autowired
+    @EnabledAggregator
     private List<MetricsAggregator> aggregators;
 
     @Bean

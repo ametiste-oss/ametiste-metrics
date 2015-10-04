@@ -26,6 +26,7 @@ public class StatsDConfiguration {
     }
 
     @Bean
+    @EnabledAggregator
     public MetricsAggregator statsDAggregator() {
         return new StatsDMetricAggregator(statsDClient());
 

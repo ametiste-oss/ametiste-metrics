@@ -15,9 +15,10 @@ public class JmxConfiguration {
 
     @Autowired
     private MetricsProperties properties;
-    @Bean
-    public MetricsAggregator jmxAggregator() {
 
+    @Bean
+    @EnabledAggregator
+    public MetricsAggregator jmxAggregator() {
         return new JmxMetricAggregator(properties.getJmx().getDomain());
     }
 
