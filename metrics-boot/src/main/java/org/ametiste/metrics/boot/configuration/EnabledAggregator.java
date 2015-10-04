@@ -15,5 +15,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Qualifier(value = "enabledAggreagtor")
+// TODO : need to test its behaviour somehow
 public @interface EnabledAggregator {
 }
