@@ -32,7 +32,9 @@ public class MetricsRoutingConfiguration {
     }
 
     @Bean
+    @EnabledAggregator
     public MetricsAggregator nullAggregator() {
         return  new NullMetricsAggregator();
     }
+
 }
