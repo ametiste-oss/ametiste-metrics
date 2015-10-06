@@ -6,7 +6,7 @@ import java.lang.annotation.*;
 
 /**
  * <p>
- *     Exclude annotated element from default metrics configuration.
+ *     Indicates object that must be included within the core metrics configuration.
  * </p>
  *
  * @since 0.2.0
@@ -14,7 +14,7 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.CONSTRUCTOR})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Qualifier(value = "enabledAggreagtor")
+@Qualifier(value = "coreAggregator")
 // TODO : need to test its behaviour somehow
-public @interface EnabledAggregator {
+public @interface CoreAggregator {
 }

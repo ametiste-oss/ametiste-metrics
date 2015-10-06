@@ -12,7 +12,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 
 @Configuration
 @Import(MetricsServiceConfiguration.class)
-public class MetricsDefaultConfiguration {
+public class MetricsCoreConfiguration {
 
     @Autowired
     private MetricsService metricsService;
