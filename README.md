@@ -1,5 +1,9 @@
 #Ametiste metrics library
 
+## Build Status
+
+[![Build Status](https://travis-ci.org/ametiste-oss/ametiste-metrics.svg?branch=master)](https://travis-ci.org/ametiste-oss/ametiste-metrics)
+
 ##Overview
 
 Ametiste metrics is a library for easy metrics registration from any point of client code.
