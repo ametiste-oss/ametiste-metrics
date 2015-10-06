@@ -6,7 +6,7 @@ import java.lang.annotation.*;
 
 /**
  * <p>
- *     Exclude annotated element from default metrics configuration.
+ *     Indicates object that must be included within the default metrics configuration.
  * </p>
  *
  * @since 0.2.0
