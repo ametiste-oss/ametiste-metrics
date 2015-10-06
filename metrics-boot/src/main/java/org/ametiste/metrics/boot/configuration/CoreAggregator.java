@@ -6,7 +6,7 @@ import java.lang.annotation.*;
 
 /**
  * <p>
- *     Indicates object that must be included within the default metrics configuration.
+ *     Indicates object that must be included within the core metrics configuration.
  * </p>
  *
  * @since 0.2.0
