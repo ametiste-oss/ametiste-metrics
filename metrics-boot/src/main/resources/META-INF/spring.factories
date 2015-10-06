@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.ametiste.metrics.boot.configuration.MetricsDefaultConfiguration
+org.ametiste.metrics.boot.configuration.MetricsCoreConfiguration
