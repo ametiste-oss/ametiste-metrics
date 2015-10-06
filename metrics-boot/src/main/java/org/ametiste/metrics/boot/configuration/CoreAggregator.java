@@ -14,7 +14,7 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.CONSTRUCTOR})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Qualifier(value = "coreAggreagtor")
+@Qualifier(value = "coreAggreagator")
 // TODO : need to test its behaviour somehow
 public @interface CoreAggregator {
 }
