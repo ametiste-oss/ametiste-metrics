@@ -1,7 +1,6 @@
 package org.ametiste.metrics.experimental.scoped;
 
 import org.ametiste.metrics.MetricsAggregator;
-import org.ametiste.metrics.boot.configuration.EnabledAggregator;
 import org.ametiste.metrics.experimental.activator.AggregationActivator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class RequestScopedMetricsConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean
-    @EnabledAggregator
     public MetricsAggregator requestScopedMetricsAggregator() {
         return new AggregationActivator(requestScopedAggregator(),
                 () -> { return RequestScopedMetricsAggregator.isRequestScoped(); },
