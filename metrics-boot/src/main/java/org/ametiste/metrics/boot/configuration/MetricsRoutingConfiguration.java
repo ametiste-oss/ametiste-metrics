@@ -16,6 +16,7 @@ import java.util.Map;
 public class MetricsRoutingConfiguration {
 
     @Autowired
+    @CoreAggregator
     private List<MetricsAggregator> aggregators;
 
     @Bean
@@ -31,7 +32,9 @@ public class MetricsRoutingConfiguration {
     }
 
     @Bean
+    @CoreAggregator
     public MetricsAggregator nullAggregator() {
         return  new NullMetricsAggregator();
     }
+
 }
