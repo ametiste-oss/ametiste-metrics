@@ -1,4 +1,4 @@
-package org.ametiste.metrics.experimental;
+package org.ametiste.metrics.experimental.activator;
 
 import org.ametiste.metrics.MetricsAggregator;
 

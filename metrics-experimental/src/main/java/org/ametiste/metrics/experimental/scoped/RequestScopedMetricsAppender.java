@@ -1,16 +1,16 @@
-package org.ametiste.metrics.experimental;
+package org.ametiste.metrics.experimental.scoped;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;import java.lang.Exception;import java.lang.Object;import java.lang.Override;
 
-@Component
+// TODO: dicumentation
+// TODO: known bug, does not work with redgreen failover line controller, have no idea wahy
 public class RequestScopedMetricsAppender extends HandlerInterceptorAdapter {
 
     // TODO: I want to do ResponseHeadersAppenderSource and ResponseHeadersAppend in the ifaces
