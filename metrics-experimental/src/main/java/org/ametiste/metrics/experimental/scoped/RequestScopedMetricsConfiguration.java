@@ -3,6 +3,8 @@ package org.ametiste.metrics.experimental.scoped;
 import org.ametiste.metrics.MetricsAggregator;
 import org.ametiste.metrics.boot.configuration.CoreAggregator;
 import org.ametiste.metrics.experimental.activator.AggregationActivator;
+import org.ametiste.metrics.experimental.activator.conditions.scopes.request.EnabledByRequestParameter;
+import org.ametiste.metrics.experimental.activator.conditions.scopes.request.WithinRequestScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -21,8 +23,8 @@ public class RequestScopedMetricsConfiguration extends WebMvcConfigurerAdapter {
     @CoreAggregator
     public MetricsAggregator requestScopedMetricsAggregator() {
         return new AggregationActivator(requestScopedAggregator(),
-                () -> { return RequestScopedMetricsAggregator.isRequestScoped(); },
-                () -> { return RequestScopedMetricsAggregator.isEnabledForRequest(); }
+                new WithinRequestScope(),
+                new EnabledByRequestParameter("ame_request_metrics")
         );
     }
 

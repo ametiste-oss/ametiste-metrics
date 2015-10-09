@@ -1,6 +1,7 @@
 package org.ametiste.metrics.experimental.scoped;
 
 import org.ametiste.metrics.MetricsAggregator;
+import org.ametiste.metrics.experimental.activator.conditions.scopes.request.RequestScopeDetector;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,8 @@ public class RequestScopedMetricsAggregator implements MetricsAggregator {
 
     @Override
     public void increment(String metricId) {
-        if (isNotRequestScoped()) {
+
+        if (RequestScopeDetector.isNotRequestScoped()) {
             return;
         }
 
@@ -33,7 +35,8 @@ public class RequestScopedMetricsAggregator implements MetricsAggregator {
 
     @Override
     public void event(String metricId, int evenValue) {
-        if (isNotRequestScoped()) {
+
+        if (RequestScopeDetector.isNotRequestScoped()) {
             return;
         }
 
@@ -43,7 +46,7 @@ public class RequestScopedMetricsAggregator implements MetricsAggregator {
     @Override
     public void increment(String metricId, int inc) {
 
-        if (isNotRequestScoped()) {
+        if (RequestScopeDetector.isNotRequestScoped()) {
             return;
         }
 
@@ -63,40 +66,6 @@ public class RequestScopedMetricsAggregator implements MetricsAggregator {
      */
     public void consumeMetrics(BiConsumer<String,Integer> consumer) {
         requestMetrics.forEach(consumer);
-    }
-
-    public static boolean isNotRequestScoped() {
-        return !isRequestScoped();
-    }
-
-    public static boolean isRequestScoped() {
-        // NOTE: ugly, but easiest known way to check is it request scope or not
-        try {
-            return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest() != null;
-        } catch (IllegalStateException e) {
-            // NOTE: if there is no request scope, RequestContextHolder.currentRequestAttributes() will
-            // throw IllegalStateException
-            return false;
-        }
-    }
-
-    public static boolean isEnabledForRequest() {
-
-        if (isNotRequestScoped()) {
-            return false;
-        }
-
-        try {
-            return Optional.of(((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
-                    .getRequest().getParameter("ame_request_metrics"))
-                    .orElse("false")
-                    .equals("true");
-        } catch (IllegalStateException e) {
-            // NOTE: if there is no request scope, RequestContextHolder.currentRequestAttributes() will
-            // throw IllegalStateException
-            return false;
-        }
-
     }
 
 }
