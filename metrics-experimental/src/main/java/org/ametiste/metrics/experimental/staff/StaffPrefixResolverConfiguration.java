@@ -24,7 +24,8 @@ public class StaffPrefixResolverConfiguration {
 
     @Bean
     public MetricsIdentifierResolver staffPrefixResolver() {
-        return new ResolverActivator(new PrefixResolver(properties.getStaffMetricPrefix()),
+        return new ResolverActivator(
+                new PrefixResolver(properties.getStaffMetricPrefix()),
                 new WithinRequestScope(),
                 new EnabledByRequestParameter(properties.getStaffTriggerParameter())
         );

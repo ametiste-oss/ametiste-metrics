@@ -6,7 +6,8 @@ import org.springframework.expression.ExpressionParser;
 
 /**
  *
- * Builds metric identifier from name from name and suffixExpression
+ * Builds metric identifier from name and suffixExpression
+ *
  * @author ametiste
  * @since 0.1.0
  */
@@ -21,6 +22,7 @@ public class IdentifierResolver {
 
     /**
      * Builds metric identifier from name and nameSuffixExpression, parsing expression with target context
+     *
      * @param name metrics name, unchangeable part, can be empty, cant be null
      * @param nameSuffixExpression expression of suffix, can be applied as only identifier if name is empty
      * @param context target object and method context to parse expression
@@ -29,7 +31,8 @@ public class IdentifierResolver {
      */
 	public String getTargetIdentifier(String name, String nameSuffixExpression, AspectContext context)
 			throws MetricExpressionParsingException {
-        //TODO refactor this... :O :E
+
+        // TODO refactor this... :O :E
 
 		String suffix = "";
 		
