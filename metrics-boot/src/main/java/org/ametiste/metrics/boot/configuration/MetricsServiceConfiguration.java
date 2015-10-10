@@ -1,12 +1,10 @@
 package org.ametiste.metrics.boot.configuration;
 
 import org.ametiste.metrics.AggregatingMetricsService;
-import org.ametiste.metrics.MetricsAggregator;
 import org.ametiste.metrics.MetricsService;
-import org.ametiste.metrics.NullMetricsAggregator;
 import org.ametiste.metrics.aop.IdentifierResolver;
 import org.ametiste.metrics.container.MapContainer;
-import org.ametiste.metrics.resolver.PlainMetricsIdentifierResolver;
+import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
 import org.ametiste.metrics.router.AggregatorsRouter;
 import org.ametiste.metrics.router.MappingAggregatorsRouter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 
 @Configuration
-@Import({JmxConfiguration.class, StatsDConfiguration.class, MetricsRoutingConfiguration.class})
+@Import({
+        JmxConfiguration.class,
+        StatsDConfiguration.class,
+        MetricsRoutingCoreConfiguration.class,
+        MetricsIdentifierResolverCoreConfguration.class})
 @EnableConfigurationProperties(MetricsProperties.class)
 public class MetricsServiceConfiguration {
 
@@ -27,6 +29,9 @@ public class MetricsServiceConfiguration {
 
     @Autowired
     private MapContainer metricRoutingMap;
+
+    @Autowired
+    private MetricsIdentifierResolver identifierResolver;
 
     @Bean
     public AggregatorsRouter aggregatorsRouter() {
@@ -38,8 +43,9 @@ public class MetricsServiceConfiguration {
     public MetricsService metricsService() {
        return new AggregatingMetricsService(
                aggregatorsRouter(),
-               new PlainMetricsIdentifierResolver(),
-               properties.getPrefix());
+               identifierResolver,
+               properties.getPrefix()
+       );
     }
 
     @Bean
