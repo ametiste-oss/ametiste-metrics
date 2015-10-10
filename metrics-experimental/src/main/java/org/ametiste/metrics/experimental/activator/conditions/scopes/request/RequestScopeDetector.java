@@ -33,7 +33,7 @@ public final class RequestScopeDetector {
         }
 
         try {
-            return Optional.of(((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+            return Optional.ofNullable(((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
                     .getRequest().getParameter(parameterName))
                     .orElse("false")
                     .equals("true");
