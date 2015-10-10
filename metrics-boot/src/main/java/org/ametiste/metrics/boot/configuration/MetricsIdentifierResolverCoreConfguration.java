@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class MetricsIdentifierResolverCoreConfguration {
 
     @Bean
-    @ConditionalOnProperty(prefix = MetricsProperties.PREFIX,
+    @ConditionalOnProperty(prefix = MetricsProperties.PROPS_PREFIX,
             name = "core.identifier-resolver.enabled", matchIfMissing = true)
     public MetricsIdentifierResolver coreIdentifierResolver() {
         return new PlainMetricsIdentifierResolver();
