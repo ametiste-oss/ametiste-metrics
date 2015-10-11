@@ -49,6 +49,10 @@ public class TimeableAspect {
     @Around("countTimeBatch(timeables)")
     public Object processTimingBatch(ProceedingJoinPoint pjp, Timeables timeables) throws Throwable {
 
+        // TODO: I guess we should generalize measurement logic, for example
+        // TODO: within the metrics-measurement module
+        // TODO: see MetaMetricsCounter, I have some generic solution here
+
         long startTime = System.currentTimeMillis();
         Object object = pjp.proceed();
         long endTime = System.currentTimeMillis();
@@ -57,7 +61,6 @@ public class TimeableAspect {
             AspectContext context = new AspectContext(pjp.getArgs(), pjp.getTarget(), object);
             this.saveTime(timeable, context, (int)(endTime - startTime));
         }
-
 
         return object;
     }
