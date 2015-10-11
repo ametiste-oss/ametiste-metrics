@@ -4,9 +4,19 @@ plugins {
 
 apply from: "https://raw.githubusercontent.com/ametiste-oss/ametiste-bintray-gradle/master/bintray.gradle"
 
+ext {
+    springBootVersion="1.2.5.RELEASE"
+}
+
 dependencies {
+
+    compile()
+
     compile "javax.servlet:javax.servlet-api:3.0.1"
     compile "org.springframework:spring-webmvc:${springVersion}"
+
+    compile "org.springframework.boot:spring-boot-actuator:${springBootVersion}"
+
     compile project(":metrics-service")
     compile project(":metrics-boot")
 }
