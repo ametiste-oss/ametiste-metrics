@@ -5,11 +5,18 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix="org.ametiste.metrics")
+@ConfigurationProperties(prefix=MetricsProperties.PROPS_PREFIX)
 public class MetricsProperties {
 
+    /**
+     * Defines prefix name used to scope library properties.
+     */
+    public static final String PROPS_PREFIX = "org.ametiste.metrics";
+
     private Statsd statsd = new Statsd();
+
     private Jmx jmx = new Jmx();
+
     private String prefix="";
 
     public Statsd getStatsd() {

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Configuration
-public class MetricsRoutingConfiguration {
+public class MetricsRoutingCoreConfiguration {
 
     @Autowired
     @CoreAggregator
