@@ -7,6 +7,7 @@ import org.ametiste.metrics.experimental.activator.conditions.scopes.request.Wit
 import org.ametiste.metrics.experimental.resolver.templated.VariableBind;
 import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,8 +16,7 @@ import org.springframework.context.annotation.Configuration;
  * @since
  */
 @Configuration
-// TODO : I guess we need MetricsIdentifierResolver usage refactoring,
-// there is no way to inject my own resolver
+@EnableConfigurationProperties(StaffPrefixResolverProperties.class)
 public class StaffPrefixResolverConfiguration {
 
     @Autowired
