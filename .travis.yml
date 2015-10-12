@@ -1,7 +1,9 @@
 language: java
-
 jdk:
   - oraclejdk8
-
 notifications:
   slack: ametiste:5jB3wwx1BF5AfCno1e5ZLvAi
+before_install:
+  - pip install --user codecov
+after_success:
+  - codecov
