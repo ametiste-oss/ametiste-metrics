@@ -16,7 +16,7 @@ public class EnabledByRequestParameter implements ActivationCondition {
 
     @Override
     public boolean checkActivation() {
-        return RequestScopeDetector.isEnabledForRequest(parameterName);
+        return RequestScopeDetector.isTrueForRequest(parameterName);
     }
 
 }
