@@ -1,16 +1,14 @@
 package org.ametiste.metrics.boot.configuration;
 
+import org.ametiste.metrics.AggregatingMetricsService;
 import org.ametiste.metrics.MetricsAggregator;
 import org.ametiste.metrics.NullMetricsAggregator;
-import org.ametiste.metrics.container.ListContainer;
-import org.ametiste.metrics.container.MapContainer;
+import org.ametiste.metrics.router.MappingAggregatorsRouter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Configuration
 public class MetricsRoutingCoreConfiguration {
@@ -19,16 +17,11 @@ public class MetricsRoutingCoreConfiguration {
     @CoreAggregator
     private List<MetricsAggregator> aggregators;
 
-    @Bean
-    public MapContainer metricRoutingMap() {
-        Map<String, ListContainer> map = new HashMap<>();
-        map.put("__default", aggregatorsContainer());
-        return new MapContainer(map);
-    }
-
-    @Bean
-    public ListContainer aggregatorsContainer() {
-        return new ListContainer(aggregators);
+    // NOTE: bean name used as map key during autowire process, so default routing name used
+    @Bean(name = MappingAggregatorsRouter.DEFAULT_ROUTE_NAME)
+    @CoreAggreagationRouting
+    public List<MetricsAggregator> metricRoutingMap() {
+        return aggregators;
     }
 
     @Bean

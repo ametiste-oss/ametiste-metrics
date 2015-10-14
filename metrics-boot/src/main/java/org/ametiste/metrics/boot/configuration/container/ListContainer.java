@@ -1,4 +1,4 @@
-package org.ametiste.metrics.container;
+package org.ametiste.metrics.boot.configuration.container;
 
 import org.ametiste.metrics.MetricsAggregator;
 

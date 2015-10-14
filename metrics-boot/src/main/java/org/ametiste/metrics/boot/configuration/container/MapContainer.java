@@ -1,5 +1,8 @@
-package org.ametiste.metrics.container;
+package org.ametiste.metrics.boot.configuration.container;
 
+import org.ametiste.metrics.MetricsAggregator;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -9,13 +12,12 @@ import java.util.Map;
  */
 public class MapContainer {
 
-
     private Map<String, ListContainer> map;
 
     public MapContainer(Map<String, ListContainer> map) {
-
         this.map = map;
     }
+
     public Map<String, ListContainer> loadMap() {
         return map;
     }
