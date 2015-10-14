@@ -24,6 +24,7 @@ public class RequestScopedMetricsConfiguration extends WebMvcConfigurerAdapter {
     public MetricsAggregator requestScopedMetricsAggregator() {
         return new AggregationActivator(requestScopedAggregator(),
                 new WithinRequestScope(),
+                // TODO: extract to configuration properties
                 new EnabledByRequestParameter("ame_request_metrics")
         );
     }
