@@ -30,26 +30,17 @@ public class MetricsServiceConfiguration {
     @Autowired
     private MetricsProperties properties;
 
-    // TODO: perhaps it shold be extracted into MetricsRoutingCoreConfiguration?
     @Autowired
-    // NOTE: List<MetricsAggregator> objects are autowired by this qualifier, not maps
-    @CoreAggreagationRouting
-    private Map<String, List<MetricsAggregator>> metricsRouting;
+    private AggregatorsRouter aggregatorsRouter;
 
     @Autowired
     private MetricsIdentifierResolver identifierResolver;
-
-    // TODO: perhaps it shold be extracted into MetricsRoutingCoreConfiguration?
-    @Bean
-    public AggregatorsRouter aggregatorsRouter() {
-        return new MappingAggregatorsRouter(metricsRouting);
-    }
 
     @Bean
     @Qualifier("metricsService")
     public MetricsService metricsService() {
        return new AggregatingMetricsService(
-               aggregatorsRouter(),
+               aggregatorsRouter,
                identifierResolver,
                properties.getPrefix()
        );
