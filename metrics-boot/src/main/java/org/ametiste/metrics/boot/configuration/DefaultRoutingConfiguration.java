@@ -34,7 +34,7 @@ public class DefaultRoutingConfiguration {
      */
     @Bean
     @CoreAggreagatorRoute
-    // @Order(Ordered.LOWEST_PRECEDENCE)
+    @Order(Ordered.LOWEST_PRECEDENCE)
     public Route defaultCoreRouting() {
         return Route.create(MappingAggregatorsRouter.DEFAULT_ROUTE_NAME, aggregators);
     }
