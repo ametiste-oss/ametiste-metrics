@@ -20,8 +20,8 @@ import java.util.Map;
 
 @Configuration
 @Import({
-        JmxConfiguration.class,
-        StatsDConfiguration.class,
+        DefaultAggreagtorsConfiguration.class,
+        DefaultRoutingConfiguration.class,
         MetricsRoutingCoreConfiguration.class,
         MetricsIdentifierResolverCoreConfguration.class})
 @EnableConfigurationProperties(MetricsProperties.class)

@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  *
- * @since
+ * @since 0.2.0
  */
 @Configuration
 public class MetricsIdentifierResolverCoreConfguration {

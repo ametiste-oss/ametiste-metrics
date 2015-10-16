@@ -6,7 +6,7 @@ import java.lang.annotation.*;
 
 /**
  * <p>
- *     Indicates map that defines aggregation routing within the core metrics configuration.
+ *     Indicates aggregation route definition bean.
  * </p>
  *
  * @since 0.2.0
@@ -14,7 +14,7 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.CONSTRUCTOR})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Qualifier(value = "coreAggregationRouting")
-public @interface CoreAggreagationRouting {
+@Qualifier(value = "coreAggreagatorRoute")
+public @interface CoreAggreagatorRoute {
 
 }
