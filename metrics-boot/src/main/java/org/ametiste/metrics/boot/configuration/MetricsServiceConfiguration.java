@@ -34,6 +34,7 @@ public class MetricsServiceConfiguration {
     private AggregatorsRouter aggregatorsRouter;
 
     @Autowired
+    @CoreIdentifierResolver
     private MetricsIdentifierResolver identifierResolver;
 
     @Bean

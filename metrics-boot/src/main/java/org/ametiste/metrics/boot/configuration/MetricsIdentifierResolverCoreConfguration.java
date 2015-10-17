@@ -16,6 +16,7 @@ public class MetricsIdentifierResolverCoreConfguration {
     @Bean
     @ConditionalOnProperty(prefix = MetricsProperties.PROPS_PREFIX,
             name = "core.identifier-resolver.enabled", matchIfMissing = true)
+    @CoreIdentifierResolver
     public MetricsIdentifierResolver coreIdentifierResolver() {
         return new PlainMetricsIdentifierResolver();
     }
