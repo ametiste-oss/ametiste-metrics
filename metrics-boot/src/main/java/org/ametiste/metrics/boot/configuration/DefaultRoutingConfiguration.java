@@ -33,8 +33,9 @@ public class DefaultRoutingConfiguration {
      * @return default route for core aggregators
      */
     @Bean
-    @CoreAggreagatorRoute
-    @Order(Ordered.LOWEST_PRECEDENCE)
+    // TODO: disabled while there is no way to control ordering at the module level
+    // TODO: enable it after routing usage refactoring
+    // @Order(Ordered.LOWEST_PRECEDENCE)
     public Route defaultCoreRouting() {
         return Route.create(MappingAggregatorsRouter.DEFAULT_ROUTE_NAME, aggregators);
     }

@@ -19,7 +19,6 @@ public class MetricsRoutingCoreConfiguration {
     private List<MetricsAggregator> aggregators;
 
     @Autowired
-    @CoreAggreagatorRoute
     private List<Route> routes;
 
     @Bean
