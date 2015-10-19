@@ -1,10 +1,10 @@
 package org.ametiste.metrics.experimental.dumb;
 
-import org.ametiste.metrics.MetricsAggregator;import java.lang.Override;import java.lang.String;import java.lang.System;
+import org.ametiste.metrics.MetricsAggregator;
 
 /**
  * <p>
- *  Hey, it would be useful for manual testing!
+ * Hey, it would be useful for manual testing!
  * </p>
  *
  * @since 0.2.0

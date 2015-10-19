@@ -7,6 +7,7 @@ import java.util.Map;
 /**
  * Temporary metrics gathering storage with helper methods for easier verification
  * Created on 24.07.2014.
+ *
  * @author ametiste
  * @since 0.1.0
  */
@@ -28,16 +29,15 @@ public class MockMetricsContainer {
 
     }
 
-    public void addValue(MetricsType type, String metricName, long  value) {
+    public void addValue(MetricsType type, String metricName, long value) {
 
         this.insertData(container.get(type), metricName, value);
     }
 
     private void insertData(Map<String, MetricsCount> map, String targetName, long value) {
-        if(map.containsKey(targetName)) {
+        if (map.containsKey(targetName)) {
             map.get(targetName).addValue(value);
-        }
-        else {
+        } else {
             MetricsCount c = new MetricsCount();
             c.addValue(value);
             map.put(targetName, c);
@@ -53,23 +53,23 @@ public class MockMetricsContainer {
     }
 
     public boolean hasValueWithTypeAndNameAndCount(MetricsType type, String name, int times) {
-        return  container.get(type).containsKey(name) && container.get(type).get(name).getCount() == times;
+        return container.get(type).containsKey(name) && container.get(type).get(name).getCount() == times;
     }
 
 
     public boolean hasValueWithTypeAndNameAndValues(MetricsType type, String name, List<Long> values) {
-        return  container.get(type).containsKey(name) &&  values.equals(container.get(type).get(name).getValues());
+        return container.get(type).containsKey(name) && values.equals(container.get(type).get(name).getValues());
     }
 
     public int getCountForValue(MetricsType type, String name) {
-        if(!container.get(type).containsKey(name)) {
+        if (!container.get(type).containsKey(name)) {
             throw new IllegalArgumentException("No metric with this name is registered for this type");
         }
         return container.get(type).get(name).getCount();
     }
 
     public List<Long> getValuesForValue(MetricsType type, String name) {
-        if(!container.get(type).containsKey(name)) {
+        if (!container.get(type).containsKey(name)) {
             throw new IllegalArgumentException("No metric with this name is registered for this type");
         }
         return container.get(type).get(name).getValues();

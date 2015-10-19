@@ -8,13 +8,11 @@ import org.springframework.context.annotation.Import;
 
 /**
  * <p>
- *     Defines default configured aggreagtors. See concrete aggregators configurations for details.
+ * Defines default configured aggreagtors. See concrete aggregators configurations for details.
  * </p>
- *
  *
  * @see JmxConfiguration
  * @see StatsDConfiguration
- *
  * @since 0.2.0
  */
 @Import({
@@ -27,7 +25,7 @@ public class DefaultAggreagtorsConfiguration {
     @Bean
     @CoreAggregator
     public MetricsAggregator nullAggregator() {
-        return  new NullMetricsAggregator();
+        return new NullMetricsAggregator();
     }
 
 }

@@ -2,8 +2,8 @@ package org.ametiste.metrics.statsd.client;
 
 
 import org.ametiste.metrics.statsd.socket.DatagramStatsDSocket;
-import org.ametiste.metrics.statsd.socket.StatsDSocketConnectException;
 import org.ametiste.metrics.statsd.socket.StatsDSocket;
+import org.ametiste.metrics.statsd.socket.StatsDSocketConnectException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,8 +14,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * Simple {@link StatsDClient} implementation with non-blocking send with help of {@link ExecutorService}
  * via {@link StatsDSocket}
- * @since 0.1.0
  *
+ * @since 0.1.0
  */
 public class SimpleStatsDClient implements StatsDClient {
 
@@ -23,20 +23,19 @@ public class SimpleStatsDClient implements StatsDClient {
     private final ErrorMode mode;
     private final StatsDSocket socket;
     private final ExecutorService executor;
-
-    private boolean isConnected = false;
-
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private boolean isConnected = false;
 
     /**
      * This constructor serves as default implementation of SimpleStatsDClient, based on default executor and
      * {@link DatagramStatsDSocket}. In case if alternative implementation is required,
      * {@link #SimpleStatsDClient(StatsDSocket, ExecutorService, ErrorMode)} should be used
+     *
      * @param hostname - name or ip of host to connect
-     * @param port - port to connect
-     * @param mode - mode of connection. {@link ErrorMode#MODERATE} provides a silent error-prone mode, with only
-     *             log warning message in case of not successful connection.
-     *             {@link ErrorMode#STRICT} throws exception in case if connection is not successful
+     * @param port     - port to connect
+     * @param mode     - mode of connection. {@link ErrorMode#MODERATE} provides a silent error-prone mode, with only
+     *                 log warning message in case of not successful connection.
+     *                 {@link ErrorMode#STRICT} throws exception in case if connection is not successful
      */
     public SimpleStatsDClient(String hostname, int port, ErrorMode mode) {
         this(
@@ -51,17 +50,18 @@ public class SimpleStatsDClient implements StatsDClient {
 
     /**
      * This constructor should be used when alternative {@link StatsDSocket} and executor are required.
-     * @param socket - {@link StatsDSocket} implementation. Cant be null.
+     *
+     * @param socket   - {@link StatsDSocket} implementation. Cant be null.
      * @param executor - {@link ExecutorService} for non-blocking send uses. NB! Default executor service
      *                 uses thread factory with custom thread name, custom executor with different naming
      *                 might trouble tracing. Cant be null.
-     * @param mode - mode of connection. {@link ErrorMode#MODERATE} provides a silent error-prone mode, with only
-     *             log warning message in case of not successful connection.
-     *             {@link ErrorMode#STRICT} throws exception in case if connection is not successful. Cant be null
-     *  @throws IllegalArgumentException if at least one of passed parameters is null
+     * @param mode     - mode of connection. {@link ErrorMode#MODERATE} provides a silent error-prone mode, with only
+     *                 log warning message in case of not successful connection.
+     *                 {@link ErrorMode#STRICT} throws exception in case if connection is not successful. Cant be null
+     * @throws IllegalArgumentException if at least one of passed parameters is null
      */
     public SimpleStatsDClient(StatsDSocket socket, ExecutorService executor, ErrorMode mode) {
-        if(socket ==null || executor ==null || mode ==null) {
+        if (socket == null || executor == null || mode == null) {
             throw new IllegalArgumentException("None of parameters can be null");
         }
         this.socket = socket;
@@ -71,6 +71,7 @@ public class SimpleStatsDClient implements StatsDClient {
 
     /**
      * Init method providing connect to socket
+     *
      * @throws StatsDSocketConnectException if {@link StatsDSocket#connect()} threw exception and mode is {@link ErrorMode#STRICT}
      */
     public void start() {
@@ -78,12 +79,10 @@ public class SimpleStatsDClient implements StatsDClient {
         try {
             socket.connect();
             isConnected = true;
-        }
-        catch (StatsDSocketConnectException e) {
-            if(mode.equals(ErrorMode.STRICT)) {
+        } catch (StatsDSocketConnectException e) {
+            if (mode.equals(ErrorMode.STRICT)) {
                 throw e;
-            }
-            else {
+            } else {
                 logger.warn("StatsDClient socket was not connected.");
                 logger.debug("StatsDClient socket error.", e);
             }
@@ -145,7 +144,7 @@ public class SimpleStatsDClient implements StatsDClient {
     private void send(final String message) {
         try {
             executor.execute(() -> {
-                if(isConnected) {
+                if (isConnected) {
                     socket.send(message);
                 } else {
                     logger.warn("StatsDClient socket was not connected.");

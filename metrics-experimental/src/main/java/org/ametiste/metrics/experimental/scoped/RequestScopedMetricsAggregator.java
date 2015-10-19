@@ -2,15 +2,8 @@ package org.ametiste.metrics.experimental.scoped;
 
 import org.ametiste.metrics.MetricsAggregator;
 import org.ametiste.metrics.experimental.activator.conditions.scopes.request.RequestScopeDetector;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import java.lang.Integer;import java.lang.Override;import java.lang.String;import java.util.HashMap;
-import java.util.Optional;
+import java.util.HashMap;
 import java.util.function.BiConsumer;
 
 /**
@@ -59,12 +52,12 @@ public class RequestScopedMetricsAggregator implements MetricsAggregator {
 
     /**
      * <p>
-     *     Used to consume aggregated metrics. Feeds key-value pairs of metric names and values.
+     * Used to consume aggregated metrics. Feeds key-value pairs of metric names and values.
      * </p>
      *
      * @param consumer metrics consumer
      */
-    public void consumeMetrics(BiConsumer<String,Integer> consumer) {
+    public void consumeMetrics(BiConsumer<String, Integer> consumer) {
         requestMetrics.forEach(consumer);
     }
 

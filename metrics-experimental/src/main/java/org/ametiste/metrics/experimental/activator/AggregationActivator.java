@@ -2,7 +2,7 @@ package org.ametiste.metrics.experimental.activator;
 
 import org.ametiste.metrics.MetricsAggregator;
 
-import java.lang.Override;import java.lang.String;import java.util.Arrays;
+import java.util.Arrays;
 import java.util.List;
 
 /**

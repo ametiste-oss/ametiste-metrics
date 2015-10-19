@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix=MetricsProperties.PROPS_PREFIX)
+@ConfigurationProperties(prefix = MetricsProperties.PROPS_PREFIX)
 public class MetricsProperties {
 
     /**
@@ -17,7 +17,7 @@ public class MetricsProperties {
 
     private Jmx jmx = new Jmx();
 
-    private String prefix="";
+    private String prefix = "";
 
     public Statsd getStatsd() {
         return statsd;
@@ -47,7 +47,7 @@ public class MetricsProperties {
     public static class Statsd {
 
         private String host = "localhost";
-        private int port=8125;
+        private int port = 8125;
         private ErrorMode mode = ErrorMode.MODERATE;
 
         public String getHost() {

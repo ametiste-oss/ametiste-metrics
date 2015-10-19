@@ -13,7 +13,7 @@ public class ResolverActivator extends Activator implements MetricsIdentifierRes
 
     private final MetricsIdentifierResolver resolver;
 
-    public ResolverActivator(MetricsIdentifierResolver resolver, ActivationCondition ...activationConditions) {
+    public ResolverActivator(MetricsIdentifierResolver resolver, ActivationCondition... activationConditions) {
         this(resolver, Arrays.asList(activationConditions));
     }
 

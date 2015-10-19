@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 
 import java.util.List;
 
@@ -26,8 +24,8 @@ public class DefaultRoutingConfiguration {
 
     /**
      * <p>
-     *  Creates default route for core aggregators, this route has lowest precedence
-     *  and would be applied last in the list of all defined routes.
+     * Creates default route for core aggregators, this route has lowest precedence
+     * and would be applied last in the list of all defined routes.
      * </p>
      *
      * @return default route for core aggregators

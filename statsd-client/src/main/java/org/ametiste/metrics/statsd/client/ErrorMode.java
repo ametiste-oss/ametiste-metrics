@@ -1,8 +1,8 @@
 package org.ametiste.metrics.statsd.client;
 
 /**
- * @since 0.1.0
  * @author ametiste
+ * @since 0.1.0
  */
 public enum ErrorMode {
 

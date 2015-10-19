@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Metric aggregator for jmx
+ *
  * @author ametiste
  * @since 0.1.0
  */

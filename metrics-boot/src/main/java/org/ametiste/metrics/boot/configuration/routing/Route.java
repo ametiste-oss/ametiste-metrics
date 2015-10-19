@@ -8,13 +8,13 @@ import java.util.List;
 
 /**
  * <p>
- *     Represents row in the routing map, contains {@link MetricsAggregator} objects
- *     assigned to the specifed routing path.
+ * Represents row in the routing map, contains {@link MetricsAggregator} objects
+ * assigned to the specifed routing path.
  * </p>
  *
- * @since 0.2.0
  * @author ametiste
  * @author masted
+ * @since 0.2.0
  */
 public class Route {
 

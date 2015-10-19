@@ -8,7 +8,7 @@ import java.util.Optional;
 
 /**
  * <p>
- *     Helper functions to check <i>Spring Web MVC</i> webrequest-scope context.
+ * Helper functions to check <i>Spring Web MVC</i> webrequest-scope context.
  * </p>
  *
  * @since 0.2.0
@@ -17,7 +17,7 @@ public final class RequestScopeDetector {
 
     /**
      * <p>
-     *     Check that the operation is called out of the request-scope.
+     * Check that the operation is called out of the request-scope.
      * </p>
      *
      * @return <b>false</b> if called within the request-scope, <b>true</b> if not.
@@ -27,12 +27,12 @@ public final class RequestScopeDetector {
     }
 
     /**
-    * <p>
-    *     Check that the operation is called within the request-scope.
-    * </p>
+     * <p>
+     * Check that the operation is called within the request-scope.
+     * </p>
      *
      * @return <b>true</b> if called within the request-scope, <b>false</b> if not.
-    */
+     */
     public static boolean isRequestScoped() {
         // NOTE: ugly, but easiest known way to check is it request scope or not
         try {
@@ -46,8 +46,8 @@ public final class RequestScopeDetector {
 
     /**
      * <p>
-     *     Check that the request parameter containes variable with the given name. And
-     *     the variable has value of <i>'true'</i>.
+     * Check that the request parameter containes variable with the given name. And
+     * the variable has value of <i>'true'</i>.
      * </p>
      *
      * @return <b>true</b> if called within the request-scope, <b>false</b> if not.
@@ -71,13 +71,13 @@ public final class RequestScopeDetector {
 
     /**
      * <p>
-     *     Extracts a parameter with the given name from the request bound to current context.
+     * Extracts a parameter with the given name from the request bound to current context.
      * </p>
      * <p>
-     *     <b>WARNING</b>
-     *
-     *     This operation is unsafe cos <i>Spring Framework</i> does
-     *     not provide any interface to check scope, please do exceptions handeling.
+     * <b>WARNING</b>
+     * <p>
+     * This operation is unsafe cos <i>Spring Framework</i> does
+     * not provide any interface to check scope, please do exceptions handeling.
      * </p>
      *
      * @param parameterName name of parameter to be extracted
@@ -90,14 +90,14 @@ public final class RequestScopeDetector {
 
     /**
      * <p>
-     *     Extracts {@code HttServletRequest} from the request bound to current context.
+     * Extracts {@code HttServletRequest} from the request bound to current context.
      * </p>
-     *
      * <p>
-     *     <b>WARNING</b>
-     *
-     *     This operation is unsafe cos <i>Spring Framework</i> does
-     *     not provide any interface to check scope, please do exceptions handeling.
+     * <p>
+     * <b>WARNING</b>
+     * <p>
+     * This operation is unsafe cos <i>Spring Framework</i> does
+     * not provide any interface to check scope, please do exceptions handeling.
      * </p>
      *
      * @return {@code HttServletRequest} bound to the current request contex, if any

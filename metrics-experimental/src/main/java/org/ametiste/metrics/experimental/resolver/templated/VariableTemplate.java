@@ -14,6 +14,12 @@ public class VariableTemplate {
         this.resolved = template;
     }
 
+    public static VariableTemplate eval(String template, List<VariableBind> binds) {
+        final VariableTemplate variableTemplate = new VariableTemplate(template);
+        binds.forEach(variableTemplate::bind);
+        return variableTemplate;
+    }
+
     public VariableTemplate bind(VariableBind variableBind) {
 
         final BindedVariable variable = variableBind.bindVariable();
@@ -28,12 +34,6 @@ public class VariableTemplate {
 
     public String resolved() {
         return resolved;
-    }
-
-    public static VariableTemplate eval(String template, List<VariableBind> binds) {
-        final VariableTemplate variableTemplate = new VariableTemplate(template);
-        binds.forEach(variableTemplate::bind);
-        return variableTemplate;
     }
 
 }

@@ -31,13 +31,13 @@ public class RequestScopedMetricsConfiguration extends WebMvcConfigurerAdapter {
 
     /**
      * <p>
-     *      Request-scoped bean to aggregate metrics within the concrete
-     *      web request.
+     * Request-scoped bean to aggregate metrics within the concrete
+     * web request.
      * </p>
-     *
      * <p>
-     *      Note, this aggregator is not included into default configuration
-     *      and designd for internal usage within the request-scoped metrics module.
+     * <p>
+     * Note, this aggregator is not included into default configuration
+     * and designd for internal usage within the request-scoped metrics module.
      * </p>
      */
     @Bean
@@ -48,7 +48,7 @@ public class RequestScopedMetricsConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean
     public RequestScopedMetricsAppender requestScopedMetricsAppender() {
-         return new RequestScopedMetricsAppender();
+        return new RequestScopedMetricsAppender();
     }
 
     @Override

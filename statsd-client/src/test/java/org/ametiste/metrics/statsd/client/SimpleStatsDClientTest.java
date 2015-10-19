@@ -1,21 +1,22 @@
 package org.ametiste.metrics.statsd.client;
 
-import org.ametiste.metrics.statsd.socket.StatsDSocketConnectException;
 import org.ametiste.metrics.statsd.socket.StatsDSocket;
+import org.ametiste.metrics.statsd.socket.StatsDSocketConnectException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
 import static org.mockito.Mockito.*;
 
 
 /**
  * Created by ametiste on 9/18/15.
- *
  */
 public class SimpleStatsDClientTest {
 
@@ -52,7 +53,7 @@ public class SimpleStatsDClientTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testIllegalParametersMode() throws Exception {
-        new SimpleStatsDClient(socket,executorService, null);
+        new SimpleStatsDClient(socket, executorService, null);
     }
 
     @Test
@@ -71,7 +72,7 @@ public class SimpleStatsDClientTest {
 
     @Test(expected = StatsDSocketConnectException.class)
     public void testStartWithFailConnectionAndVerboseMode() throws Exception {
-        client = new SimpleStatsDClient(socket,executorService, ErrorMode.STRICT);
+        client = new SimpleStatsDClient(socket, executorService, ErrorMode.STRICT);
         doThrow(StatsDSocketConnectException.class).when(socket).connect();
         client.start();
         verify(socket, times(1)).connect();
@@ -145,6 +146,7 @@ public class SimpleStatsDClientTest {
      * Method relies on {@link Executors#newSingleThreadExecutor()} in its work, supposing next task completion after
      * test task guarantee completion of test task. (Since the executor is single threaded. Change of executor for tests
      * might break this logic.
+     *
      * @throws InterruptedException
      * @throws java.util.concurrent.ExecutionException
      */

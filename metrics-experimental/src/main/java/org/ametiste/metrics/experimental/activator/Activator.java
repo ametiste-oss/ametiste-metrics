@@ -1,19 +1,15 @@
 package org.ametiste.metrics.experimental.activator;
 
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 /**
  * <p>
- *     Abstract activator class that defines common activation check.
+ * Abstract activator class that defines common activation check.
  * </p>
- *
  * <p>
- *     TODO: controversial solution to have it as avstract class, would work only for some cases.
+ * <p>
+ * TODO: controversial solution to have it as avstract class, would work only for some cases.
  * </p>
- *
- * @since
  */
 public abstract class Activator {
 
