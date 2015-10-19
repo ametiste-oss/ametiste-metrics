@@ -1,39 +1,43 @@
 package org.ametiste.metrics.router;
 
 import org.ametiste.metrics.MetricsAggregator;
-import org.ametiste.metrics.container.ListContainer;
-import org.ametiste.metrics.container.MapContainer;
 import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * {@link AggregatorsRouter} implementation based on {@link MapContainer}
+ * {@link AggregatorsRouter} implementation based on routing map,
+ *
  * Metric ids in routing map may contain wildcards.
+ *
  * Routing map should contain route with key "__default".
+ *
  * Its possible to have only "__default" route.
+ *
  * @since 0.1.0
  * @author ametiste
  */
 public class MappingAggregatorsRouter implements AggregatorsRouter {
 	
-	private final String defaultRouteName = "__default";
-	private final Map<String, ListContainer> aggregatorsMap;
-	private boolean hasWildCards = false;
+	public final static String DEFAULT_ROUTE_NAME = "__default";
 
+	private final Map<String, List<MetricsAggregator>> aggregatorsMap;
+
+    private boolean hasWildCards = false;
 
 	/**
-	 * Requires routing map {@link MapContainer}  with "__default" key route at least.
-	 * @param container - routing map container
+	 * Requires routing map with "__default" key route at least.
+     *
+	 * @param aggregators - routing map aggregators
 	 */
-	public MappingAggregatorsRouter(MapContainer container) {
-		if(container == null || !container.loadMap().containsKey(defaultRouteName)) {
-			throw new IllegalArgumentException("Default routing should be set, use key '" + defaultRouteName + "'");
+	public MappingAggregatorsRouter(Map<String, List<MetricsAggregator>> aggregators) {
+		if(aggregators == null || !aggregators.containsKey(DEFAULT_ROUTE_NAME)) {
+			throw new IllegalArgumentException("Default routing should be set, use key '" + DEFAULT_ROUTE_NAME + "'");
 		}
-		container.loadMap().keySet().stream().filter(key -> key.contains("*")).forEach(key ->
+		aggregators.keySet().stream().filter(key -> key.contains("*")).forEach(key ->
 				hasWildCards = true);
-		this.aggregatorsMap = container.loadMap();
+		this.aggregatorsMap = aggregators;
 	}
 
 	/**
@@ -51,19 +55,19 @@ public class MappingAggregatorsRouter implements AggregatorsRouter {
 	@Override
 	public List<MetricsAggregator> getAggregatorsForMetric(String metricIdentifier) {
 		if (aggregatorsMap.containsKey(metricIdentifier)) {
-			return aggregatorsMap.get(metricIdentifier).loadList();
+			return aggregatorsMap.get(metricIdentifier);
 		} else {
 			if (hasWildCards) {
 				for (String key : aggregatorsMap.keySet()) {
 					if (key.contains("*")) {
 						if (metricIdentifier.startsWith(key.replace("*", ""))) {
-							return aggregatorsMap.get(key).loadList();
+							return aggregatorsMap.get(key);
 						}
 					}
 				}
 			}
 		}
-		return aggregatorsMap.get(defaultRouteName).loadList();
+		return aggregatorsMap.get(DEFAULT_ROUTE_NAME);
 	}
 
 }

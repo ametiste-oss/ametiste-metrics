@@ -1,16 +1,15 @@
 package org.ametiste.metrics.boot.configuration;
 
 import org.ametiste.metrics.MetricsAggregator;
-import org.ametiste.metrics.NullMetricsAggregator;
-import org.ametiste.metrics.container.ListContainer;
-import org.ametiste.metrics.container.MapContainer;
+import org.ametiste.metrics.boot.configuration.routing.Route;
+import org.ametiste.metrics.boot.configuration.routing.RouteConfiguration;
+import org.ametiste.metrics.router.AggregatorsRouter;
+import org.ametiste.metrics.router.MappingAggregatorsRouter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Configuration
 public class MetricsRoutingCoreConfiguration {
@@ -19,22 +18,17 @@ public class MetricsRoutingCoreConfiguration {
     @CoreAggregator
     private List<MetricsAggregator> aggregators;
 
+    @Autowired
+    private List<Route> routes;
+
     @Bean
-    public MapContainer metricRoutingMap() {
-        Map<String, ListContainer> map = new HashMap<>();
-        map.put("__default", aggregatorsContainer());
-        return new MapContainer(map);
+    public RouteConfiguration routeConfiguration() {
+        return new RouteConfiguration(routes);
     }
 
     @Bean
-    public ListContainer aggregatorsContainer() {
-        return new ListContainer(aggregators);
-    }
-
-    @Bean
-    @CoreAggregator
-    public MetricsAggregator nullAggregator() {
-        return  new NullMetricsAggregator();
+    public AggregatorsRouter aggregatorsRouter() {
+        return new MappingAggregatorsRouter(routeConfiguration().asMap());
     }
 
 }
