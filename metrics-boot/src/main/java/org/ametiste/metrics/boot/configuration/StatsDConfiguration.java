@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableConfigurationProperties(MetricsProperties.class)
-@ConditionalOnProperty(prefix="org.ametiste.metrics.statsd", name = "enabled", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "org.ametiste.metrics.statsd", name = "enabled", matchIfMissing = true)
 public class StatsDConfiguration {
 
     @Autowired

@@ -6,18 +6,18 @@ import java.util.*;
 
 /**
  * <p>
- *     Represents routing configuration, route routing, that would be used
- *     during routing service configuration to define how concrete metrics are handeled.
+ * Represents routing configuration, route routing, that would be used
+ * during routing service configuration to define how concrete metrics are handeled.
  * </p>
- *
  * <p>
- *     Each route configuration contains list of {@link Route} objects mapped to route paths.
- * </p>
- *
  * <p>
- *     To configure routing just define route paths and routes to this paths, for example
+ * Each route configuration contains list of {@link Route} objects mapped to route paths.
  * </p>
- *
+ * <p>
+ * <p>
+ * To configure routing just define route paths and routes to this paths, for example
+ * </p>
+ * <p>
  * <pre>
  * new RouteConfiguration(
  *      Route.create("org.ame.controller.*", jmxAggregator),
@@ -25,9 +25,9 @@ import java.util.*;
  * );
  * </pre>
  *
- * @since 0.2.0
  * @author ametiste
  * @author masted
+ * @since 0.2.0
  */
 public class RouteConfiguration {
 
@@ -54,8 +54,8 @@ public class RouteConfiguration {
 
     private void assign(Route route) {
         routing
-            .computeIfAbsent(route.path, k -> new ArrayList<>())
-            .addAll(route.assigned);
+                .computeIfAbsent(route.path, k -> new ArrayList<>())
+                .addAll(route.assigned);
     }
 
 }

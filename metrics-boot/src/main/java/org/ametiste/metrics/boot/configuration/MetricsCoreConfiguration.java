@@ -4,7 +4,6 @@ import org.ametiste.metrics.MetricsService;
 import org.ametiste.metrics.aop.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -40,7 +39,7 @@ public class MetricsCoreConfiguration {
 
     @Bean
     public ChronableAspect chronableAspect() {
-        return new ChronableAspect(metricsService, nameResolver,spelParser);
+        return new ChronableAspect(metricsService, nameResolver, spelParser);
     }
 
 }

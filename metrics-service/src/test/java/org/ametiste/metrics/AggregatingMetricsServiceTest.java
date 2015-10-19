@@ -11,16 +11,14 @@ import java.util.List;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 public class AggregatingMetricsServiceTest {
 
-    private  AggregatingMetricsService aggregatingMetricsService ;
     private final AggregatorsRouter aggregatorsRouter = mock(AggregatorsRouter.class);
     private final MetricsIdentifierResolver resolver = mock(MetricsIdentifierResolver.class);
+    private AggregatingMetricsService aggregatingMetricsService;
 
     @Before
     public void setUp() throws Exception {

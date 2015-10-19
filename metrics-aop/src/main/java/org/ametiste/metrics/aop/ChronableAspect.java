@@ -26,137 +26,134 @@ import org.springframework.expression.ExpressionParser;
 @Aspect
 public class ChronableAspect {
 
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	private MetricsService service;
+    private MetricsService service;
 
-	private ExpressionParser parser;
+    private ExpressionParser parser;
 
-	private IdentifierResolver resolver;
+    private IdentifierResolver resolver;
 
-	private static class ChronableMetric {
+    public ChronableAspect(MetricsService service, IdentifierResolver resolver, ExpressionParser parser) {
 
-		int value;
-		String name;
-		boolean condition;
+        if (service == null || resolver == null || parser == null) {
+            throw new IllegalArgumentException("MetricsService, IdentifierResolver and ExpressionParser cant be null, however one of it is null");
+        }
+        this.service = service;
+        this.resolver = resolver;
+        this.parser = parser;
+    }
 
-	}
-
-	public ChronableAspect(MetricsService service, IdentifierResolver resolver, ExpressionParser parser) {
-
-		if(service == null || resolver == null || parser ==null) {
-			throw new IllegalArgumentException("MetricsService, IdentifierResolver and ExpressionParser cant be null, however one of it is null");
-		}
-		this.service = service;
-		this.resolver = resolver;
-		this.parser = parser;
-	}
-
-	@Pointcut(value = "@annotation(chron)", argNames = "chron")
+    @Pointcut(value = "@annotation(chron)", argNames = "chron")
     public void chronate(Chronable chron) {
     }
 
-	@Deprecated
+    @Deprecated
     @Pointcut(value = "@annotation(chrons)", argNames = "chrons")
     public void chronateBatch(Chronables chrons) {
     }
 
-	@Deprecated
+    @Deprecated
     @AfterReturning(pointcut = "chronateBatch(chrons)", returning = "returnedObject")
     public void processTimingBatch(JoinPoint pjp, Object returnedObject, Chronables chrons) {
-        for(Chronable chron: chrons.value()) {
+        for (Chronable chron : chrons.value()) {
             this.processTiming(pjp, returnedObject, chron);
         }
     }
 
-	@Deprecated
+    @Deprecated
     @AfterThrowing(pointcut = "chronateBatch(chrons)", throwing = "exception")
     public void processTimingBatch(JoinPoint pjp, Exception exception, Chronables chrons) {
 
-         for(Chronable chron: chrons.value()) {
+        for (Chronable chron : chrons.value()) {
             this.processTiming(pjp, exception, chron);
         }
     }
 
+    @AfterReturning(pointcut = "chronate(chron)", returning = "returnedObject")
+    public void processTiming(JoinPoint pjp, Object returnedObject, Chronable chron) {
+        if (chron.exceptionClass().equals(Chronable.NO_EXCEPTION.class)) {
+            this.chroneMetric(pjp, returnedObject, chron);
+        }
 
+    }
 
-	@AfterReturning(pointcut = "chronate(chron)", returning = "returnedObject")
-	public void processTiming(JoinPoint pjp, Object returnedObject, Chronable chron) {
-		if (chron.exceptionClass().equals(Chronable.NO_EXCEPTION.class)) {
-			this.chroneMetric(pjp, returnedObject, chron);
-		}
+    @AfterThrowing(pointcut = "chronate(chron)", throwing = "exception")
+    public void processTiming(JoinPoint pjp, Exception exception, Chronable chron) {
 
-	}
+        if (chron.exceptionClass().isAssignableFrom(exception.getClass())) {
+            this.chroneMetric(pjp, null, chron);
 
-	@AfterThrowing(pointcut = "chronate(chron)", throwing = "exception")
-	public void processTiming(JoinPoint pjp, Exception exception, Chronable chron) {
+        }
+    }
 
-		if (chron.exceptionClass().isAssignableFrom(exception.getClass())) {
-			this.chroneMetric(pjp, null, chron);
+    private void chroneMetric(JoinPoint pjp, Object returnedObject, Chronable chron) {
 
-		}
-	}
+        if (chron.value().isEmpty() && chron.valueExpression().isEmpty()) {
+            throw new IllegalArgumentException("Chronable annotation must contain value expression or value");
+        }
 
-	private void chroneMetric(JoinPoint pjp, Object returnedObject, Chronable chron) {
+        ChronableMetric metric;
 
-		if (chron.value().isEmpty() && chron.valueExpression().isEmpty()) {
-			throw new IllegalArgumentException("Chronable annotation must contain value expression or value");
-		}
+        try {
+            metric = constructMetric(pjp, returnedObject, chron);
+        } catch (MetricExpressionParsingException e) {
 
-		ChronableMetric metric;
+            if (logger.isDebugEnabled()) {
+                logger.debug("Metric construction exception", e);
+            }
+            return;
+        }
 
-		try {
-			metric = constructMetric(pjp, returnedObject, chron);
-		} catch (MetricExpressionParsingException e) {
+        if (metric.condition) {
+            service.createEvent(metric.name, metric.value);
+        }
+    }
 
-			if (logger.isDebugEnabled()) {
-				logger.debug("Metric construction exception", e);
-			}
-			return;
-		}
+    // TODO: think how we could use this code in another metric related aspects
+    private ChronableMetric constructMetric(JoinPoint pjp, Object returnedObject, Chronable chron)
+            throws MetricExpressionParsingException {
 
-		if (metric.condition) {
-			service.createEvent(metric.name, metric.value);
-		}
-	}
+        AspectContext context = new AspectContext(pjp.getArgs(), pjp.getTarget(), returnedObject);
 
-	// TODO: think how we could use this code in another metric related aspects
-	private ChronableMetric constructMetric(JoinPoint pjp, Object returnedObject, Chronable chron)
-			throws MetricExpressionParsingException {
+        ChronableMetric chronableMetric = new ChronableMetric();
 
-		AspectContext context = new AspectContext(pjp.getArgs(), pjp.getTarget(), returnedObject);
+        chronableMetric.condition = this.tryParse(chron.conditionExpression(), context, boolean.class);
+        if (!chronableMetric.condition) {
+            return chronableMetric;
+        }
 
-		ChronableMetric chronableMetric = new ChronableMetric();
+        chronableMetric.name = resolver.getTargetIdentifier(chron.name(), chron.nameSuffixExpression(), context);
 
-		chronableMetric.condition = this.tryParse(chron.conditionExpression(), context, boolean.class);
-		if (!chronableMetric.condition) {
-			return chronableMetric;
-		}
+        if (!chron.value().isEmpty()) {
+            chronableMetric.value = Integer.parseInt(chron.value());
+        } else {
+            chronableMetric.value = this.tryParse(chron.valueExpression(), context, Integer.class);
+        }
 
-		chronableMetric.name = resolver.getTargetIdentifier(chron.name(), chron.nameSuffixExpression(), context);
+        return chronableMetric;
 
-		if(!chron.value().isEmpty()) {
-			chronableMetric.value = Integer.parseInt(chron.value());
-		}
-		else {
-			chronableMetric.value = this.tryParse(chron.valueExpression(), context, Integer.class);
-		}
+    }
 
-		return chronableMetric;
+    private <T> T tryParse(String value, AspectContext context, Class<T> type)
+            throws MetricExpressionParsingException {
 
-	}
+        try {
+            // note: hold two exception prone methods together
+            Expression exp = parser.parseExpression(value);
+            return exp.getValue(context, type);
+        } catch (Exception e) {
+            throw new MetricExpressionParsingException("Value expression parsing error, check expression: " + value, e);
 
-	private <T> T tryParse(String value, AspectContext context, Class<T> type)
-			throws MetricExpressionParsingException {
+        }
 
-		try {
-			// note: hold two exception prone methods together
-			Expression exp = parser.parseExpression(value);
-			return exp.getValue(context, type);
-		} catch (Exception e) {
-			throw new MetricExpressionParsingException("Value expression parsing error, check expression: " + value, e);
-	
-		}
+    }
 
-	 }
+    private static class ChronableMetric {
+
+        int value;
+        String name;
+        boolean condition;
+
+    }
 }

@@ -10,12 +10,12 @@ import java.util.Collections;
 @Configuration
 public class MetricResolverConfiguration {
 
-    @Bean(name =  "timingResolver")
+    @Bean(name = "timingResolver")
     public MetricsIdentifierResolver timingResolver() {
         return new PathMetricsIdentifierResolver(Collections.emptyList(), "unsorted_timing_requests");
     }
 
-    @Bean(name =  "countResolver")
+    @Bean(name = "countResolver")
     public MetricsIdentifierResolver countResolver() {
         return new PathMetricsIdentifierResolver(Collections.emptyList(), "unsorted_count_requests");
     }

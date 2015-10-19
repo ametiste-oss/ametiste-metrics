@@ -1,15 +1,18 @@
 package org.ametiste.metrics.mock;
+
 import org.ametiste.metrics.mock.store.MetricsType;
 import org.ametiste.metrics.mock.store.MockMetricsContainer;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Verify chain with methods to verify specific conditions of metric registration - type of metric (count, time),
  * number of times registered and values of registered metrics.
  * Created on 24.07.2014.
+ *
  * @author ametiste
  * @since 0.1.0
  */
@@ -27,23 +30,26 @@ public class MockMetricsVerifier {
 
     /**
      * Verifies metric with requested name was registered without type and numbers check
+     *
      * @return verify chain
      */
     public MockMetricsVerifier registered() {
         assertTrue("Metric with name '" + name + "' was expected to be registered in service, but wasnt", container.hasValueWithName(name));
         return this;
     }
+
     /**
      * Verifies metric with requested name was not registered. Ends chain of verifies.
      */
     public void notRegistered() {
-        assertFalse("Metric with name '" + name + "' not expected to be registered by service, but actually was",container.hasValueWithName(name));
+        assertFalse("Metric with name '" + name + "' not expected to be registered by service, but actually was", container.hasValueWithName(name));
     }
 
     /**
      * Verifies metric with requested name was registered as incremental one, without check number
      * of calls and values. Can be used in serial call after {@link MockMetricsVerifier#registered()},
      * to provide more clear failure trace, however this method success guarantees success of mentioned one
+     *
      * @return verify chain
      */
     public MockMetricsVerifier increment() {
@@ -56,11 +62,12 @@ public class MockMetricsVerifier {
      * number of calls, not checking values registered. Can be used in serial call after
      * {@link MockMetricsVerifier#registered()}, {@link MockMetricsVerifier#increment()}
      * to provide more clear failure trace, however this method success guarantees success of mentioned ones
+     *
      * @return verify chain
      */
     public MockMetricsVerifier increment(int times) {
         assertTrue("Metric with name '" + name + "' was expected to be registered as incremental " + times + " times, but actually was registered "
-                + container.getCountForValue(MetricsType.INCR, name) + " times" ,
+                        + container.getCountForValue(MetricsType.INCR, name) + " times",
                 container.hasValueWithTypeAndNameAndCount(MetricsType.INCR, name, times));
         return this;
     }
@@ -82,6 +89,7 @@ public class MockMetricsVerifier {
      * Verifies metric with requested name was registered as increment for delta value, without check number
      * of calls and values. Can be used in serial call after {@link MockMetricsVerifier#registered()},
      * to provide more clear failure trace, however this method success guarantees success of mentioned one
+     *
      * @return verify chain
      */
     public MockMetricsVerifier valueIncrement() {
@@ -94,6 +102,7 @@ public class MockMetricsVerifier {
      * number of calls, not checking values registered. Can be used in serial call after
      * {@link MockMetricsVerifier#registered()}, {@link MockMetricsVerifier#valueIncrement()}
      * to provide more clear failure trace, however this method success guarantees success of mentioned ones
+     *
      * @return verify chain
      */
     public MockMetricsVerifier valueIncrement(int times) {
@@ -119,6 +128,7 @@ public class MockMetricsVerifier {
      * Verifies metric with requested name was registered as time update, without check number
      * of calls and values. Can be used in serial call after {@link MockMetricsVerifier#registered()},
      * to provide more clear failure trace, however this method success guarantees success of mentioned one
+     *
      * @return verify chain
      */
     public MockMetricsVerifier event() {
@@ -131,11 +141,12 @@ public class MockMetricsVerifier {
      * number of calls, not checking values registered. Can be used in serial call after
      * {@link MockMetricsVerifier#registered()}, {@link MockMetricsVerifier#event()}
      * to provide more clear failure trace, however this method success guarantees success of mentioned ones
+     *
      * @return verify chain
      */
     public MockMetricsVerifier event(int times) {
         assertTrue("Metric with name '" + name + "' was expected to be registered as timer or chronable value " + times + " times, but actually was registered "
-                + container.getCountForValue(MetricsType.TIME, name) + " times",container.hasValueWithTypeAndNameAndCount(MetricsType.TIME, name, times));
+                + container.getCountForValue(MetricsType.TIME, name) + " times", container.hasValueWithTypeAndNameAndCount(MetricsType.TIME, name, times));
         return this;
     }
 

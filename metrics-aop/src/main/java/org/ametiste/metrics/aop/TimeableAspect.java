@@ -22,23 +22,21 @@ import org.slf4j.LoggerFactory;
 @Aspect
 public class TimeableAspect {
 
-	private IdentifierResolver resolver;
-
-	private MetricsService service;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private IdentifierResolver resolver;
+    private MetricsService service;
 
     public TimeableAspect(MetricsService service, IdentifierResolver resolver) {
-        if(service == null || resolver == null) {
+        if (service == null || resolver == null) {
             throw new IllegalArgumentException("MetricsService and IdentifierResolver cant be null, however one of it is null");
         }
         this.service = service;
         this.resolver = resolver;
     }
 
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-	@Pointcut(value = "@annotation(timeable)", argNames = "timeable")
-	public void countTime(Timeable timeable) {
-	}
+    @Pointcut(value = "@annotation(timeable)", argNames = "timeable")
+    public void countTime(Timeable timeable) {
+    }
 
     @Deprecated
     @Pointcut(value = "@annotation(timeables)", argNames = "timeables")
@@ -57,39 +55,38 @@ public class TimeableAspect {
         Object object = pjp.proceed();
         long endTime = System.currentTimeMillis();
 
-        for(Timeable timeable: timeables.value()) {
+        for (Timeable timeable : timeables.value()) {
             AspectContext context = new AspectContext(pjp.getArgs(), pjp.getTarget(), object);
-            this.saveTime(timeable, context, (int)(endTime - startTime));
+            this.saveTime(timeable, context, (int) (endTime - startTime));
         }
 
         return object;
     }
 
-	@Around("countTime(timeable)")
-	public Object processTiming(ProceedingJoinPoint pjp, Timeable timeable) throws Throwable {
+    @Around("countTime(timeable)")
+    public Object processTiming(ProceedingJoinPoint pjp, Timeable timeable) throws Throwable {
 
         long endTime;
         Object object;
 
-		long startTime = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
         try {
             object = pjp.proceed();
             endTime = System.currentTimeMillis();
-        }
-        catch (Exception e) {
-            if(timeable.mode().equals(MetricsMode.ERROR_PRONE)) {
+        } catch (Exception e) {
+            if (timeable.mode().equals(MetricsMode.ERROR_PRONE)) {
                 endTime = System.currentTimeMillis();
                 AspectContext context = new AspectContext(pjp.getArgs(), pjp.getTarget());
 
-                this.saveTime(timeable, context, (int)(endTime - startTime));
+                this.saveTime(timeable, context, (int) (endTime - startTime));
             }
             throw e;
         }
 
         AspectContext context = new AspectContext(pjp.getArgs(), pjp.getTarget(), object);
-        this.saveTime(timeable, context, (int)(endTime - startTime));
-		return object;
-	}
+        this.saveTime(timeable, context, (int) (endTime - startTime));
+        return object;
+    }
 
 
     public void saveTime(Timeable timeable, AspectContext context, int eventTime) {

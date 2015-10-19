@@ -8,6 +8,7 @@ import org.ametiste.metrics.mock.store.MockMetricsContainer;
  * Mock metric service for test needs. Provides both independence from external aggregators and herefore
  * external calls, and ability to verify expected metrics registration.
  * Is recommended for use in test environment.
+ *
  * @author ametiste
  * @since 0.1.0
  */
@@ -16,6 +17,7 @@ public class MockMetricsService implements MetricsService {
     boolean verifyChainStarted = false;
 
     private MockMetricsContainer container = new MockMetricsContainer();
+
     /**
      * If this method is used after verify chain started, IllegalArgumentException is thrown
      * {@inheritDoc}
@@ -28,10 +30,11 @@ public class MockMetricsService implements MetricsService {
     }
 
     private void checkIfAlreadyVerified() {
-        if(verifyChainStarted) {
+        if (verifyChainStarted) {
             throw new IllegalArgumentException("After verify chain is started, service cant be used as usual anymore, maybe you need 'resetData()' method call to reset service work");
         }
     }
+
     /**
      * If this method is used after verify chain started, IllegalArgumentException is thrown
      * {@inheritDoc}
@@ -41,6 +44,7 @@ public class MockMetricsService implements MetricsService {
         checkIfAlreadyVerified();
         container.addValue(MetricsType.INCR_VALUE, targetName, incrementValue);
     }
+
     /**
      * If this method is used after verify chain started, IllegalArgumentException is thrown
      * {@inheritDoc}
@@ -66,6 +70,7 @@ public class MockMetricsService implements MetricsService {
     /**
      * Starts chain of verify calls. After verify is started, no further service call can be made.
      * If mock is used as service for registration after verify, IllegalArgumentException is thrown
+     *
      * @param name metric name to verify
      * @return verify chain for checking specific metrics registration
      */
@@ -85,4 +90,4 @@ public class MockMetricsService implements MetricsService {
         container.clear();
     }
 
- }
+}

@@ -2,7 +2,6 @@ package org.ametiste.metrics.experimental.resolver.templated;
 
 import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**

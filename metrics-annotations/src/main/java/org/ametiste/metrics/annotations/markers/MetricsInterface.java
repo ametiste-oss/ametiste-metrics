@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * Marker annotation for indication metrics interfaces
+ *
  * @author ametiste
  * @since 0.1.0
  */

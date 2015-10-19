@@ -7,18 +7,17 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;import java.lang.Exception;import java.lang.Object;import java.lang.Override;
+import javax.servlet.http.HttpServletResponse;
 
 // TODO: dicumentation
 // TODO: known bug, does not work with redgreen failover line controller, have no idea wahy
 public class RequestScopedMetricsAppender extends HandlerInterceptorAdapter {
 
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     // TODO: I want to do ResponseHeadersAppenderSource and ResponseHeadersAppend in the ifaces
     // TODO: I want to feed headers throug it, it would be general solution
     @Autowired(required = false)
     private RequestScopedMetricsAggregator requestScopedMetricsAggregator;
-
-    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
     public void postHandle(HttpServletRequest request,

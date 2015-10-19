@@ -1,26 +1,22 @@
 package org.ametiste.metrics.experimental.meta;
 
 import org.ametiste.metrics.MetricsService;
-import org.ametiste.metrics.experimental.activator.ActivationCondition;
-
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 /**
  * <p>
- *      Meta-metric service provides performance metric of enclosed metrics service.
+ * Meta-metric service provides performance metric of enclosed metrics service.
  * </p>
- *
  * <p>
- *     Usable when information about metric service performance is required, say
- *     when new metrics or aggregator introduced.
- * </p>
- *
  * <p>
- *     Usually this service may be disabled, but it may be helpful in the performance
- *     test environment to gather information about metrics performance and usage statistic.
+ * Usable when information about metric service performance is required, say
+ * when new metrics or aggregator introduced.
  * </p>
- *
+ * <p>
+ * <p>
+ * Usually this service may be disabled, but it may be helpful in the performance
+ * test environment to gather information about metrics performance and usage statistic.
+ * </p>
+ * <p>
  * todo : special prefix and namespace
  * todo : configuration that allow to choose enabled this service or not
  *
@@ -28,15 +24,10 @@ import java.util.function.Supplier;
  */
 public class MetaMetricsCounter implements MetricsService {
 
-    private interface Action {
-        void peroform();
-    }
-
     /**
      * MetricsService used to collect meta-metrics.
      */
     private final MetricsService metaMetricsService;
-
     /**
      * MetricsService that become target of meta-metrics measurements.
      */
@@ -84,8 +75,12 @@ public class MetaMetricsCounter implements MetricsService {
             // TODO: Could I use multiple measurement at the same time?
 
             // TODO: prefix parameter
-            metaMetricsService.createEvent("meta." + name, (int)(endTime - startTime));
+            metaMetricsService.createEvent("meta." + name, (int) (endTime - startTime));
         }
+    }
+
+    private interface Action {
+        void peroform();
     }
 
 }
