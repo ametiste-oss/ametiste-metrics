@@ -22,7 +22,7 @@ public class OpenTSDBConfigurationSupport implements InitializingBean {
     protected void configureMetric() { }
 
     protected void addWildcard(String wildCard, List<String> tags) {
-        openTSDBMetricaResolver.addResolveRule(new WildCardResolveRuleFFF(wildCard, tags));
+        openTSDBMetricaResolver.addResolveRule(new WildcardResolveRule(wildCard, tags));
     }
 
     protected void addWildcard(String wildcard, String... tags) {
