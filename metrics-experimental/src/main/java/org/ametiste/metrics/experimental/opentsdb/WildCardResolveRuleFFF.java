@@ -4,15 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- *
  * @since
  */
-public class WildcardResolveRule implements OpenTSDBMetricaResolveRule {
+public class WildCardResolveRuleFFF implements OpenTSDBMetricaResolveRule {
 
     private final String wildcard;
     private final List<String> tags;
 
-    public WildcardResolveRule(String wildcard, List<String> tags) {
+    public WildCardResolveRuleFFF(String wildcard, List<String> tags) {
         // NOTE: mockup, only prefix wildcards, like foo.bar.* will work
         this.wildcard = wildcard.replace("*", "");
         this.tags = tags;
