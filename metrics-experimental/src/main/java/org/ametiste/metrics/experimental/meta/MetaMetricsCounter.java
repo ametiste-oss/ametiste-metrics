@@ -1,6 +1,7 @@
 package org.ametiste.metrics.experimental.meta;
 
 import org.ametiste.metrics.MetricsService;
+import org.aspectj.lang.annotation.Aspect;
 
 /**
  * <p>
@@ -17,6 +18,7 @@ import org.ametiste.metrics.MetricsService;
  * test environment to gather information about metrics performance and usage statistic.
  * </p>
  * <p>
+ *
  * todo : special prefix and namespace
  * todo : configuration that allow to choose enabled this service or not
  *
