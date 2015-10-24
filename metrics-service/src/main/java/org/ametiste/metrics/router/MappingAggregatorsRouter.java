@@ -58,13 +58,13 @@ public class MappingAggregatorsRouter implements AggregatorsRouter {
             return aggregatorsMap.get(metricIdentifier);
         } else {
             if (hasWildCards) {
-                for (String key : aggregatorsMap.keySet()) {
-                    if (key.contains("*") && metricIdentifier.startsWith(key.replace("*", ""))) {
-                            return aggregatorsMap.get(key);
-                        }
-                    }
-                }
+                return aggregatorsMap.keySet().stream()
+                        .filter((key) -> key.contains("*") && metricIdentifier.startsWith(key.replace("*", "")) )
+                        .findFirst()
+                        .map(aggregatorsMap::get)
+                        .orElse(aggregatorsMap.get(DEFAULT_ROUTE_NAME));
             }
+        }
         return aggregatorsMap.get(DEFAULT_ROUTE_NAME);
     }
 
