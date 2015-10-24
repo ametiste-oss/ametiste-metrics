@@ -14,7 +14,7 @@ import org.ametiste.metrics.mock.store.MockMetricsContainer;
  */
 public class MockMetricsService implements MetricsService {
 
-    boolean verifyChainStarted = false;
+    private boolean verifyChainStarted = false;
 
     private MockMetricsContainer container = new MockMetricsContainer();
 

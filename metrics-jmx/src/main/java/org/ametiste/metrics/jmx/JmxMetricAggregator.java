@@ -14,8 +14,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class JmxMetricAggregator implements MetricsAggregator {
 
-    final MetricRegistry metrics;
-    final JmxReporter reporter;
+    private final MetricRegistry metrics;
+    private final JmxReporter reporter;
 
     public JmxMetricAggregator(String domain) {
         metrics = new MetricRegistry();

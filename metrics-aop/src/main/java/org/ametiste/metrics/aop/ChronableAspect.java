@@ -151,9 +151,9 @@ public class ChronableAspect {
 
     private static class ChronableMetric {
 
-        int value;
-        String name;
-        boolean condition;
+        public int value;
+        public String name;
+        public boolean condition;
 
     }
 }
