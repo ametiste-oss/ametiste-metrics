@@ -1,6 +1,5 @@
 package org.ametiste.metrics.boot.configuration;
 
-import org.ametiste.metrics.MetricsAggregator;
 import org.ametiste.metrics.boot.configuration.routing.Route;
 import org.ametiste.metrics.boot.configuration.routing.RouteConfiguration;
 import org.ametiste.metrics.router.AggregatorsRouter;
@@ -13,10 +12,6 @@ import java.util.List;
 
 @Configuration
 public class MetricsRoutingCoreConfiguration {
-
-    @Autowired
-    @CoreAggregator
-    private List<MetricsAggregator> aggregators;
 
     @Autowired
     private List<Route> routes;

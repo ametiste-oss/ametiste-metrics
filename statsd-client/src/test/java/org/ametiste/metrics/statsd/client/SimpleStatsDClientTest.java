@@ -38,7 +38,7 @@ public class SimpleStatsDClientTest {
 
     @After
     public void tearDown() {
-        Mockito.reset(socket);
+        reset(socket);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -65,7 +65,7 @@ public class SimpleStatsDClientTest {
 
     @Test
     public void testStartWithFailConnectionAndSilentMode() throws Exception {
-        Mockito.doThrow(StatsDSocketConnectException.class).when(socket).connect();
+        doThrow(StatsDSocketConnectException.class).when(socket).connect();
         client.start();
         verify(socket, times(1)).connect();
     }
