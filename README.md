@@ -38,6 +38,7 @@ To register a metric for a method, one of following annotations may be applied t
 - _@ErrorCountable_
 - _@Timeable_
 - _@Chronable_
+- _@Gaugable_
 
 _@Countable_ - `org.ametiste.metrics.annotations.Countable` is used when incremental count is required - on any joint point, such is request count, method call count, and so on. Only counts number of successfully executed operations.
 
