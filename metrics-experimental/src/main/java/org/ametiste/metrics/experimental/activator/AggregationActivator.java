@@ -25,23 +25,17 @@ public class AggregationActivator extends Activator implements MetricsAggregator
 
     @Override
     public void gauge(String metricId, int gaugeValue) {
-        if (isActive()) {
-            metricsAggregator.gauge(metricId, gaugeValue);
-        }
+        invokeIfActive(() -> metricsAggregator.gauge(metricId, gaugeValue));
     }
 
     @Override
     public void event(String metricId, int eventValue) {
-        if (isActive()) {
-            metricsAggregator.event(metricId, eventValue);
-        }
+        invokeIfActive(() -> metricsAggregator.event(metricId, eventValue));
     }
 
     @Override
     public void increment(String metricId, int inc) {
-        if (isActive()) {
-            metricsAggregator.increment(metricId, inc);
-        }
+        invokeIfActive(() -> metricsAggregator.increment(metricId, inc));
     }
 
 }

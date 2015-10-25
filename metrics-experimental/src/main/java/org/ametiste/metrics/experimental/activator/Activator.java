@@ -19,12 +19,19 @@ public abstract class Activator {
         this.activationConditions = activationConditions;
     }
 
-    protected boolean isActive() {
+    protected final boolean isActive() {
         return activationConditions
                 .stream()
                 .map(ActivationCondition::checkActivation)
                 .allMatch(Boolean.TRUE::equals);
     }
+
+    protected final void invokeIfActive(Runnable sup) {
+        if (isActive()) {
+            sup.run();
+        }
+    }
+
 
 //    protected void invokeIfActivated(Function<T, String> supplier, String elseReturn) {
 //
