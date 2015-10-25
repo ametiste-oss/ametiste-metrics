@@ -3,6 +3,7 @@ package org.ametiste.metrics.filter.boot.configuration;
 import org.ametiste.metrics.MetricsService;
 import org.ametiste.metrics.boot.configuration.MetricsServiceConfiguration;
 import org.ametiste.metrics.filter.RequestCountFilter;
+import org.ametiste.metrics.filter.RequestTimingFilter;
 import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,9 +24,9 @@ public class MetricFilterConfiguration {
     private MetricsIdentifierResolver countResolver;
 
     @Bean
-    public RequestCountFilter metricTimingFilter() {
+    public RequestTimingFilter metricTimingFilter() {
 
-        return new RequestCountFilter(metricsService, timingResolver);
+        return new RequestTimingFilter(metricsService, timingResolver);
     }
 
     @Bean

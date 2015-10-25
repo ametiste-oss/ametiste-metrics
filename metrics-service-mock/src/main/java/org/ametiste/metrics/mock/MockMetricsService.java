@@ -23,11 +23,11 @@ public class MockMetricsService implements MetricsService {
      * {@inheritDoc}
      */
     @Override
-    public void increment(String targetName) {
+    public void gauge(String metricId, int gaugeValue) {
         checkIfAlreadyVerified();
-        container.addValue(MetricsType.INCR, targetName, 1L);
-
+        container.addValue(MetricsType.GAUGE, metricId, gaugeValue);
     }
+
 
     private void checkIfAlreadyVerified() {
         if (verifyChainStarted) {
@@ -45,17 +45,6 @@ public class MockMetricsService implements MetricsService {
         container.addValue(MetricsType.INCR_VALUE, targetName, incrementValue);
     }
 
-    /**
-     * If this method is used after verify chain started, IllegalArgumentException is thrown
-     * {@inheritDoc}
-     */
-    @Override
-    public void createEvent(String name, long startTime, long endTime) {
-        checkIfAlreadyVerified();
-        long incrementValue = endTime - startTime;
-
-        container.addValue(MetricsType.TIME, name, incrementValue);
-    }
 
     /**
      * If this method is used after verify chain started, IllegalArgumentException is thrown

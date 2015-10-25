@@ -13,17 +13,17 @@ import java.util.Map;
  */
 public class MockMetricsContainer {
 
-    private Map<String, MetricsCount> singleIncMap;
+    private Map<String, MetricsCount> gaugeIncMap;
     private Map<String, MetricsCount> rangeIncMap;
     private Map<String, MetricsCount> timeMap;
     private Map<MetricsType, Map<String, MetricsCount>> container;
 
     public MockMetricsContainer() {
-        singleIncMap = new HashMap<>();
+        gaugeIncMap = new HashMap<>();
         rangeIncMap = new HashMap<>();
         timeMap = new HashMap<>();
         container = new HashMap<>();
-        container.put(MetricsType.INCR, singleIncMap);
+        container.put(MetricsType.GAUGE, gaugeIncMap);
         container.put(MetricsType.INCR_VALUE, rangeIncMap);
         container.put(MetricsType.TIME, timeMap);
 
@@ -45,7 +45,7 @@ public class MockMetricsContainer {
     }
 
     public boolean hasValueWithName(String name) {
-        return singleIncMap.containsKey(name) || rangeIncMap.containsKey(name) || timeMap.containsKey(name);
+        return gaugeIncMap.containsKey(name) || rangeIncMap.containsKey(name) || timeMap.containsKey(name);
     }
 
     public boolean hasValueWithTypeAndName(MetricsType type, String name) {
@@ -76,7 +76,7 @@ public class MockMetricsContainer {
     }
 
     public void clear() {
-        singleIncMap.clear();
+        gaugeIncMap.clear();
         rangeIncMap.clear();
         timeMap.clear();
     }

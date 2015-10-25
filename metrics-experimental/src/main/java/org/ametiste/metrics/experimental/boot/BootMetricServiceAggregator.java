@@ -16,9 +16,10 @@ public class BootMetricServiceAggregator implements MetricsAggregator {
         this.counterService = counterService;
     }
 
+
     @Override
-    public void increment(String metricId) {
-        counterService.increment(metricId);
+    public void gauge(String metricId, int gaugeValue) {
+
     }
 
     @Override
@@ -26,10 +27,11 @@ public class BootMetricServiceAggregator implements MetricsAggregator {
 
     }
 
+    //TODO just fixed this for compilation, cant understand whats this service for.
     @Override
     public void increment(String metricId, int inc) {
         for (int i = 0; i < inc; i++) {
-            increment(metricId);
+            increment(metricId, 1);
         }
     }
 }

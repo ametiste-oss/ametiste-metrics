@@ -31,9 +31,9 @@ public class MockMetricsAggregator implements MetricsAggregator {
      * {@inheritDoc}
      */
     @Override
-    public void increment(String metricId) {
+    public void gauge(String metricId, int gaugeValue) {
         checkIfAlreadyVerified();
-        container.addValue(MetricsType.INCR, metricId, 1);
+        container.addValue(MetricsType.GAUGE, metricId, 1);
     }
 
     /**

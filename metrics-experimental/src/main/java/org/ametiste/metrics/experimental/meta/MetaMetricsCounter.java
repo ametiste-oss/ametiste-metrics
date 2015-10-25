@@ -45,18 +45,13 @@ public class MetaMetricsCounter implements MetricsService {
     }
 
     @Override
-    public void increment(String metricId) {
-        measureTime("incriment", () -> enclosedMetricsService.increment(metricId));
-    }
-
-    @Override
     public void increment(String metricId, int incrementValue) {
-        measureTime("incriment-valued", () -> enclosedMetricsService.increment(metricId, incrementValue));
+        measureTime("increment", () -> enclosedMetricsService.increment(metricId, incrementValue));
     }
 
     @Override
-    public void createEvent(String metricId, long startValue, long endValue) {
-        measureTime("event-range", () -> enclosedMetricsService.createEvent(metricId, startValue, endValue));
+    public void gauge(String metricId, int gaugeValue) {
+        measureTime("gauge", () -> enclosedMetricsService.increment(metricId, gaugeValue));
     }
 
     @Override
@@ -67,7 +62,7 @@ public class MetaMetricsCounter implements MetricsService {
     private void measureTime(String name, Action action) {
         long startTime = System.currentTimeMillis();
         try {
-            action.peroform();
+            action.perform();
         } finally {
             long endTime = System.currentTimeMillis();
             // TODO: how I should compose meta-name?
@@ -82,7 +77,7 @@ public class MetaMetricsCounter implements MetricsService {
     }
 
     private interface Action {
-        void peroform();
+        void perform();
     }
 
 }

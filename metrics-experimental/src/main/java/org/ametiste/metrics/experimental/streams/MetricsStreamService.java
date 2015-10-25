@@ -19,10 +19,6 @@ public class MetricsStreamService implements MetricsService {
         this.metricsStreams = metricsStreams;
     }
 
-    @Override
-    public void increment(String metricId) {
-        increment(metricId, 1);
-    }
 
     @Override
     public void increment(String metricId, int incrementValue) {
@@ -30,9 +26,11 @@ public class MetricsStreamService implements MetricsService {
     }
 
     @Override
-    public void createEvent(String metricId, long startValue, long endValue) {
-        createEvent(metricId, (int)(endValue - startValue));
+    public void gauge(String metricId, int gaugeValue) {
+        //TODO implement it
+        throw new UnsupportedOperationException("Not implemented");
     }
+
 
     @Override
     public void createEvent(String metricId, int eventValue) {

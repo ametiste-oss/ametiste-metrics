@@ -38,18 +38,6 @@ public class AggregatingMetricsService implements MetricsService {
     }
 
     /**
-     * Increments counter to 1 for metrics with id metricId
-     *
-     * @param metricId identifier of metric
-     */
-    @Override
-    public void increment(String metricId) {
-        //TODO maybe its possible to get rid of 'get'
-        router.getAggregatorsForMetric(metricId)
-                .forEach(metricAggregator -> metricAggregator.increment(resolve(metricId)));
-    }
-
-    /**
      * Increments counter to incrementValue for metrics with id metricId
      *
      * @param metricId       identifier of metric
@@ -62,18 +50,17 @@ public class AggregatingMetricsService implements MetricsService {
     }
 
     /**
-     * Creates event in time for metricId for every aggregator supporting route for metric with metricId
-     *
-     * @param metricId  identifier of metric
-     * @param startTime logged event start time
-     * @param endTime   logged event end time
+     * Increments gauge counter to gaugeValue for metric with id metricId
+     * @param metricId identifier of metric
+     * @param gaugeValue gauge value
+     * @since 0.2.0
      */
-    @Deprecated
     @Override
-    public void createEvent(String metricId, long startTime, long endTime) {
-        this.createEvent(metricId, (int) (endTime - startTime));
-
+    public void gauge(String metricId, int gaugeValue) {
+        router.getAggregatorsForMetric(metricId)
+                .forEach(metricAggregator -> metricAggregator.gauge(resolve(metricId), gaugeValue));
     }
+
 
     /**
      * Creates event in time with eventValue for metricId.

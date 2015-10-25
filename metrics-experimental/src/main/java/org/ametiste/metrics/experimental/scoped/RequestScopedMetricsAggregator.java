@@ -16,14 +16,11 @@ public class RequestScopedMetricsAggregator implements MetricsAggregator {
 
     private HashMap<String, Integer> requestMetrics = new HashMap<>();
 
+
     @Override
-    public void increment(String metricId) {
-
-        if (RequestScopeDetector.isNotRequestScoped()) {
-            return;
-        }
-
-        increment(metricId, 1);
+    public void gauge(String metricId, int gaugeValue) {
+        //TODO implement it
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override

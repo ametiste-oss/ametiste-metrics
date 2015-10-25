@@ -22,10 +22,11 @@ public class AggregationActivator extends Activator implements MetricsAggregator
         this.metricsAggregator = aggregator;
     }
 
+
     @Override
-    public void increment(String metricId) {
+    public void gauge(String metricId, int gaugeValue) {
         if (isActive()) {
-            metricsAggregator.increment(metricId);
+            metricsAggregator.gauge(metricId, gaugeValue);
         }
     }
 

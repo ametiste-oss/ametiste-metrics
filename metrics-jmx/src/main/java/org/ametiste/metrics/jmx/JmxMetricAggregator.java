@@ -1,5 +1,6 @@
 package org.ametiste.metrics.jmx;
 
+import com.codahale.metrics.Gauge;
 import com.codahale.metrics.JmxReporter;
 import com.codahale.metrics.MetricRegistry;
 import org.ametiste.metrics.MetricsAggregator;
@@ -24,8 +25,8 @@ public class JmxMetricAggregator implements MetricsAggregator {
     }
 
     @Override
-    public void increment(String metricId) {
-        metrics.counter(metricId).inc();
+    public void gauge(String metricId, int gaugeValue) {
+        metrics.register(metricId, (Gauge)() -> gaugeValue);
     }
 
     @Override
