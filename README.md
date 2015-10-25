@@ -48,7 +48,7 @@ _@Timeable_ - `org.ametiste.metrics.annotations.Timeable` is used when method ex
 
 _@Chronable_ - `org.ametiste.metrics.annotations.Chronable` is used to chronate data from flow. Value of chronable data is regulated by its value or value expression, i.e. can be any event data that is to be saved in timeline (method arguments or execution result numerical values, counts or phase of moon, etc)
 
-_@Gaugable_ `org.ametiste.metrics.annotations.Chronable` is used to measure executions with gauge. Only  successful operations are measured. 
+_@Gaugable_ `org.ametiste.metrics.annotations.Gaugable` is used to measure executions with gauge. Only  successful operations are measured. 
 
 Example:
 ```java
