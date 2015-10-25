@@ -1,9 +1,7 @@
 package org.ametiste.metrics.aop;
 
 import org.ametiste.metrics.MetricsService;
-import org.ametiste.metrics.annotations.Countable;
 import org.ametiste.metrics.annotations.Gaugeable;
-import org.ametiste.metrics.annotations.composite.Countables;
 import org.ametiste.metrics.annotations.composite.Gaugeables;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
