@@ -10,7 +10,7 @@ public interface MetricsAggregator {
 
     void gauge(String metricId, int gaugeValue);
 
-    void event(String metricId, int evenValue);
+    void event(String metricId, int eventValue);
 
     void increment(String metricId, int inc);
 }

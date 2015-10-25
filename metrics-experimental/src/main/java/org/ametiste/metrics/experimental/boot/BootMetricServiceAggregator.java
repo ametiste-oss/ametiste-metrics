@@ -32,7 +32,7 @@ public class BootMetricServiceAggregator implements MetricsAggregator {
     }
 
     @Override
-    public void event(String metricId, int evenValue) {
+    public void event(String metricId, int eventValue) {
         // NOTE: log warnigns only if debug logging is enabled to not overload log output
         if (logger.isDebugEnabled()) {
             logger.warn("Event metric '" + metricId + "' skiped.");

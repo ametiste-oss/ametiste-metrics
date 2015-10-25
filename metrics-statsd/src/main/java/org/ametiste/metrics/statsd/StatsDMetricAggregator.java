@@ -22,8 +22,8 @@ public class StatsDMetricAggregator implements MetricsAggregator {
     }
 
     @Override
-    public void event(String metricId, int value) {
-        client.time(metricId, value);
+    public void event(String metricId, int eventValue) {
+        client.time(metricId, eventValue);
 
     }
 

@@ -41,9 +41,9 @@ public class MockMetricsAggregator implements MetricsAggregator {
      * {@inheritDoc}
      */
     @Override
-    public void event(String metricId, int value) {
+    public void event(String metricId, int eventValue) {
         checkIfAlreadyVerified();
-        container.addValue(MetricsType.TIME, metricId, value);
+        container.addValue(MetricsType.TIME, metricId, eventValue);
     }
 
     /**

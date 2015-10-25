@@ -31,9 +31,9 @@ public class AggregationActivator extends Activator implements MetricsAggregator
     }
 
     @Override
-    public void event(String metricId, int evenValue) {
+    public void event(String metricId, int eventValue) {
         if (isActive()) {
-            metricsAggregator.event(metricId, evenValue);
+            metricsAggregator.event(metricId, eventValue);
         }
     }
 
