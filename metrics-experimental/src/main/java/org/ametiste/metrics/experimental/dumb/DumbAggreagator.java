@@ -17,7 +17,7 @@ public class DumbAggreagator implements MetricsAggregator {
     }
 
     @Override
-    public void event(String metricId, int evenValue) {
+    public void event(String metricId, int eventValue) {
         System.out.println("Just Dumb Aggregator");
     }
 

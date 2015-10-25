@@ -14,7 +14,7 @@ public class NullMetricsAggregator implements MetricsAggregator {
     }
 
     @Override
-    public void event(String metricId, int evenValue) {
+    public void event(String metricId, int eventValue) {
 
     }
 

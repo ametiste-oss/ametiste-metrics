@@ -30,8 +30,8 @@ public class JmxMetricAggregator implements MetricsAggregator {
     }
 
     @Override
-    public void event(String metricId, int value) {
-        metrics.timer(metricId).update(value, TimeUnit.MILLISECONDS);
+    public void event(String metricId, int eventValue) {
+        metrics.timer(metricId).update(eventValue, TimeUnit.MILLISECONDS);
     }
 
     @Override
