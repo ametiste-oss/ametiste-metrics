@@ -27,11 +27,10 @@ public class BootMetricServiceAggregator implements MetricsAggregator {
 
     }
 
-    //TODO just fixed this for compilation, cant understand whats this service for.
     @Override
     public void increment(String metricId, int inc) {
         for (int i = 0; i < inc; i++) {
-            increment(metricId, 1);
+            counterService.increment(metricId);
         }
     }
 }
