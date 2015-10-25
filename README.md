@@ -39,13 +39,15 @@ To register a metric for a method, one of following annotations may be applied t
 - _@Timeable_
 - _@Chronable_
 
-_@Countable_ - `org.ametiste.metrics.annotations.Countable` is used when incremental count is required - on any joint point, such is request count, method call count, and so on. Only counts   number of successfully executed operations.
+_@Countable_ - `org.ametiste.metrics.annotations.Countable` is used when incremental count is required - on any joint point, such is request count, method call count, and so on. Only counts number of successfully executed operations.
 
 _@ErrorCountable_ - `org.ametiste.metrics.annotations.ErrorCountable` is used when count of executions completed with exceptions is required - works similarly to @Countable but for joint points ended with errors.
 
 _@Timeable_ - `org.ametiste.metrics.annotations.Timeable` is used when method execution time is required.
 
 _@Chronable_ - `org.ametiste.metrics.annotations.Chronable` is used to chronate data from flow. Value of chronable data is regulated by its value or value expression, i.e. can be any event data that is to be saved in timeline (method arguments or execution result numerical values, counts or phase of moon, etc)
+
+_@Gaugable_ `org.ametiste.metrics.annotations.Chronable` is used to measure executions with gauge. Only  successful operations are measured. 
 
 Example:
 ```java
@@ -118,7 +120,7 @@ For annotations usage out of spring boot context, dependency  `'org.ametiste.met
 
 ###Child projects and libraries with only annotations required
 
-For annotations only `'org.ametiste.metrics:metrics-annotations:{metricsVersion}'` may be used.
+When library or separate part of project requires annotations only, then import of `'org.ametiste.metrics:metrics-annotations:{metricsVersion}'` may be used.
 
 ##Optional properties customisation
 
@@ -172,7 +174,7 @@ _@Timeable_ besides name fields also contains:
 |------------|-------|---------------|-------------|
 |mode| MetricsMode | MetricsMode.ERROR_FREE | Defines whether time is registered only for successfully executed method or both for successful and ended with exception |
 
-_@Countable_  specific field is:
+_@Countable_ and _@Gaugeable_ specific field is:
 
 | Field name | Type | Default Value | Description |
 |------------|-------|---------------|-------------|
@@ -314,7 +316,7 @@ public void testMetrics() throws Exception {
     metricsService.verify(“some.method.timing").registered().event().event(1);
     metricsService.verify("some.other.metric.timing").registered().event().event(1);
     metricsService.verify(“error.counts").registered().increment().increment(1);
-    metricsService.verify(“results.number.counts").registered().valueIncrement().valueIncrement(1).valueIncrement(Arrays.asList(15));
+    metricsService.verify(“results.number.gauge").registered().gauge().gauge(1).gauge(Arrays.asList(15));
     metricsService.verify(“absent.metrics").notRegistered();
 
 }
@@ -326,13 +328,13 @@ MockMetricsVerifier has several methods accessible to be called in chain, and ar
 - **registered()** - assert that metric with name indicated in verify() is registered by service. No assertion of metric type happens in this call, only fact it was somehow registered.
 - **notRegistered()** - on opposite, asserts that metric with name indicated in verify() not registered by service. It guarantees no metric of ANY type is registered.
 
-- **increment()** - asserts that metric is registered by service as single increment value (Countable or ErrorCountable mostly). No number of calls or values are checked.
-- **increment(int times)**  - asserts that metric was registered by service as single increment value times times, no values are checked.
-- **increment(List<Long> values)**  - asserts that metric was registered by service as single increment value with given values.
+- **increment()** - asserts that metric is registered by service as increment value (Countable or ErrorCountable mostly). No number of calls or values are checked.
+- **increment(int times)**  - asserts that metric was registered by service as increment value times times, no values are checked.
+- **increment(List<Long> values)**  - asserts that metric was registered by service as increment value with given values.
 
-- **valueIncrement()** - asserts that metric is registered by service as definite increment value( Countable with value)
-- **valueIncrement(int times)** - asserts that metric is registered by service as definite increment value times times
-- **valueIncrement(List<Long> values)** -  asserts that metric was registered by service as definite increment value with given values.
+- **gauge()** - asserts that metric is registered by service as gauge measure value( Gaugeable annotation)
+- **gauge(int times)** - asserts that metric is registered by service as gauge measure value times times
+- **vgauge(List<Long> values)** -  asserts that metric was registered by service as gauge measure value with given values.
 
 - **event()** - asserts that metric is registered by service as time or chrone measurement (Timeable, Chronable)
 - **event(int times)** - asserts that metric is registered by service as time or chrone measurement times times
@@ -345,7 +347,7 @@ However same result is guaranteed(though less clear and obvious) by  `verify("my
 There are 4 methods that considered as 'endpoint' ones:
 - **notRegistered()**
 - **increment(List<Long> values)**
-- **valueIncrement(List<Long> values)**
+- **gauge(List<Long> values)**
 - **event(List<Long> values)**
 
 No futher calls could be done after it. In case of other calls no order is defined, however its obsolete to call registered after concrete metric type verify, or just type verify after times call verify. (i.e call `verify("myMetric").increment().registered();` is obsolete, so as `verify("myMetric").increment(1).increment();`
