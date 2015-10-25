@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Aspect for registration of metric count increment for methods that annotated with
+ * Aspect for registration of metric gauge for methods that annotated with
  * {@link Gaugeable} annotation. Increments metric with identifier, resolved from
  * {@link Gaugeable#name()} and {@link Gaugeable#nameSuffixExpression()} for value
  * {@link Gaugeable#value()}
