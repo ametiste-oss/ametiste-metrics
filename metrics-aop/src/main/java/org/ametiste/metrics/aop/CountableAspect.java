@@ -39,7 +39,6 @@ public class CountableAspect {
     public void countRequest(Countable countable) {
     }
 
-    @Deprecated
     @Pointcut(value = "@annotation(countables)", argNames = "countables")
     public void countRequestMultiple(Countables countables) {
     }

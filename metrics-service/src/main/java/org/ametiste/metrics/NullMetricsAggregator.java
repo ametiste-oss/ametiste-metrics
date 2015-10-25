@@ -7,8 +7,9 @@ package org.ametiste.metrics;
  */
 public class NullMetricsAggregator implements MetricsAggregator {
 
+
     @Override
-    public void increment(String metricId) {
+    public void gauge(String metricId, int gaugeValue) {
 
     }
 

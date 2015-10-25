@@ -35,8 +35,8 @@ public class MappingAggregatorsRouter implements AggregatorsRouter {
         if (aggregators == null || !aggregators.containsKey(DEFAULT_ROUTE_NAME)) {
             throw new IllegalArgumentException("Default routing should be set, use key '" + DEFAULT_ROUTE_NAME + "'");
         }
-        aggregators.keySet().stream().filter(key -> key.contains("*")).forEach(key ->
-                hasWildCards = true);
+        aggregators.keySet().stream().filter(key -> key.contains("*"))
+                .findAny().ifPresent((wildcard) -> hasWildCards = true);
         this.aggregatorsMap = aggregators;
     }
 
@@ -58,13 +58,11 @@ public class MappingAggregatorsRouter implements AggregatorsRouter {
             return aggregatorsMap.get(metricIdentifier);
         } else {
             if (hasWildCards) {
-                for (String key : aggregatorsMap.keySet()) {
-                    if (key.contains("*")) {
-                        if (metricIdentifier.startsWith(key.replace("*", ""))) {
-                            return aggregatorsMap.get(key);
-                        }
-                    }
-                }
+                return aggregatorsMap.keySet().stream()
+                        .filter((key) -> key.contains("*") && metricIdentifier.startsWith(key.replace("*", "")) )
+                        .findFirst()
+                        .map(aggregatorsMap::get)
+                        .orElse(aggregatorsMap.get(DEFAULT_ROUTE_NAME));
             }
         }
         return aggregatorsMap.get(DEFAULT_ROUTE_NAME);

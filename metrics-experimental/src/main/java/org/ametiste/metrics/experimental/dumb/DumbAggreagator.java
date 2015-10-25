@@ -10,8 +10,9 @@ import org.ametiste.metrics.MetricsAggregator;
  * @since 0.2.0
  */
 public class DumbAggreagator implements MetricsAggregator {
+
     @Override
-    public void increment(String metricId) {
+    public void gauge(String metricId, int gaugeValue) {
         System.out.println("Just Dumb Aggregator");
     }
 

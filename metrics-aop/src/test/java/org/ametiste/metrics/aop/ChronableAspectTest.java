@@ -36,9 +36,6 @@ public class ChronableAspectTest {
     private JoinPoint pjp;
 
     @Mock
-    private Exception exception;
-
-    @Mock
     private Chronable chron;
 
     @Mock

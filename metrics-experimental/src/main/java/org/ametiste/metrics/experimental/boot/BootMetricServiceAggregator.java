@@ -16,9 +16,10 @@ public class BootMetricServiceAggregator implements MetricsAggregator {
         this.counterService = counterService;
     }
 
+
     @Override
-    public void increment(String metricId) {
-        counterService.increment(metricId);
+    public void gauge(String metricId, int gaugeValue) {
+
     }
 
     @Override
@@ -29,7 +30,7 @@ public class BootMetricServiceAggregator implements MetricsAggregator {
     @Override
     public void increment(String metricId, int inc) {
         for (int i = 0; i < inc; i++) {
-            increment(metricId);
+            counterService.increment(metricId);
         }
     }
 }
