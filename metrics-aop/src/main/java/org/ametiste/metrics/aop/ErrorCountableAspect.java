@@ -38,7 +38,6 @@ public class ErrorCountableAspect {
     public void errorRequest(ErrorCountable errorCountable) {
     }
 
-    @Deprecated
     @Pointcut(value = "@annotation(errorCountables)", argNames = "errorCountables")
     public void errorRequestBatch(ErrorCountables errorCountables) {
     }

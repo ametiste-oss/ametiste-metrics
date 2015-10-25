@@ -48,12 +48,10 @@ public class ChronableAspect {
     public void chronate(Chronable chron) {
     }
 
-    @Deprecated
     @Pointcut(value = "@annotation(chrons)", argNames = "chrons")
     public void chronateBatch(Chronables chrons) {
     }
 
-    @Deprecated
     @AfterReturning(pointcut = "chronateBatch(chrons)", returning = "returnedObject")
     public void processTimingBatch(JoinPoint pjp, Object returnedObject, Chronables chrons) {
         for (Chronable chron : chrons.value()) {
@@ -61,7 +59,6 @@ public class ChronableAspect {
         }
     }
 
-    @Deprecated
     @AfterThrowing(pointcut = "chronateBatch(chrons)", throwing = "exception")
     public void processTimingBatch(JoinPoint pjp, Exception exception, Chronables chrons) {
 
