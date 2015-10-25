@@ -38,7 +38,7 @@ To register a metric for a method, one of following annotations may be applied t
 - _@ErrorCountable_
 - _@Timeable_
 - _@Chronable_
-- _@Gaugable_
+- _@Gaugeable_
 
 _@Countable_ - `org.ametiste.metrics.annotations.Countable` is used when incremental count is required - on any joint point, such is request count, method call count, and so on. Only counts number of successfully executed operations.
 
@@ -48,7 +48,7 @@ _@Timeable_ - `org.ametiste.metrics.annotations.Timeable` is used when method ex
 
 _@Chronable_ - `org.ametiste.metrics.annotations.Chronable` is used to chronate data from flow. Value of chronable data is regulated by its value or value expression, i.e. can be any event data that is to be saved in timeline (method arguments or execution result numerical values, counts or phase of moon, etc)
 
-_@Gaugable_ `org.ametiste.metrics.annotations.Gaugable` is used to measure executions with gauge. Only  successful operations are measured. 
+_@Gaugeable_ `org.ametiste.metrics.annotations.Gaugeable` is used to measure executions with gauge. Only  successful operations are measured. 
 
 Example:
 ```java
