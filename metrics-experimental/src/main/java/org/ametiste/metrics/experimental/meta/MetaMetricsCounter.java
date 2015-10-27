@@ -1,7 +1,6 @@
 package org.ametiste.metrics.experimental.meta;
 
 import org.ametiste.metrics.MetricsService;
-import org.aspectj.lang.annotation.Aspect;
 
 /**
  * <p>
@@ -24,6 +23,8 @@ import org.aspectj.lang.annotation.Aspect;
  *
  * @since 0.2.0
  */
+// TODO: remove me
+@Deprecated
 public class MetaMetricsCounter implements MetricsService {
 
     /**

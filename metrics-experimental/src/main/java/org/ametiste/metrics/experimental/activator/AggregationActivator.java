@@ -22,7 +22,6 @@ public class AggregationActivator extends Activator implements MetricsAggregator
         this.metricsAggregator = aggregator;
     }
 
-
     @Override
     public void gauge(String metricId, int gaugeValue) {
         invokeIfActive(() -> metricsAggregator.gauge(metricId, gaugeValue));

@@ -33,6 +33,7 @@ public class BootMetricServiceAggregator implements MetricsAggregator {
 
     @Override
     public void event(String metricId, int eventValue) {
+
         // NOTE: log warnigns only if debug logging is enabled to not overload log output
         if (logger.isDebugEnabled()) {
             logger.warn("Event metric '" + metricId + "' skiped.");
@@ -43,13 +44,15 @@ public class BootMetricServiceAggregator implements MetricsAggregator {
     @Override
     public void increment(String metricId, int inc) {
 
-        // NOTE: log warnigns only if debug logging is enabled to not overload log output
-        if (inc >= INCREMENT_THRESHOLD && logger.isDebugEnabled()) {
-            logger.warn("Incremental metric '" + metricId + "' skiped.");
-            logger.warn("BootMetricServiceAggregator#increment " +
-                    "implementation will take more than 10 calls of underlying method.");
-            logger.warn("Use metric routing to exclude this metric from boot aggreagtion");
-            logger.warn("Or reimplement it.");
+        if (inc >= INCREMENT_THRESHOLD) {
+            // NOTE: log warnigns only if debug logging is enabled to not overload log output
+            if (logger.isDebugEnabled()) {
+                logger.warn("Incremental metric '" + metricId + "' skiped.");
+                logger.warn("BootMetricServiceAggregator#increment " +
+                        "implementation will take more than 10 calls of underlying method.");
+                logger.warn("Use metric routing to exclude this metric from boot aggreagtion");
+                logger.warn("Or reimplement it.");
+            }
             return;
         }
 

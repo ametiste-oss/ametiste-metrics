@@ -1,6 +1,5 @@
 package org.ametiste.metrics.experimental.activator;
 
-import junit.framework.TestCase;
 import org.ametiste.metrics.MetricsAggregator;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,13 +12,15 @@ import static org.mockito.Mockito.*;
  *
  * @since
  */
-public class AggregationActivatorTest extends TestCase {
+public class AggregationActivatorTest {
 
     private final static String METRIC_ID = "metricId";
     private final static int METRIC_VALUE = 123;
     private AggregationActivator activator;
+
     @Mock
     private MetricsAggregator mockUpstream;
+
     @Mock
     private ActivationCondition mockCondition;
 

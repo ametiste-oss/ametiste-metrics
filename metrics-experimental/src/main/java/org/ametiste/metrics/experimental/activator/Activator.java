@@ -1,6 +1,7 @@
 package org.ametiste.metrics.experimental.activator;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * <p>
@@ -26,20 +27,14 @@ public abstract class Activator {
                 .allMatch(Boolean.TRUE::equals);
     }
 
-    protected final void invokeIfActive(Runnable sup) {
+    protected final void invokeIfActive(Runnable call) {
         if (isActive()) {
-            sup.run();
+            call.run();
         }
     }
 
-
-//    protected void invokeIfActivated(Function<T, String> supplier, String elseReturn) {
-//
-//        if (isActive) {
-//            return supplier.apply();
-//        } else {
-//            return elseReturn;
-//        }
-//    }
+    protected final <T> T invokeIfActiveAndReturn(Supplier<T> sup, T elseReturn) {
+        return isActive() ? sup.get() : elseReturn;
+    }
 
 }

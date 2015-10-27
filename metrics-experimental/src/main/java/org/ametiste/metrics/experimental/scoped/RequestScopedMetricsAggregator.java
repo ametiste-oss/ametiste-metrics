@@ -26,10 +26,7 @@ public class RequestScopedMetricsAggregator implements MetricsAggregator {
 
     @Override
     public void increment(String metricId, int inc) {
-        invokeIfRequestScoped(() -> requestMetrics.merge(
-                        metricId, inc, (k, v) -> v + inc
-                )
-        );
+        invokeIfRequestScoped(() -> requestMetrics.merge(metricId, inc, (k, v) -> v + inc));
     }
 
     /**
@@ -47,18 +44,14 @@ public class RequestScopedMetricsAggregator implements MetricsAggregator {
         invokeIfRequestScoped(() -> requestMetrics.put(metricId, value));
     }
 
-    private void invokeIfRequestScoped(Invocation invocation) {
+    private void invokeIfRequestScoped(Runnable invocation) {
 
         // TODO: need to inject it for unit tests
         if (RequestScopeDetector.isNotRequestScoped()) {
             return;
         }
 
-        invocation.invoke();
-    }
-
-    private interface Invocation {
-        void invoke();
+        invocation.run();
     }
 
 }
