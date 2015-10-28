@@ -1,15 +1,6 @@
 package org.ametiste.metrics.experimental.staff;
 
-import org.ametiste.metrics.boot.configuration.CoreIdentifierResolver;
-import org.ametiste.metrics.boot.configuration.MetricsProperties;
-import org.ametiste.metrics.experimental.activator.ResolverActivator;
-import org.ametiste.metrics.experimental.activator.conditions.scopes.request.EnabledByRequestParameter;
-import org.ametiste.metrics.experimental.activator.conditions.scopes.request.WithinRequestScope;
-import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -20,19 +11,10 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(StaffPrefixResolverProperties.class)
 public class StaffPrefixResolverConfiguration {
 
-    @Autowired
-    private StaffPrefixResolverProperties properties;
-
-    @Bean
-    @CoreIdentifierResolver
-    @ConditionalOnProperty(prefix = MetricsProperties.PROPS_PREFIX,
-            name = " staff.identifier-resolver.enabled", matchIfMissing = true)
-    public MetricsIdentifierResolver staffPrefixResolver() {
-        return new ResolverActivator(
-                new PrefixResolver(properties.getStaffMetricPrefix()),
-                new WithinRequestScope(),
-                new EnabledByRequestParameter(properties.getStaffTriggerParameter())
-        );
-    }
+    // TBD: assumed to be implemented with the IdentifierTemplateResolver, as extension by variable type
+    //
+    // to implement this I need to have VariableBind implemention that would
+    // be triggered within the request scope and resolve {staffVariable} to the given value,
+    // if the specified request parameter is present.
 
 }

@@ -3,8 +3,25 @@ package org.ametiste.metrics.experimental.streams;
 import org.ametiste.metrics.experimental.measurement.TimeMeasurement;
 
 /**
+ * <p>
+ * Meta-metric Stream provides performance metric of enclosed metrics service.
+ * </p>
+ * <p>
+ * <p>
+ * Usable when information about metric service performance is required, say
+ * when new metrics or aggregator introduced.
+ * </p>
+ * <p>
+ * <p>
+ * Usually this service may be disabled, but it may be helpful in the performance
+ * test environment to gather information about metrics performance and usage statistic.
+ * </p>
+ * <p>
  *
- * @since
+ * todo : special prefix and namespace
+ * todo : configuration that allow to choose enabled this service or not
+ *
+ * @since 0.2.0
  */
 public class MetaMetricsStream implements MetricsStream {
 

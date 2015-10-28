@@ -1,11 +1,6 @@
 package org.ametiste.metrics.experimental.streams;
 
 import org.ametiste.metrics.MetricsService;
-import org.ametiste.metrics.NullMetricsAggregator;
-import org.ametiste.metrics.jmx.JmxMetricAggregator;
-import org.ametiste.metrics.statsd.StatsDMetricAggregator;
-
-import java.util.stream.Stream;
 
 /**
  *
@@ -18,7 +13,6 @@ public class MetricsStreamService implements MetricsService {
     public MetricsStreamService(MetricsStream metricsStreams) {
         this.metricsStreams = metricsStreams;
     }
-
 
     @Override
     public void increment(String metricId, int incrementValue) {

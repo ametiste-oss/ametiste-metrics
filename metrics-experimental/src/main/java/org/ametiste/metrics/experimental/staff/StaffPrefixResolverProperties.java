@@ -13,6 +13,8 @@ public class StaffPrefixResolverProperties {
 
     private String staffTriggerParameter = "ame_staff_metrics";
 
+    private String resolverTemplatestaffVaraibleName = "staffVariable";
+
     public String getStaffMetricPrefix() {
         return staffMetricPrefix;
     }
@@ -28,4 +30,13 @@ public class StaffPrefixResolverProperties {
     public void setStaffTriggerParameter(String staffTriggerParameter) {
         this.staffTriggerParameter = staffTriggerParameter;
     }
+
+    public String getResolverTemplatestaffVaraibleName() {
+        return resolverTemplatestaffVaraibleName;
+    }
+
+    public void setResolverTemplatestaffVaraibleName(String resolverTemplatestaffVaraibleName) {
+        this.resolverTemplatestaffVaraibleName = resolverTemplatestaffVaraibleName;
+    }
+
 }
