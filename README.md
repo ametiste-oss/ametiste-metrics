@@ -10,6 +10,7 @@
 Ametiste metrics is a library for easy metrics registration from any point of client code.
 
 ## Table Of Contents
+* [Documentation](#documentation)
 * [Usage example](#usage-example)
 * [Binaries](#binaries)
   * [Usage snippets](#usage-snippets)
@@ -20,6 +21,9 @@ Ametiste metrics is a library for easy metrics registration from any point of cl
   * [Metrics service with aop support](#metrics-service-with-aop-support)
   * [Child projects and libraries with only annotations required](#child-projects-and-libraries-with-only-annotations-required)
 * [Annotation examples](#annotation-examples)
+
+##Documentation 
+Library at a glance is described here, for more detailed description view [wiki](https://github.com/ametiste-oss/ametiste-metrics/wiki)
 
 ##Usage example
 
@@ -93,7 +97,7 @@ Aspects and metric service should be configured to start metrics annotations usa
 
 ###Metrics service with spring boot
 
-Adding `'org.ametiste.metrics:metrics-boot:{metricsVersion}'` dependency in classpath of spring boot project provides it with default most commonly used configuration, and if autoconfiguration is enabled, it requires no further actions for usage. For more details view [Optional properties customisation] (#optional-properties-customisation) and [Default configuration further tuning] (#default-configuration-further-tuning) sections
+Adding `'org.ametiste.metrics:metrics-boot:{metricsVersion}'` dependency in classpath of spring boot project provides it with default most commonly used configuration, and if autoconfiguration is enabled, it requires no further actions for usage. For more details view [Installation and configuration](https://github.com/ametiste-oss/ametiste-metrics/wiki/Installation-and-configuration) wiki page
 
 ###Metrics service without aop support
 
