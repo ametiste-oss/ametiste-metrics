@@ -6,7 +6,6 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/fdb7b072ff264edcb0bbc72c5ade3b53)](https://www.codacy.com/app/Ametiste-OSS/ametiste-metrics)
 
 ##Overview
-
 Ametiste metrics is a library for easy metrics registration from any point of client code.
 
 ## Table Of Contents
@@ -17,9 +16,6 @@ Ametiste metrics is a library for easy metrics registration from any point of cl
     * [Gradle](#gradle)
     * [Maven](#maven)
   * [Metrics service with spring boot](#metrics-service-with-spring-boot)
-  * [Metrics service without aop support](#metrics-service-without-aop-support)
-  * [Metrics service with aop support](#metrics-service-with-aop-support)
-  * [Child projects and libraries with only annotations required](#child-projects-and-libraries-with-only-annotations-required)
 * [Annotation examples](#annotation-examples)
 
 ##Documentation 
@@ -47,7 +43,7 @@ _@Gaugeable_ `org.ametiste.metrics.annotations.Gaugeable` is used to measure exe
 
 Example:
 ```java
-@Timeable(name=“my.neat.metric")
+@Timeable(name="my.neat.metric")
 public void justAMethod(String parameter) {
 }
 ```
@@ -93,24 +89,11 @@ compile "org.ametiste.metrics:metrics-boot:${metricsVersion}"
 </dependency>
 ```
 
-Aspects and metric service should be configured to start metrics annotations usage There are several ways to use metrics service, from easiest to most specific. 
+Aspects and metric service should be configured to start using metrics annotations. There are several ways to use metrics service, from easiest to most specific. 
 
 ###Metrics service with spring boot
 
-Adding `'org.ametiste.metrics:metrics-boot:{metricsVersion}'` dependency in classpath of spring boot project provides it with default most commonly used configuration, and if autoconfiguration is enabled, it requires no further actions for usage. For more details view [Installation and configuration](https://github.com/ametiste-oss/ametiste-metrics/wiki/Installation-and-configuration) wiki page
-
-###Metrics service without aop support
-
-In case if metrics service is required without aop support, `'org.ametiste.metrics:metrics-service:{metricsVersion}'` is satisfying dependency, however it has no default configuration included.
-
-###Metrics service with aop support
-
-For annotations usage out of spring boot context, dependency  `'org.ametiste.metrics:metrics-aop:{metricsVersion}'` is satisfying, however required aspects and metrics service should be configured, no default configuration is provided.
-
-###Child projects and libraries with only annotations required
-
-When library or separate part of project requires annotations only, then import of `'org.ametiste.metrics:metrics-annotations:{metricsVersion}'` may be used.
-
+Adding `'org.ametiste.metrics:metrics-boot:{metricsVersion}'` dependency in classpath of spring boot project provides it with default most commonly used configuration, and if autoconfiguration is enabled, it requires no further actions for usage. For more details and alternative usages view [Installation and configuration](https://github.com/ametiste-oss/ametiste-metrics/wiki/Installation-and-configuration) wiki page
 
 ##Annotation examples
 
@@ -118,6 +101,7 @@ Parameter-dependent count metric, with parameter="cat" passed in method register
 ```java
 @Countable(name="my.neat.metric", nameSuffixExpression="args[0]")
 public void letsCount(String parameter) {
+    //something useful surely happens here 
 }
 ```
 
@@ -125,6 +109,7 @@ Registers method execution time with name "my.amazing.metric"
 ```java
 @Timeable(name="my.amazing.metric")
 public void letsTime(String parameter) {
+    //something useful surely happens here 
 }
 ```
 
@@ -133,6 +118,7 @@ Note, that though name and name suffix are separated by point automatically, in 
 ```java
 @ErrorCountable(nameSuffixExpression="args[0] + '.my.useful.metric'")
 public void letsError(String parameter) {
+    //something useful surely happens here 
 }
 ```
 
@@ -142,6 +128,7 @@ With parameter "cat” registers value "3" for metric with name  "cat.my.amazing
 ```java
 @Chronable(valueExpression="args[0].length()", nameSuffixExpression="args[0] + '.my.amazing.metric'")
 public String letsChron(String parameter) {
+    //something useful surely happens here 
     return "mew mew";
 }
 ```
@@ -150,6 +137,7 @@ Does not register metric when parameter equals “dog", with any other parameter
 ```java
 @Chronable(valueExpression="result.length() - 1", name="my.cats.metric", condition="args[0]!='dog'")
 public String letsChron(String parameter) {
+    //something useful surely happens here 
     return "mew mew";
 }
 ```
@@ -158,7 +146,8 @@ public String letsChron(String parameter) {
 ```java
 @Chronable(valueExpression="args[0].length()", name="my.cats.metric.exceptions", exceptionClass=DogException.class)
 public String letsChron(String parameter) {
-    if(parameter.equals(“dog")) {
+    //something useful surely happens here 
+    if(parameter.equals("dog")) {
         throw new CatException("Oh noes, its a cat!");
     }
     return "mew mew";
