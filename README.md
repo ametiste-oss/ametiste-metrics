@@ -8,16 +8,6 @@
 ##Overview
 Ametiste metrics is a library for easy metrics registration from any point of client code.
 
-## Table Of Contents
-* [Documentation](#documentation)
-* [Usage example](#usage-example)
-* [Binaries](#binaries)
-  * [Usage snippets](#usage-snippets)
-    * [Gradle](#gradle)
-    * [Maven](#maven)
-  * [Metrics service with spring boot](#metrics-service-with-spring-boot)
-* [Annotation examples](#annotation-examples)
-
 ##Documentation 
 Library at a glance is described here, for more detailed description view [wiki](https://github.com/ametiste-oss/ametiste-metrics/wiki)
 
@@ -31,15 +21,15 @@ To register a metric for a method, one of following annotations may be applied t
 - _@Chronable_
 - _@Gaugeable_
 
-_@Countable_ - `org.ametiste.metrics.annotations.Countable` is used when incremental count is required - on any joint point, such is request count, method call count, and so on. Only counts number of successfully executed operations.
+_@Countable_ is used when incremental count is required - on any joint point, such is request count, method call count, and so on. Only counts number of successfully executed operations.
 
-_@ErrorCountable_ - `org.ametiste.metrics.annotations.ErrorCountable` is used when count of executions completed with exceptions is required - works similarly to @Countable but for joint points ended with errors.
+_@ErrorCountable_ is used when count of executions completed with exceptions is required - works similarly to @Countable but for joint points ended with errors.
 
-_@Timeable_ - `org.ametiste.metrics.annotations.Timeable` is used when method execution time is required.
+_@Timeable_ is used when method execution time is required.
 
-_@Chronable_ - `org.ametiste.metrics.annotations.Chronable` is used to chronate data from flow. Value of chronable data is regulated by its value or value expression, i.e. can be any event data that is to be saved in timeline (method arguments or execution result numerical values, counts or phase of moon, etc)
+_@Chronable_ is used to chronate data from flow. Value of chronable data is regulated by its value or value expression, i.e. can be any event data that is to be saved in timeline (method arguments or execution result numerical values, counts or phase of moon, etc)
 
-_@Gaugeable_ `org.ametiste.metrics.annotations.Gaugeable` is used to measure executions with gauge. Only  successful operations are measured. 
+_@Gaugeable_ is used to measure executions with gauge. Only  successful operations are measured. 
 
 Example:
 ```java
@@ -48,13 +38,13 @@ public void justAMethod(String parameter) {
 }
 ```
 
-For further annotation usage details view  [Annotation examples](#annotation-examples)
+For further annotation usage details view  [Annotation examples](https://github.com/ametiste-oss/ametiste-metrics/wiki/Annotations-examples)
 
 Metrics library can be used directly, without annotations, by injecting metrics service to client code.
 For more detailed library description and custom configuration view [Ametiste metrics wiki](https://github.com/ametiste-oss/ametiste-metrics/wiki)
 
 ##Binaries
-All mentioned dependencies is accessible at bintray central.
+All non experimental dependencies is accessible at bintray central.
 
 ####Usage snippets
 
@@ -94,63 +84,4 @@ Aspects and metric service should be configured to start using metrics annotatio
 ###Metrics service with spring boot
 
 Adding `'org.ametiste.metrics:metrics-boot:{metricsVersion}'` dependency in classpath of spring boot project provides it with default most commonly used configuration, and if autoconfiguration is enabled, it requires no further actions for usage. For more details and alternative usages view [Installation and configuration](https://github.com/ametiste-oss/ametiste-metrics/wiki/Installation-and-configuration) wiki page
-
-##Annotation examples
-
-Parameter-dependent count metric, with parameter="cat" passed in method registers metric with name "my.neat.metric.cat", while with parameter="dog", metric is registered with name "my.neat.metric.dog"
-```java
-@Countable(name="my.neat.metric", nameSuffixExpression="args[0]")
-public void letsCount(String parameter) {
-    //something useful surely happens here 
-}
-```
-
-Registers method execution time with name "my.amazing.metric"
-```java
-@Timeable(name="my.amazing.metric")
-public void letsTime(String parameter) {
-    //something useful surely happens here 
-}
-```
-
-Counts error happen in method and save them with metric name (if parameter="cat") "cat.my.useful.metric".
-Note, that though name and name suffix are separated by point automatically, in expression it should be expression consern to provide readable and good-looking name.
-```java
-@ErrorCountable(nameSuffixExpression="args[0] + '.my.useful.metric'")
-public void letsError(String parameter) {
-    //something useful surely happens here 
-}
-```
-
-_@Chronable_ is described more detailed.
-
-With parameter "cat” registers value "3" for metric with name  "cat.my.amazing.metric"
-```java
-@Chronable(valueExpression="args[0].length()", nameSuffixExpression="args[0] + '.my.amazing.metric'")
-public String letsChron(String parameter) {
-    //something useful surely happens here 
-    return "mew mew";
-}
-```
-
-Does not register metric when parameter equals “dog", with any other parameter registers value "6" (7 as length of returned sting - 1) for metric with name  "my.cats.metric"
-```java
-@Chronable(valueExpression="result.length() - 1", name="my.cats.metric", condition="args[0]!='dog'")
-public String letsChron(String parameter) {
-    //something useful surely happens here 
-    return "mew mew";
-}
-```
-
- With parameter “dog" registers value "3" to metric with name "my.cats.metric.exceptions”. If method ends normally, no metric is registered.
-```java
-@Chronable(valueExpression="args[0].length()", name="my.cats.metric.exceptions", exceptionClass=DogException.class)
-public String letsChron(String parameter) {
-    //something useful surely happens here 
-    if(parameter.equals("dog")) {
-        throw new CatException("Oh noes, its a cat!");
-    }
-    return "mew mew";
-}
-```
 
