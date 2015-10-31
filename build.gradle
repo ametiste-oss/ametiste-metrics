@@ -11,6 +11,7 @@ apply plugin: 'nebula-aggregate-javadocs'
 
 subprojects {
 
+    apply plugin: 'groovy'
     apply plugin: 'maven'
     apply plugin: 'java'
     apply plugin: 'jacoco'
@@ -30,7 +31,7 @@ subprojects {
 
     ext {
         springVersion = '4.2.0.RELEASE'
-        junitVersion = '4.11'
+        junitVersion = '4.12'
         mockitoVersion = '1.9.5'
         sl4jVersion = '1.7.2'
 
@@ -43,9 +44,13 @@ subprojects {
     }
 
     dependencies {
-        testCompile "junit:junit:${junitVersion}"
-        testCompile "org.mockito:mockito-all:${mockitoVersion}"
         compile "org.slf4j:slf4j-api:${sl4jVersion}"
+        testCompile(
+                "junit:junit:${junitVersion}",
+                "org.mockito:mockito-all:${mockitoVersion}",
+                'org.codehaus.groovy:groovy-all:2.4.4',
+                'org.spockframework:spock-core:1.0-groovy-2.4'
+        )
     }
 
     configurations {
