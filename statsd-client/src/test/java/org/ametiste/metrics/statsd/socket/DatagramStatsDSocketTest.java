@@ -25,10 +25,8 @@ public class DatagramStatsDSocketTest {
     private static final int TEST_PORT = 9999;
     private static final String TEST_HOST = "localhost";
     private static final String TEST_MESSAGE = "TEST_MESSAGE";
-
     @Mock
     private DatagramSocket datagramSocket;
-
     private DatagramStatsDSocket datagramStatsDSocket;
 
     @Before
@@ -46,13 +44,12 @@ public class DatagramStatsDSocketTest {
         datagramStatsDSocket.connect();
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = JustForTestException.class)
     public void testErroredSocketFactory() throws Exception {
 
         final DatagramStatsDSocket datagramStatsDSocket =
                 new DatagramStatsDSocket(TEST_HOST, TEST_PORT, () -> {
-                    throw new RuntimeException() {{
-                    }}; /** just to get not RAW RuntimeException **/
+                    throw new JustForTestException();
                 });
 
         datagramStatsDSocket.connect();
@@ -180,5 +177,8 @@ public class DatagramStatsDSocketTest {
         datagramStatsDSocket.close();
 
         verify(datagramSocket, times(0)).close();
+    }
+
+    private class JustForTestException extends RuntimeException {
     }
 }
