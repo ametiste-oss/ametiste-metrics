@@ -51,7 +51,8 @@ public class DatagramStatsDSocketTest {
 
         final DatagramStatsDSocket datagramStatsDSocket =
                 new DatagramStatsDSocket(TEST_HOST, TEST_PORT, () -> {
-                    throw new RuntimeException();
+                    throw new RuntimeException() {{
+                    }}; /** just to get not RAW RuntimeException **/
                 });
 
         datagramStatsDSocket.connect();
