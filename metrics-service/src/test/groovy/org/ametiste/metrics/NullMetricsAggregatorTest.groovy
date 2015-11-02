@@ -18,13 +18,13 @@ class NullMetricsAggregatorTest extends Specification {
 
     def event() {
         when: "event is called"
-            aggregator.gauge("",4)
+            aggregator.event("",4)
         then: "nothing happens"
     }
 
     def increment() {
         when: "increment is called"
-            aggregator.gauge("",4)
+            aggregator.increment("",4)
         then: "nothing happens"
     }
 }
