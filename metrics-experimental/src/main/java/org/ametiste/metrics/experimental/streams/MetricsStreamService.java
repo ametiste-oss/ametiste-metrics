@@ -30,8 +30,7 @@ public class MetricsStreamService implements MetricsService {
 
     @Override
     public void gauge(String metricId, int gaugeValue) {
-        //TODO implement it
-        throw new UnsupportedOperationException("Not implemented");
+        this.metricsStreams.gauge(metricId, gaugeValue);
     }
 
     @Override

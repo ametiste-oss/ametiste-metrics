@@ -1,6 +1,5 @@
 package org.ametiste.metrics.experimental.streams;
 
-import com.sun.javafx.font.Metrics;
 import org.ametiste.metrics.router.AggregatorsRouter;
 
 /**
@@ -22,4 +21,10 @@ public class AggregatorRoutingStream implements MetricsStream {
     public void event(String metricId, int value) {
 
     }
+
+    @Override
+    public void gauge(String metricId, int value) {
+
+    }
+
 }

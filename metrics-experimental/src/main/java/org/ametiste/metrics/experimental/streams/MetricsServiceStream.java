@@ -39,4 +39,9 @@ public class MetricsServiceStream implements MetricsStream {
         this.metricsService.createEvent(metricId, value);
     }
 
+    @Override
+    public void gauge(String metricId, int value) {
+        this.metricsService.gauge(metricId, value);
+    }
+
 }

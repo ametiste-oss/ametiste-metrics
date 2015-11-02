@@ -52,4 +52,10 @@ public class MetaMetricsStream implements MetricsStream {
                 .measureTimeOf(META_EVENT_METRIC, () -> upstream.event(metricId, value));
     }
 
+    @Override
+    public void gauge(String metricId, int value) {
+        this.timeMeasurement
+                .measureTimeOf(META_EVENT_METRIC, () -> upstream.gauge(metricId, value));
+    }
+
 }

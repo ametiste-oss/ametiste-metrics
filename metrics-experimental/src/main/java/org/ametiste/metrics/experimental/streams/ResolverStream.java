@@ -32,4 +32,12 @@ public class ResolverStream implements MetricsStream {
         );
     }
 
+    @Override
+    public void gauge(String metricId, int value) {
+        this.upstream.gauge(
+                this.metricsIdentifierResolver.resolveMetricId(metricId),
+                value
+        );
+    }
+
 }
