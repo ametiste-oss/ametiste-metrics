@@ -6,15 +6,6 @@ import org.ametiste.metrics.MetricsService;
  *
  * @since
  */
-/*
-
-TODO: try to use it with the core metrics service configuration using MetricsServiceStream.
-
-But, need to find the way how to specify which metrics service implementation is used by the aspects.
-One option here is write aggregator implementation that relays calls to MetricsStreamService.
-And inject this aggregator as @CoreAggregator to core metrics service.
-
-*/
 public class MetricsStreamService implements MetricsService {
 
     private MetricsStream metricsStreams;
