@@ -52,6 +52,7 @@ public class ChronableAspect {
     public void chronateBatch(Chronables chrons) {
     }
 
+    //TODO rename it, its not timing batch
     @AfterReturning(pointcut = "chronateBatch(chrons)", returning = "returnedObject")
     public void processTimingBatch(JoinPoint pjp, Object returnedObject, Chronables chrons) {
         for (Chronable chron : chrons.value()) {

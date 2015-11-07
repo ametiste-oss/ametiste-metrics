@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 
 
 @RunWith(MockitoJUnitRunner.class)
-public class ChronableAspectTest {
+public class ChronableAspectTestJ {
     @Mock
     private ExpressionParser parser;
 
