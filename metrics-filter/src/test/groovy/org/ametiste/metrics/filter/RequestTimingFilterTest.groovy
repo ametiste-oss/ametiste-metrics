@@ -12,22 +12,21 @@ import javax.servlet.http.HttpServletResponse
 /**
  * Created by atlantis on 11/7/15.
  */
-class RequestCountFilterTest extends Specification {
+class RequestTimingFilterTest extends Specification {
 
     private MetricsService service = Mock()
     private MetricsIdentifierResolver resolver = Mock()
-    private RequestCountFilter filter = new RequestCountFilter(service, resolver)
-
+    private RequestTimingFilter filter = new RequestTimingFilter(service, resolver)
 
     def initialization() {
         when: "filter is created with null service"
-            new RequestCountFilter(null, resolver)
+            new RequestTimingFilter(null, resolver)
         then: "exception should be thrown but now not :D"
-            //thrown()
+        //thrown()
         when: "filter is created with null resolver"
-            new RequestCountFilter(service, null)
+            new RequestTimingFilter(service, null)
         then: "exception should be thrown but now not :D"
-            //thrown()
+        //thrown()
     }
     def defaults() {
         given: "some config"
@@ -47,9 +46,7 @@ class RequestCountFilterTest extends Specification {
             resolver.resolveMetricId(_) >> "metricName"
             filter.doFilter(request, response, chain)
         then: "service is called with increment, and chain proceeds"
-            1* service.increment("metricName",1)
+            1* service.createEvent("metricName",_)
             1* chain.doFilter(request, response)
     }
-
-
 }
