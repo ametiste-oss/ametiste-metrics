@@ -3,6 +3,8 @@ package org.ametiste.metrics.aop
 import org.ametiste.metrics.MetricsService
 import org.ametiste.metrics.annotations.Chronable
 import org.ametiste.metrics.annotations.composite.Chronables
+import org.ametiste.metrics.aop.stubs.StubChronable
+import org.ametiste.metrics.aop.stubs.StubChronables
 import org.aspectj.lang.JoinPoint
 import org.springframework.expression.Expression
 import org.springframework.expression.ExpressionParser
@@ -14,10 +16,10 @@ import spock.lang.Specification
  */
 class ChronableAspectTest extends Specification {
 
-    MetricsService service = Mock()
-    IdentifierResolver resolver = Mock()
-    ExpressionParser parser = Mock()
-    ChronableAspect aspect = new ChronableAspect(service, resolver, parser)
+    private MetricsService service = Mock()
+    private IdentifierResolver resolver = Mock()
+    private ExpressionParser parser = Mock()
+    private ChronableAspect aspect = new ChronableAspect(service, resolver, parser)
 
 
     def initialization() {
@@ -35,14 +37,6 @@ class ChronableAspectTest extends Specification {
             thrown(IllegalArgumentException)
     }
 
-
-    def processBatch() {
-
-    }
-
-    def "ProcessTimingBatch1"() {
-
-    }
 
     def processTimingNoException() {
         given: "metric with normal result and annotation"

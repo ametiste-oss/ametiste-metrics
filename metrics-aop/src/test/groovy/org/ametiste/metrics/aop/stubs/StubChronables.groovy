@@ -1,4 +1,4 @@
-package org.ametiste.metrics.aop
+package org.ametiste.metrics.aop.stubs
 
 import org.ametiste.metrics.annotations.Chronable
 import org.ametiste.metrics.annotations.composite.Chronables
