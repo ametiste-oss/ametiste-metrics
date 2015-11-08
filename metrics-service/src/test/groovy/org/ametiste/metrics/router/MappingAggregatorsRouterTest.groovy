@@ -3,6 +3,8 @@ package org.ametiste.metrics.router
 import org.ametiste.metrics.MetricsAggregator
 import spock.lang.Specification
 
+import java.util.function.Consumer
+
 /**
  * Created by atlantis on 11/1/15.
  */
@@ -80,5 +82,42 @@ class MappingAggregatorsRouterTest extends Specification {
             def a = router.getAggregatorsForMetric(metricId)
         then: "list of aggregators should be as expected"
             aggregators == a
+    }
+
+    def routingWithWildCardsWithConsumer() {
+        given: "router without wildcards"
+            map.containsKey("__default") >> true
+            map.keySet() >> ["metric*", "metric2"]
+            def router = new MappingAggregatorsRouter(map)
+            def metricId = "metric1"
+            Consumer<MetricsAggregator> action = Mock()
+        when: "aggregators for metricId is requested "
+            MetricsAggregator a1 = Mock()
+            MetricsAggregator a2 = Mock()
+            List<MetricsAggregator> aggregators = Arrays.asList(a1, a2);
+            map.keySet() >> ["metric*", "metric2"]
+            map.get("metric*") >> aggregators
+            router.aggregate(metricId,action)
+        then: "list of aggregators should be as expected"
+            2* action.accept(_)
+    }
+
+    def routingWithWildCardsWithException() {
+        given: "router without wildcards"
+            map.containsKey("__default") >> true
+            map.keySet() >> ["metric*", "metric2"]
+            def router = new MappingAggregatorsRouter(map)
+            def metricId = "metric1"
+            Consumer<MetricsAggregator> action = Mock()
+        when: "aggregators for metricId is requested "
+            MetricsAggregator a1 = Mock()
+            MetricsAggregator a2 = Mock()
+            List<MetricsAggregator> aggregators = Arrays.asList(a1, a2);
+            map.keySet() >> ["metric*", "metric2"]
+            map.get("metric*") >> aggregators
+            action.accept(a1) >> {throw new IllegalArgumentException()}
+            router.aggregate(metricId,action)
+        then: "list of aggregators should be as expected"
+            2* action.accept(_)
     }
 }

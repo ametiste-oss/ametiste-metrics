@@ -2,6 +2,8 @@ package org.ametiste.metrics.router;
 
 import org.ametiste.metrics.MetricsAggregator;
 import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -27,6 +29,7 @@ public class MappingAggregatorsRouter implements AggregatorsRouter {
     private final Map<String, List<MetricsAggregator>> aggregatorsMap;
 
     private boolean hasWildCards = false;
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Requires routing map with "__default" key route at least.
@@ -85,7 +88,14 @@ public class MappingAggregatorsRouter implements AggregatorsRouter {
      */
     @Override
     public void aggregate(String metricIdentifier, Consumer<MetricsAggregator> function) {
-        this.getAggregatorsForMetric(metricIdentifier).forEach(function);
+        this.getAggregatorsForMetric(metricIdentifier).forEach(a -> {
+            try {
+                function.accept(a);
+            } catch (Exception e) {
+                logger.warn("Aggregator threw exception. Aggregator: " + a.getClass(), e);
+            }
+
+        });
     }
 
 }
