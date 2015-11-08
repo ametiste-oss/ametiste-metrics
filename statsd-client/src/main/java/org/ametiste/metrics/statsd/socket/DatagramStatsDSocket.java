@@ -13,6 +13,7 @@ import java.net.*;
 public class DatagramStatsDSocket implements StatsDSocket {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final DatagramSocketFactory sockFacotry;
     private InetSocketAddress address;
     private DatagramSocket clientSocket;
 
@@ -26,6 +27,24 @@ public class DatagramStatsDSocket implements StatsDSocket {
      *                                  (from {@link InetSocketAddress#InetSocketAddress(String, int)}
      */
     public DatagramStatsDSocket(String hostname, int port) {
+        this(hostname, port, () -> {
+            return new DatagramSocket();
+        });
+    }
+
+    /**
+     * Primarily used to unit test socket implementation,
+     * allows to change underlying {@link DatagramSocket} implementation.
+     *
+     * @param hostname    - name or ip of host to connect
+     * @param port        - port to connect
+     * @param sockFacotry - factory to create {@link DatagramSocket}
+     * @throws IllegalArgumentException if the port parameter is outside the range
+     *                                  of valid port values, or if the hostname parameter is <TT>null</TT>.
+     *                                  (from {@link InetSocketAddress#InetSocketAddress(String, int)}
+     */
+    DatagramStatsDSocket(String hostname, int port, DatagramSocketFactory sockFacotry) {
+        this.sockFacotry = sockFacotry;
         this.address = new InetSocketAddress(hostname, port);
     }
 
@@ -37,7 +56,7 @@ public class DatagramStatsDSocket implements StatsDSocket {
      */
     public void connect() throws StatsDSocketConnectException {
         try {
-            this.clientSocket = new DatagramSocket();
+            this.clientSocket = sockFacotry.create();
             this.clientSocket.connect(address);
         } catch (SocketException e) {
             throw new StatsDSocketConnectException(e);
