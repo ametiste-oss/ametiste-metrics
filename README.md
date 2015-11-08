@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/ametiste-oss/ametiste-metrics.svg?branch=master)](https://travis-ci.org/ametiste-oss/ametiste-metrics)
 [![Codacy Badge](https://api.codacy.com/project/badge/fdb7b072ff264edcb0bbc72c5ade3b53)](https://www.codacy.com/app/Ametiste-OSS/ametiste-metrics)
-
+[![codecov.io](https://codecov.io/github/ametiste-oss/ametiste-metrics/coverage.svg?branch=master)](https://codecov.io/github/ametiste-oss/ametiste-metrics?branch=master)
 ##Overview
 Ametiste metrics is a library for easy metrics registration from any point of client code.
 
