@@ -4,6 +4,8 @@ import org.ametiste.metrics.MetricsAggregator;
 import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
 
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * Metrics allow configuration with different routes for specific metrics.
@@ -24,5 +26,7 @@ public interface AggregatorsRouter {
      * @return list of  {@link MetricsAggregator} that accept metric with id metricIdentifier
      */
     List<MetricsAggregator> getAggregatorsForMetric(String metricIdentifier);
+
+    void aggregate(String metricIdentifier,  Consumer<MetricsAggregator> function);
 
 }

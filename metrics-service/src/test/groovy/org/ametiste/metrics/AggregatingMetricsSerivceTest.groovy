@@ -41,7 +41,7 @@ class AggregatingMetricsSerivceTest extends Specification {
             def incrementValue = 3;
 
         when: "router is resolving any metrics name to list of aggregators a out of 2 aggregators"
-            aggregatorsRouter.getAggregatorsForMetric(_) >> a
+            aggregatorsRouter.aggregate(_, _) >> {arguments -> a.forEach(arguments[1])}
             service.increment("", incrementValue);
 
         then: "both aggregators in list should receive increment method call with value 3"
@@ -54,7 +54,7 @@ class AggregatingMetricsSerivceTest extends Specification {
             def incrementValue = 3;
 
         when: "router is resolving any metrics name to list of aggregators a out of 2 aggregators"
-            aggregatorsRouter.getAggregatorsForMetric(_) >> a
+            aggregatorsRouter.aggregate(_, _) >> {arguments -> a.forEach(arguments[1])}
             service.gauge("", incrementValue);
 
         then: "both aggregators in list should receive gauge method call with value 3"
@@ -67,7 +67,7 @@ class AggregatingMetricsSerivceTest extends Specification {
             def incrementValue = 3;
 
         when: "router is resolving any metrics name to list of aggregators a out of 2 aggregators"
-            aggregatorsRouter.getAggregatorsForMetric(_) >> a
+            aggregatorsRouter.aggregate(_, _) >> {arguments -> a.forEach(arguments[1])}
             service.createEvent("", incrementValue);
 
         then: "both aggregators in list should receive event method call with value 3"
@@ -75,5 +75,17 @@ class AggregatingMetricsSerivceTest extends Specification {
             1* aggregatorTwo.event(_, 3)
     }
 
+
+    def eventWithAggregatorException() {
+        given: "value for registering event metric"
+            def incrementValue = 3;
+
+        when: "router aggregating ends with exception"
+            aggregatorsRouter.aggregate(_, _) >> {throw new IllegalArgumentException()}
+            service.createEvent("", incrementValue);
+
+        then: "No exception it thrown from service"
+
+    }
 
 }
