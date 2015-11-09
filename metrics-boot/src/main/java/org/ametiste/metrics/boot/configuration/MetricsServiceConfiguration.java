@@ -7,6 +7,8 @@ import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
 import org.ametiste.metrics.router.AggregatorsRouter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +36,7 @@ public class MetricsServiceConfiguration {
 
     @Bean
     @Qualifier("metricsService")
+    @ConditionalOnMissingBean
     public MetricsService metricsService() {
         return new AggregatingMetricsService(
                 aggregatorsRouter,

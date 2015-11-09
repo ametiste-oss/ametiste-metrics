@@ -52,6 +52,6 @@ public class MetricsIntegrationTestJ {
     @Test
     public void test() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/")).andExpect(status().isOk());
-       // service.verify("time_metric").registered();
+        service.verify("time_metric").registered();
     }
 }
