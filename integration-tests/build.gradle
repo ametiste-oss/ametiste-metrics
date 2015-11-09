@@ -15,15 +15,11 @@ dependencies {
 
     compile project(':metrics-boot')
     compile project(':metrics-service-mock')
-    compile (
-            "org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}",
-            "org.springframework.boot:spring-boot:${springBootVersion}",
-            "org.springframework:spring-web"
-    )
     testCompile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}") {
         exclude module: "spring-boot-starter-tomcat"
     }
     testCompile(
+
        "org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}",
         "org.springframework.boot:spring-boot:${springBootVersion}",
         'org.spockframework:spock-spring:1.0-groovy-2.4',
