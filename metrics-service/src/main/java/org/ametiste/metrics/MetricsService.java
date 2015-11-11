@@ -9,13 +9,6 @@ package org.ametiste.metrics;
 public interface MetricsService {
 
     /**
-     * Increments counter to 1 for metrics with id metricId
-     *
-     * @param metricId identifier of metric
-     */
-    void increment(String metricId);
-
-    /**
      * Increments counter to incrementValue for metrics with id metricId
      *
      * @param metricId       identifier of metric
@@ -23,15 +16,14 @@ public interface MetricsService {
      */
     void increment(String metricId, int incrementValue);
 
+
     /**
-     * Creates event in time with lower and higher values for metricId.
-     *
-     * @param metricId   identifier of metric
-     * @param startValue logged event start time
-     * @param endValue   logged event end time
+     * Increments gauge counter to gaugeValue for metric with id metricId
+     * @param metricId identifier of metric
+     * @param gaugeValue gauge value
+     * @since 0.2.0
      */
-    @Deprecated
-    void createEvent(String metricId, long startValue, long endValue);
+    void gauge(String metricId, int gaugeValue);
 
     /**
      * Creates event in time with eventValue for metricId.

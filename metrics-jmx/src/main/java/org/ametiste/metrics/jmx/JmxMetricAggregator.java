@@ -1,5 +1,6 @@
 package org.ametiste.metrics.jmx;
 
+import com.codahale.metrics.Gauge;
 import com.codahale.metrics.JmxReporter;
 import com.codahale.metrics.MetricRegistry;
 import org.ametiste.metrics.MetricsAggregator;
@@ -14,8 +15,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class JmxMetricAggregator implements MetricsAggregator {
 
-    final MetricRegistry metrics;
-    final JmxReporter reporter;
+    private final MetricRegistry metrics;
+    private final JmxReporter reporter;
 
     public JmxMetricAggregator(String domain) {
         metrics = new MetricRegistry();
@@ -24,13 +25,13 @@ public class JmxMetricAggregator implements MetricsAggregator {
     }
 
     @Override
-    public void increment(String metricId) {
-        metrics.counter(metricId).inc();
+    public void gauge(String metricId, int gaugeValue) {
+        metrics.register(metricId, (Gauge)() -> gaugeValue);
     }
 
     @Override
-    public void event(String metricId, int value) {
-        metrics.timer(metricId).update(value, TimeUnit.MILLISECONDS);
+    public void event(String metricId, int eventValue) {
+        metrics.timer(metricId).update(eventValue, TimeUnit.MILLISECONDS);
     }
 
     @Override

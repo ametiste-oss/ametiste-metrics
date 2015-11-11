@@ -33,7 +33,7 @@ public class RequestCountFilter implements Filter {
             ServletException {
 
         String metricName = RequestToMetricIdConverter.convert(request, resolver);
-        service.increment(metricName);
+        service.increment(metricName, 1);
 
         chain.doFilter(request, response);
     }

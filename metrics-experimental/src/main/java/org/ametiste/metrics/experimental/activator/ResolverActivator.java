@@ -24,11 +24,7 @@ public class ResolverActivator extends Activator implements MetricsIdentifierRes
 
     @Override
     public String resolveMetricId(String metricName) {
-        if (isActive()) {
-            return resolver.resolveMetricId(metricName);
-        } else {
-            return metricName;
-        }
+        return invokeIfActiveAndReturn(() -> resolver.resolveMetricId(metricName), metricName);
     }
 
 }

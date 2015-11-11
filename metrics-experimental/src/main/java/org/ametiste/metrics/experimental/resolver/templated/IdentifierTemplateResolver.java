@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class IdentifierTemplateResolver implements MetricsIdentifierResolver {
 
-    private static String DEFAULT_IDENTIFIER_TEMPLATE = "{corePrefix}.{metricName}";
+    public static final String DEFAULT_IDENTIFIER_TEMPLATE = "{corePrefix}.{metricName}";
 
     private final String identifierTemplate;
 

@@ -38,7 +38,6 @@ public class ErrorCountableAspect {
     public void errorRequest(ErrorCountable errorCountable) {
     }
 
-    @Deprecated
     @Pointcut(value = "@annotation(errorCountables)", argNames = "errorCountables")
     public void errorRequestBatch(ErrorCountables errorCountables) {
     }
@@ -61,7 +60,7 @@ public class ErrorCountableAspect {
             String name = resolver.getTargetIdentifier(errorCountable.name(), errorCountable.nameSuffixExpression(),
                     context);
             logger.debug("Error pointcut achieved, target method: " + name);
-            service.increment(name);
+            service.increment(name, 1);
         } catch (MetricExpressionParsingException e) {
             logger.debug("Error pointcut achieved, but wasnt logged, wrong expression: "
                     + errorCountable.nameSuffixExpression());

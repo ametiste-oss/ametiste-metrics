@@ -15,15 +15,15 @@ public class StatsDMetricAggregator implements MetricsAggregator {
         this.client = client;
     }
 
-    @Override
-    public void increment(String metricId) {
-        client.increment(metricId);
 
+    @Override
+    public void gauge(String metricId, int gaugeValue) {
+        client.gauge(metricId, gaugeValue);
     }
 
     @Override
-    public void event(String metricId, int value) {
-        client.time(metricId, value);
+    public void event(String metricId, int eventValue) {
+        client.time(metricId, eventValue);
 
     }
 

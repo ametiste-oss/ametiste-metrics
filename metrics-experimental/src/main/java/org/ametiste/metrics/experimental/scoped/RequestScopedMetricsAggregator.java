@@ -10,44 +10,23 @@ import java.util.function.BiConsumer;
  *
  * @since
  */
-// TODO: aggregator activator, something to check request parameters for magic one
-// TODO: I would like to do it as decorator
 public class RequestScopedMetricsAggregator implements MetricsAggregator {
 
     private HashMap<String, Integer> requestMetrics = new HashMap<>();
 
     @Override
-    public void increment(String metricId) {
-
-        if (RequestScopeDetector.isNotRequestScoped()) {
-            return;
-        }
-
-        increment(metricId, 1);
+    public void gauge(String metricId, int gaugeValue) {
+        putMetricValue(metricId, gaugeValue);
     }
 
     @Override
-    public void event(String metricId, int evenValue) {
-
-        if (RequestScopeDetector.isNotRequestScoped()) {
-            return;
-        }
-
-        requestMetrics.put(metricId, evenValue);
+    public void event(String metricId, int eventValue) {
+        putMetricValue(metricId, eventValue);
     }
 
     @Override
     public void increment(String metricId, int inc) {
-
-        if (RequestScopeDetector.isNotRequestScoped()) {
-            return;
-        }
-
-        if (!requestMetrics.containsKey(metricId)) {
-            requestMetrics.put(metricId, inc);
-        } else {
-            requestMetrics.put(metricId, requestMetrics.get(metricId) + inc);
-        }
+        invokeIfRequestScoped(() -> requestMetrics.merge(metricId, inc, (k, v) -> v + inc));
     }
 
     /**
@@ -59,6 +38,20 @@ public class RequestScopedMetricsAggregator implements MetricsAggregator {
      */
     public void consumeMetrics(BiConsumer<String, Integer> consumer) {
         requestMetrics.forEach(consumer);
+    }
+
+    private void putMetricValue(String metricId, int value) {
+        invokeIfRequestScoped(() -> requestMetrics.put(metricId, value));
+    }
+
+    private void invokeIfRequestScoped(Runnable invocation) {
+
+        // TODO: need to inject it for unit tests
+        if (RequestScopeDetector.isNotRequestScoped()) {
+            return;
+        }
+
+        invocation.run();
     }
 
 }

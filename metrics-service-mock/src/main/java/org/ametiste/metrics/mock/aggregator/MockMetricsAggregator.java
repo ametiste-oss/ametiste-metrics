@@ -16,7 +16,7 @@ import org.ametiste.metrics.mock.store.MockMetricsContainer;
  */
 public class MockMetricsAggregator implements MetricsAggregator {
 
-    boolean verifyChainStarted = false;
+    private boolean verifyChainStarted = false;
 
     private MockMetricsContainer container = new MockMetricsContainer();
 
@@ -31,9 +31,9 @@ public class MockMetricsAggregator implements MetricsAggregator {
      * {@inheritDoc}
      */
     @Override
-    public void increment(String metricId) {
+    public void gauge(String metricId, int gaugeValue) {
         checkIfAlreadyVerified();
-        container.addValue(MetricsType.INCR, metricId, 1);
+        container.addValue(MetricsType.GAUGE, metricId, 1);
     }
 
     /**
@@ -41,9 +41,9 @@ public class MockMetricsAggregator implements MetricsAggregator {
      * {@inheritDoc}
      */
     @Override
-    public void event(String metricId, int value) {
+    public void event(String metricId, int eventValue) {
         checkIfAlreadyVerified();
-        container.addValue(MetricsType.TIME, metricId, value);
+        container.addValue(MetricsType.TIME, metricId, eventValue);
     }
 
     /**

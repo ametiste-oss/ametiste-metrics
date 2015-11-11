@@ -22,6 +22,8 @@ public class PathMetricsIdentifierResolver implements MetricsIdentifierResolver 
      * @param defaultIdentifier metric identifier for all requests that dont match one of paths
      */
     public PathMetricsIdentifierResolver(List<String> paths, String defaultIdentifier) {
+
+        //TODO add null & empty checks
         this.defaultIdentifier = defaultIdentifier;
         pathsToId = new HashMap<>();
         for (String path : paths) {

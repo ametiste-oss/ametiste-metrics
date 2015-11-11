@@ -53,7 +53,7 @@ public class MockMetricsVerifier {
      * @return verify chain
      */
     public MockMetricsVerifier increment() {
-        assertTrue("Metric with name '" + name + "' was expected to be registered as incremental, but wasnt", container.hasValueWithTypeAndName(MetricsType.INCR, name));
+        assertTrue("Metric with name '" + name + "' was expected to be registered as incremental, but wasnt", container.hasValueWithTypeAndName(MetricsType.INCR_VALUE, name));
         return this;
     }
 
@@ -67,8 +67,8 @@ public class MockMetricsVerifier {
      */
     public MockMetricsVerifier increment(int times) {
         assertTrue("Metric with name '" + name + "' was expected to be registered as incremental " + times + " times, but actually was registered "
-                        + container.getCountForValue(MetricsType.INCR, name) + " times",
-                container.hasValueWithTypeAndNameAndCount(MetricsType.INCR, name, times));
+                        + container.getCountForValue(MetricsType.INCR_VALUE, name) + " times",
+                container.hasValueWithTypeAndNameAndCount(MetricsType.INCR_VALUE, name, times));
         return this;
     }
 
@@ -82,46 +82,50 @@ public class MockMetricsVerifier {
      */
     public void increment(List<Long> values) {
         assertTrue("Metric with name '" + name + "'  was expected to be registered as incremental with values " + values + " , but actually was registered with values "
-                + container.getValuesForValue(MetricsType.INCR, name), container.hasValueWithTypeAndNameAndValues(MetricsType.INCR, name, values));
+                + container.getValuesForValue(MetricsType.INCR_VALUE, name),
+                container.hasValueWithTypeAndNameAndValues(MetricsType.INCR_VALUE, name, values));
     }
 
     /**
-     * Verifies metric with requested name was registered as increment for delta value, without check number
+     * Verifies metric with requested name was registered as gauge, without check number
      * of calls and values. Can be used in serial call after {@link MockMetricsVerifier#registered()},
      * to provide more clear failure trace, however this method success guarantees success of mentioned one
      *
      * @return verify chain
      */
-    public MockMetricsVerifier valueIncrement() {
-        assertTrue("Metric with name '" + name + "' was expected to be registered as value incremental, but wasnt", container.hasValueWithTypeAndName(MetricsType.INCR_VALUE, name));
+    public MockMetricsVerifier gauge() {
+        assertTrue("Metric with name '" + name + "' was expected to be registered as gauge, but wasnt",
+                container.hasValueWithTypeAndName(MetricsType.GAUGE, name));
         return this;
     }
 
     /**
-     * Verifies metric with requested name was registered as increment for delta value, with definite
+     * Verifies metric with requested name was registered as gauge, with definite
      * number of calls, not checking values registered. Can be used in serial call after
-     * {@link MockMetricsVerifier#registered()}, {@link MockMetricsVerifier#valueIncrement()}
+     * {@link MockMetricsVerifier#registered()}, {@link MockMetricsVerifier#gauge()}
      * to provide more clear failure trace, however this method success guarantees success of mentioned ones
      *
      * @return verify chain
      */
-    public MockMetricsVerifier valueIncrement(int times) {
-        assertTrue("Metric with name '" + name + "' was expected to be registered as value incremental " + times + " times, but actually was registered "
-                + container.getCountForValue(MetricsType.INCR_VALUE, name) + " times", container.hasValueWithTypeAndNameAndCount(MetricsType.INCR_VALUE, name, times));
+    public MockMetricsVerifier gauge(int times) {
+        assertTrue("Metric with name '" + name + "' was expected to be registered as gauge " + times + " times, but actually was registered "
+                + container.getCountForValue(MetricsType.GAUGE, name) + " times",
+                container.hasValueWithTypeAndNameAndCount(MetricsType.GAUGE, name, times));
         return this;
     }
 
     /**
-     * Verifies metric with requested name was registered as increment for delta value with definite
+     * Verifies metric with requested name was registered as gauge with definite
      * number of calls, with list of values provided. Can be used in serial call after
-     * {@link MockMetricsVerifier#registered()}, {@link MockMetricsVerifier#valueIncrement()}
-     * and {@link MockMetricsVerifier#valueIncrement(int)}  to provide more clear failure trace,
+     * {@link MockMetricsVerifier#registered()}, {@link MockMetricsVerifier#gauge()}
+     * and {@link MockMetricsVerifier#gauge(int)}  to provide more clear failure trace,
      * however this method success guarantees success of mentioned ones.
      * Ends verify chain
      */
-    public void valueIncrement(List<Long> values) {
-        assertTrue("Metric with name '" + name + "' was expected to be registered as value incremental with values " + values + " , but actually was registered with values "
-                + container.getValuesForValue(MetricsType.INCR_VALUE, name), container.hasValueWithTypeAndNameAndValues(MetricsType.INCR_VALUE, name, values));
+    public void gauge(List<Long> values) {
+        assertTrue("Metric with name '" + name + "' was expected to be registered as gauge with values " + values + " , but actually was registered with values "
+                + container.getValuesForValue(MetricsType.GAUGE, name),
+                container.hasValueWithTypeAndNameAndValues(MetricsType.GAUGE, name, values));
     }
 
     /**
@@ -132,7 +136,7 @@ public class MockMetricsVerifier {
      * @return verify chain
      */
     public MockMetricsVerifier event() {
-        assertTrue("Metric with name '" + name + "'  was expected to be registered as timer or chronable value, but wasnt", container.hasValueWithTypeAndName(MetricsType.TIME, name));
+        assertTrue("Metric with name '" + name + "'  was expected to be registered as timer or chronable event value, but wasnt", container.hasValueWithTypeAndName(MetricsType.TIME, name));
         return this;
     }
 
@@ -145,7 +149,7 @@ public class MockMetricsVerifier {
      * @return verify chain
      */
     public MockMetricsVerifier event(int times) {
-        assertTrue("Metric with name '" + name + "' was expected to be registered as timer or chronable value " + times + " times, but actually was registered "
+        assertTrue("Metric with name '" + name + "' was expected to be registered as timer or chronable event value " + times + " times, but actually was registered "
                 + container.getCountForValue(MetricsType.TIME, name) + " times", container.hasValueWithTypeAndNameAndCount(MetricsType.TIME, name, times));
         return this;
     }
@@ -161,7 +165,7 @@ public class MockMetricsVerifier {
      */
     public void event(List<Long> values) {
 
-        assertTrue("Metric with name '" + name + "' was expected to be registered as timer or chronable value with values " + values + " , but actually was registered with values "
+        assertTrue("Metric with name '" + name + "' was expected to be registered as timer or chronable event value with values " + values + " , but actually was registered with values "
                 + container.getValuesForValue(MetricsType.TIME, name), container.hasValueWithTypeAndNameAndValues(MetricsType.TIME, name, values));
     }
 

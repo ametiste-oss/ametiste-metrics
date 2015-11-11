@@ -2,6 +2,10 @@ package org.ametiste.metrics;
 
 import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
 import org.ametiste.metrics.router.AggregatorsRouter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.function.Consumer;
 
 /**
  * Default {@link MetricsService} implementation, sending metrics to metrics aggregators by
@@ -16,6 +20,7 @@ public class AggregatingMetricsService implements MetricsService {
     private MetricsIdentifierResolver resolver;
     private String prefix = "";
     private AggregatorsRouter router;
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * @param router   AggregatorRouter that defines list of aggregators accepting metric with defined name
@@ -38,18 +43,6 @@ public class AggregatingMetricsService implements MetricsService {
     }
 
     /**
-     * Increments counter to 1 for metrics with id metricId
-     *
-     * @param metricId identifier of metric
-     */
-    @Override
-    public void increment(String metricId) {
-        //TODO maybe its possible to get rid of 'get'
-        router.getAggregatorsForMetric(metricId)
-                .forEach(metricAggregator -> metricAggregator.increment(resolve(metricId)));
-    }
-
-    /**
      * Increments counter to incrementValue for metrics with id metricId
      *
      * @param metricId       identifier of metric
@@ -57,23 +50,20 @@ public class AggregatingMetricsService implements MetricsService {
      */
     @Override
     public void increment(String metricId, int incrementValue) {
-        router.getAggregatorsForMetric(metricId)
-                .forEach(metricAggregator -> metricAggregator.increment(resolve(metricId), incrementValue));
+        route(metricId, metricAggregator -> metricAggregator.increment(resolve(metricId), incrementValue));
     }
 
     /**
-     * Creates event in time for metricId for every aggregator supporting route for metric with metricId
-     *
-     * @param metricId  identifier of metric
-     * @param startTime logged event start time
-     * @param endTime   logged event end time
+     * Increments gauge counter to gaugeValue for metric with id metricId
+     * @param metricId identifier of metric
+     * @param gaugeValue gauge value
+     * @since 0.2.0
      */
-    @Deprecated
     @Override
-    public void createEvent(String metricId, long startTime, long endTime) {
-        this.createEvent(metricId, (int) (endTime - startTime));
+    public void gauge(String metricId, int gaugeValue) {
+        route(metricId, metricAggregator -> metricAggregator.gauge(resolve(metricId), gaugeValue));
+     }
 
-    }
 
     /**
      * Creates event in time with eventValue for metricId.
@@ -85,8 +75,18 @@ public class AggregatingMetricsService implements MetricsService {
      */
     @Override
     public void createEvent(String metricId, int eventValue) {
-        router.getAggregatorsForMetric(metricId).forEach(metricAggregator ->
+        route(metricId, (metricAggregator) ->
                 metricAggregator.event(resolve(metricId), eventValue));
+    }
+
+    private void route(String metricId, Consumer<MetricsAggregator> action) {
+        try {
+            router.aggregate(metricId, action);
+        }catch (Exception e) {
+            // do nothing, our service should not stop flow in common case
+            logger.debug("Router threw an exception", e);
+        }
+
     }
 
     private String resolve(String metricId) {

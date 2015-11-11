@@ -5,5 +5,5 @@ package org.ametiste.metrics.mock.store;
  */
 public enum MetricsType {
 
-    TIME, INCR, INCR_VALUE;
+    TIME, INCR_VALUE, GAUGE;
 }
