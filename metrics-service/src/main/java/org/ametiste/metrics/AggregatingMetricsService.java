@@ -84,7 +84,7 @@ public class AggregatingMetricsService implements MetricsService {
             router.aggregate(metricId, action);
         }catch (Exception e) {
             // do nothing, our service should not stop flow in common case
-            logger.warn("Router threw an exception", e);
+            logger.debug("Router threw an exception", e);
         }
 
     }

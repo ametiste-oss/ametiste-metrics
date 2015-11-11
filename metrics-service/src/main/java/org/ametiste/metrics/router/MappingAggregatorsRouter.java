@@ -92,7 +92,7 @@ public class MappingAggregatorsRouter implements AggregatorsRouter {
             try {
                 function.accept(a);
             } catch (Exception e) {
-                logger.warn("Aggregator threw exception. Aggregator: " + a.getClass(), e);
+                logger.debug("Aggregator threw exception. Aggregator: " + a.getClass(), e);
             }
 
         });
