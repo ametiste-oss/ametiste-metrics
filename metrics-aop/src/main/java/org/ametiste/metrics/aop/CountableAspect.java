@@ -43,7 +43,6 @@ public class CountableAspect {
     public void countRequestMultiple(Countables countables) {
     }
 
-    @Deprecated
     @AfterReturning(pointcut = "countRequestMultiple(countables)", returning = "returnedObject")
     public void processCounting(JoinPoint jp, Object returnedObject, Countables countables) {
         for (Countable c : countables.value()) {

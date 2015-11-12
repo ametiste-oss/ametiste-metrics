@@ -12,8 +12,9 @@ import java.net.*;
  */
 public class DatagramStatsDSocket implements StatsDSocket {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private final DatagramSocketFactory sockFacotry;
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final DatagramSocketFactory sockFactory;
+
     private InetSocketAddress address;
     private DatagramSocket clientSocket;
 
@@ -27,9 +28,7 @@ public class DatagramStatsDSocket implements StatsDSocket {
      *                                  (from {@link InetSocketAddress#InetSocketAddress(String, int)}
      */
     public DatagramStatsDSocket(String hostname, int port) {
-        this(hostname, port, () -> {
-            return new DatagramSocket();
-        });
+        this(hostname, port, DatagramSocket::new);
     }
 
     /**
@@ -38,13 +37,13 @@ public class DatagramStatsDSocket implements StatsDSocket {
      *
      * @param hostname    - name or ip of host to connect
      * @param port        - port to connect
-     * @param sockFacotry - factory to create {@link DatagramSocket}
+     * @param sockFactory - factory to create {@link DatagramSocket}
      * @throws IllegalArgumentException if the port parameter is outside the range
      *                                  of valid port values, or if the hostname parameter is <TT>null</TT>.
      *                                  (from {@link InetSocketAddress#InetSocketAddress(String, int)}
      */
-    DatagramStatsDSocket(String hostname, int port, DatagramSocketFactory sockFacotry) {
-        this.sockFacotry = sockFacotry;
+    DatagramStatsDSocket(String hostname, int port, DatagramSocketFactory sockFactory) {
+        this.sockFactory = sockFactory;
         this.address = new InetSocketAddress(hostname, port);
     }
 
@@ -52,11 +51,19 @@ public class DatagramStatsDSocket implements StatsDSocket {
      * Socket connection attempt with parameters provided in {@link #DatagramStatsDSocket(String, int)}
      *
      * @throws StatsDSocketConnectException - in case {@link DatagramSocket#connect(InetAddress, int)} threw
-     *                                      {@link SocketException}
+     *                                      {@link SocketException} or this socket is already connected.
      */
     public void connect() throws StatsDSocketConnectException {
+
+        // NOTE: because connect operation is critical and must be verified by a client through
+        // exception handling, failed connection notified by exception
+        if (clientSocket != null) {
+            throw new StatsDSocketConnectException("Socket already connected to "
+                    + address.getHostName() + ":" + address.getPort());
+        }
+
         try {
-            this.clientSocket = sockFacotry.create();
+            this.clientSocket = sockFactory.create();
             this.clientSocket.connect(address);
         } catch (SocketException e) {
             throw new StatsDSocketConnectException(e);
@@ -69,6 +76,12 @@ public class DatagramStatsDSocket implements StatsDSocket {
      * @param message - message to send
      */
     public void send(String message) {
+
+        if (clientSocket == null) {
+            logger.debug("Trying to send to already closed socket. Check your client.");
+            return;
+        }
+
         try {
             final byte[] sendData = message.getBytes();
             final DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length);
@@ -84,7 +97,13 @@ public class DatagramStatsDSocket implements StatsDSocket {
      */
     public void close() {
         if (clientSocket != null) {
-            clientSocket.close();
+            try {
+                clientSocket.close();
+            } finally {
+                clientSocket = null;
+            }
+        } else if (logger.isDebugEnabled()) {
+            logger.debug("Trying to close already closed socket. Check your client.");
         }
     }
 }

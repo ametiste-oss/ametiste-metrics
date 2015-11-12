@@ -10,7 +10,7 @@ class MappingMetricsIdentifierResolverTest extends Specification {
     Map<String, String> map = Mock()
     MappingMetricsIdentifierResolver resolver = new MappingMetricsIdentifierResolver(map)
 
-    def properInitializaion() {
+    def properInitialization() {
         given: "creating resolver"
         when: "resolver is created with null map"
             new MappingMetricsIdentifierResolver(null)

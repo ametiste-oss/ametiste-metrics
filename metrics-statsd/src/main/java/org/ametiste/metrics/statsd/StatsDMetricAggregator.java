@@ -12,6 +12,10 @@ public class StatsDMetricAggregator implements MetricsAggregator {
     private StatsDClient client;
 
     public StatsDMetricAggregator(StatsDClient client) {
+
+        if(client==null) {
+            throw new IllegalArgumentException("Client for aggregator cant be null");
+        }
         this.client = client;
     }
 

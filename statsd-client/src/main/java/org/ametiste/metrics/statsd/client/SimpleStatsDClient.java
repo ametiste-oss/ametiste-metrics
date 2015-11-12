@@ -147,7 +147,10 @@ public class SimpleStatsDClient implements StatsDClient {
                 if (isConnected) {
                     socket.send(message);
                 } else {
-                    logger.warn("StatsDClient socket was not connected.");
+                    if(logger.isDebugEnabled()) {
+                        logger.warn("StatsDClient socket was not connected.");
+                        //warn is left for noticeability but we dont need it in warn
+                    }
                 }
             });
         } catch (Exception ignored) {

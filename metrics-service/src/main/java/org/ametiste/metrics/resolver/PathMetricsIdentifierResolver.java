@@ -23,11 +23,18 @@ public class PathMetricsIdentifierResolver implements MetricsIdentifierResolver 
      */
     public PathMetricsIdentifierResolver(List<String> paths, String defaultIdentifier) {
 
-        //TODO add null & empty checks
+        if(defaultIdentifier==null || defaultIdentifier.isEmpty()) {
+            throw new IllegalArgumentException("Default metric identifier cant be empty or null");
+        }
+        if(paths==null) {
+            throw new IllegalArgumentException("Paths cant be null. Use empty list if required");
+        }
+
         this.defaultIdentifier = defaultIdentifier;
         pathsToId = new HashMap<>();
         for (String path : paths) {
-            pathsToId.put(path, this.fitName(path));
+            String trimmed = trimEnclosingPath(path);
+            pathsToId.put(trimmed, this.fitName(trimmed));
         }
     }
 
@@ -37,9 +44,23 @@ public class PathMetricsIdentifierResolver implements MetricsIdentifierResolver 
 
     @Override
     public String resolveMetricId(String metricName) {
+
+        metricName = trimEnclosingPath(metricName);
+
         if (pathsToId.containsKey(metricName))
             return pathsToId.get(metricName);
         return defaultIdentifier;
+    }
+
+    private String trimEnclosingPath(String path) {
+
+        if(path.startsWith("/")) {
+            path = path.replaceFirst("/","");
+        }
+        if(path.endsWith("/")) {
+            path = path.substring(0, path.length()-1);
+        }
+        return path;
     }
 
 }
