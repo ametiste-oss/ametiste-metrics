@@ -21,7 +21,7 @@ public class PathMetricsIdentifierResolver implements MetricsIdentifierResolver 
      * @param paths             list of paths for separate requests metrics count
      * @param defaultIdentifier metric identifier for all requests that dont match one of paths
      */
-    public PathMetricsIdentifierResolver(List<String> paths, String defaultIdentifier) {
+    public PathMetricsIdentifierResolver(final List<String> paths, final String defaultIdentifier) {
 
         if(defaultIdentifier==null || defaultIdentifier.isEmpty()) {
             throw new IllegalArgumentException("Default metric identifier cant be empty or null");
@@ -38,29 +38,29 @@ public class PathMetricsIdentifierResolver implements MetricsIdentifierResolver 
         }
     }
 
-    private String fitName(String path) {
+    private String fitName(final String path) {
         return path.replaceAll("/", ".");
     }
 
     @Override
-    public String resolveMetricId(String metricName) {
-
-        metricName = trimEnclosingPath(metricName);
-
-        if (pathsToId.containsKey(metricName))
-            return pathsToId.get(metricName);
-        return defaultIdentifier;
+    public String resolveMetricId(final String metricName) {
+        return pathsToId.getOrDefault(
+                trimEnclosingPath(metricName), defaultIdentifier);
     }
 
-    private String trimEnclosingPath(String path) {
+    private String trimEnclosingPath(final String path) {
 
-        if(path.startsWith("/")) {
-            path = path.replaceFirst("/","");
+        String trimedPath = path;
+
+        if (trimedPath.startsWith("/")) {
+            trimedPath = trimedPath.replaceFirst("/", "");
         }
-        if(path.endsWith("/")) {
-            path = path.substring(0, path.length()-1);
+
+        if (trimedPath.endsWith("/")) {
+            trimedPath = trimedPath.substring(0, trimedPath.length() - 1);
         }
-        return path;
+
+        return trimedPath;
     }
 
 }
