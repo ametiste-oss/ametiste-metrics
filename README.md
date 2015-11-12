@@ -7,9 +7,11 @@
 [![codecov.io](https://codecov.io/github/ametiste-oss/ametiste-metrics/coverage.svg?branch=master)](https://codecov.io/github/ametiste-oss/ametiste-metrics?branch=master)  
 
 **Latest Stable**  
+  
 [ ![Download](https://api.bintray.com/packages/ametiste-oss/maven/metrics-boot/images/download.svg?version=0.1.0-RELEASE)](https://bintray.com/ametiste-oss/maven/metrics-boot/0.1.0-RELEASE)
 
-**Current Development**  
+**Current Development** 
+  
 [ ![Download](https://api.bintray.com/packages/ametiste-oss/maven/metrics-boot/images/download.svg) ](https://bintray.com/ametiste-oss/maven/metrics-boot/_latestVersion)
 
 ##Overview
