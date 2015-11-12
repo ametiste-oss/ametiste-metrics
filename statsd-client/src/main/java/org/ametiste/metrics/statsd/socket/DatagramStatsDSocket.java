@@ -14,6 +14,8 @@ public class DatagramStatsDSocket implements StatsDSocket {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final DatagramSocketFactory sockFacotry;
+    //TODO fix the typo
+
     private InetSocketAddress address;
     private DatagramSocket clientSocket;
 

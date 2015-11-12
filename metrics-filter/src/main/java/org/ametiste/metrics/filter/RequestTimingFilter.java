@@ -19,6 +19,10 @@ public class RequestTimingFilter implements Filter {
     private final MetricsService service;
 
     public RequestTimingFilter(MetricsService service, MetricsIdentifierResolver resolver) {
+        if(service ==null || resolver ==null) {
+            throw new IllegalArgumentException("MetricService and MetricIdentifierResolver cant be null, " +
+                    "however at least one is null");
+        }
         this.service = service;
         this.resolver = resolver;
     }

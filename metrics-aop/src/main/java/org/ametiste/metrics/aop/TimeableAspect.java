@@ -38,12 +38,10 @@ public class TimeableAspect {
     public void countTime(Timeable timeable) {
     }
 
-    @Deprecated
     @Pointcut(value = "@annotation(timeables)", argNames = "timeables")
     public void countTimeBatch(Timeables timeables) {
     }
 
-    @Deprecated
     @Around("countTimeBatch(timeables)")
     public Object processTimingBatch(ProceedingJoinPoint pjp, Timeables timeables) throws Throwable {
 

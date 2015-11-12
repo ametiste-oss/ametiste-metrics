@@ -8,6 +8,7 @@ import org.ametiste.metrics.aop.stubs.StubChronables
 import org.aspectj.lang.JoinPoint
 import org.springframework.expression.Expression
 import org.springframework.expression.ExpressionParser
+import spock.lang.Shared
 import spock.lang.Specification
 
 
@@ -21,6 +22,13 @@ class ChronableAspectTest extends Specification {
     private ExpressionParser parser = Mock()
     private ChronableAspect aspect = new ChronableAspect(service, resolver, parser)
 
+    private JoinPoint jp
+
+    def setup() {
+        jp = Mock()
+        jp.args >> new Object()
+        jp.target >> new Object()
+    }
 
     def initialization() {
         when: "aspect is initialized with null metric service"
@@ -40,7 +48,6 @@ class ChronableAspectTest extends Specification {
 
     def processTimingNoException() {
         given: "metric with normal result and annotation"
-            JoinPoint jp = Mock()
             Object result = Mock()
             Chronable annotation = new StubChronable("metricName", "", "5", "", "'true'", Chronable.NO_EXCEPTION)
         when: "metric is processed"
@@ -48,14 +55,13 @@ class ChronableAspectTest extends Specification {
             parser.parseExpression("'true'") >> expression
             resolver.getTargetIdentifier(_,_,_) >> "metricName"
             expression.getValue(_, boolean.class) >> true
-            aspect.processTiming(jp, result, annotation)
+            aspect.processChronable(jp, result, annotation)
         then: "service method is called"
             1 * service.createEvent("metricName", 5);
     }
 
     def processTimingParserException() {
         given: "metric with normal result and annotation"
-            JoinPoint jp = Mock()
             Object result = Mock()
             Chronable annotation = new StubChronable("metricName", "", "5", "", "'true'", Chronable.NO_EXCEPTION)
         when: "metric is processed and parser throws exception"
@@ -63,14 +69,13 @@ class ChronableAspectTest extends Specification {
             parser.parseExpression("'true'") >> {throw new Exception()}
             resolver.getTargetIdentifier(_,_,_) >> "metricName"
             expression.getValue(_, boolean.class) >> true
-            aspect.processTiming(jp, result, annotation)
+            aspect.processChronable(jp, result, annotation)
         then: "service method is not called"
             0 * service.createEvent(_, _);
     }
 
     def processTimingNoExceptionWithValueExp() {
         given: "metric with normal result and annotation with value expression"
-            JoinPoint jp = Mock()
             Object result = Mock()
             Chronable annotation = new StubChronable("metricName", "", "", "12", "'true'", Chronable.NO_EXCEPTION)
         when: "metric is processed"
@@ -80,14 +85,13 @@ class ChronableAspectTest extends Specification {
             parser.parseExpression("'true'") >> expression
             resolver.getTargetIdentifier(_,_,_) >> "metricName"
             expression.getValue(_, boolean.class) >> true
-            aspect.processTiming(jp, result, annotation)
+            aspect.processChronable(jp, result, annotation)
         then: "service method is called"
             1 * service.createEvent("metricName", 12);
     }
 
     def processTimingWithEmtyNameAndNameExp() {
         given: "metric with normal result and annotation with empty value and expression"
-            JoinPoint jp = Mock()
             Object result = Mock()
             Chronable annotation = new StubChronable("", "", "", "", "'true'", Chronable.NO_EXCEPTION)
         when: "metric is processed"
@@ -95,14 +99,13 @@ class ChronableAspectTest extends Specification {
             parser.parseExpression("'true'") >> expression
             resolver.getTargetIdentifier(_,_,_) >> "metricName"
             expression.getValue(_, boolean.class) >> true
-            aspect.processTiming(jp, result, annotation)
+            aspect.processChronable(jp, result, annotation)
         then: "exception is thrown and not catched"
             thrown(IllegalArgumentException.class)
     }
 
     def processTimingNoExceptionWithFalseCondition() {
         given: "metric with normal result and annotation"
-            JoinPoint jp = Mock()
             Object result = Mock()
             Chronable annotation = new StubChronable("metricName", "", "5", "", "'true'", Chronable.NO_EXCEPTION)
         when: "metric is processed and conition is false"
@@ -110,14 +113,13 @@ class ChronableAspectTest extends Specification {
             parser.parseExpression("'true'") >> expression
             resolver.getTargetIdentifier(_,_,_) >> "metricName"
             expression.getValue(_, boolean.class) >> false
-            aspect.processTiming(jp, result, annotation)
+            aspect.processChronable(jp, result, annotation)
         then: "service method is not called"
             0 * service.createEvent("metricName", 5);
     }
 
     def processTimingWithException() {
         given: "metric with illegal argument exception and annotation"
-            JoinPoint jp = Mock()
             Exception exception = new IllegalArgumentException()
             Chronable annotation = new StubChronable("metricName", "", "5", "", "'true'", IllegalArgumentException.class)
         when: "metric is processed"
@@ -125,14 +127,13 @@ class ChronableAspectTest extends Specification {
             parser.parseExpression("'true'") >> expression
             resolver.getTargetIdentifier(_,_,_) >> "metricName"
             expression.getValue(_, boolean.class) >> true
-            aspect.processTiming(jp, exception, annotation)
+            aspect.processChronable(jp, exception, annotation)
         then: "service method is called"
            1 * service.createEvent("metricName", 5);
     }
 
     def processTimingBatchWithException() {
         given: "metric with illegal argument exception and annotation"
-            JoinPoint jp = Mock()
             Exception exception = new IllegalArgumentException()
             Chronable annotation = new StubChronable("metricName", "", "5", "", "'true'", IllegalArgumentException.class)
             Chronables batch = new StubChronables(annotation, annotation)
@@ -141,14 +142,13 @@ class ChronableAspectTest extends Specification {
             parser.parseExpression("'true'") >> expression
             resolver.getTargetIdentifier(_,_,_) >> "metricName"
             expression.getValue(_, boolean.class) >> true
-            aspect.processTimingBatch(jp, exception, batch)
+            aspect.processChronablesBatch(jp, exception, batch)
         then: "service method is called"
             2 * service.createEvent("metricName", 5);
     }
 
     def processTimingBatchNoException() {
         given: "metric with normal result and annotation"
-            JoinPoint jp = Mock()
             Object result = Mock()
             Chronable annotation = new StubChronable("metricName", "", "5", "", "'true'", Chronable.NO_EXCEPTION)
             Chronables batch = new StubChronables(annotation, annotation)
@@ -157,7 +157,7 @@ class ChronableAspectTest extends Specification {
             parser.parseExpression("'true'") >> expression
             resolver.getTargetIdentifier(_,_,_) >> "metricName"
             expression.getValue(_, boolean.class) >> true
-            aspect.processTimingBatch(jp, result, batch)
+            aspect.processChronablesBatch(jp, result, batch)
         then: "service method is called"
             2 * service.createEvent("metricName", 5);
     }

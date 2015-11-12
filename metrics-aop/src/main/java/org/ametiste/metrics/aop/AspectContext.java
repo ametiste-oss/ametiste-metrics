@@ -21,6 +21,9 @@ public class AspectContext {
      * @param returnedValue result of target method execution
      */
     public AspectContext(Object[] args, Object target, Object returnedValue) {
+        if(args ==null || target ==null) {
+            throw new IllegalArgumentException("Arguments and target cant be null");
+        }
         this.args = args;
         this.target = target;
         this.result = returnedValue;
@@ -33,6 +36,9 @@ public class AspectContext {
      * @param target target object
      */
     public AspectContext(Object[] args, Object target) {
+        if(args ==null || target ==null) {
+            throw new IllegalArgumentException("Arguments and target cant be null");
+        }
         this.args = args;
         this.target = target;
         this.result = null;

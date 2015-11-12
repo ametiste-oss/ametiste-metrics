@@ -15,6 +15,9 @@ public class IdentifierResolver {
     private final ExpressionParser parser;
 
     public IdentifierResolver(ExpressionParser parser) {
+        if(parser==null) {
+            throw new IllegalArgumentException("ExpressionParser cant be null");
+        }
         this.parser = parser;
     }
 
