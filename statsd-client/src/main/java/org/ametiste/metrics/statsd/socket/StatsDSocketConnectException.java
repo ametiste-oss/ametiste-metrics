@@ -9,6 +9,11 @@ import java.net.SocketException;
  * @since 0.1.0
  */
 public class StatsDSocketConnectException extends RuntimeException {
+
+    public StatsDSocketConnectException(String message) {
+        super(message);
+    }
+
     public StatsDSocketConnectException(SocketException e) {
         super(e);
     }

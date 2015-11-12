@@ -1,7 +1,6 @@
 package org.ametiste.metrics.statsd.socket;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
@@ -70,6 +69,23 @@ public class DatagramStatsDSocketTest {
     }
 
     @Test(expected = StatsDSocketConnectException.class)
+    public void testConnectConnectedSocket() throws Exception {
+        datagramStatsDSocket.connect();
+
+        // NOTE: first check that the first connection request is succesful
+        final ArgumentCaptor<InetSocketAddress> captor =
+                ArgumentCaptor.forClass(InetSocketAddress.class);
+
+        verify(datagramSocket, times(1)).connect(captor.capture());
+
+        assertEquals(TEST_HOST, captor.getValue().getHostName());
+        assertEquals(TEST_PORT, captor.getValue().getPort());
+
+        // NOTE: then try second connect attempt that should throw exception
+        datagramStatsDSocket.connect();
+    }
+
+    @Test(expected = StatsDSocketConnectException.class)
     public void testConnectToErroredSocket() throws Exception {
 
         doThrow(SocketException.class)
@@ -111,8 +127,6 @@ public class DatagramStatsDSocketTest {
     }
 
     @Test
-    // TODO: fix implementation and unignore
-    @Ignore
     public void testSendToClosedSocket() throws Exception {
 
         datagramStatsDSocket.connect();
@@ -159,8 +173,6 @@ public class DatagramStatsDSocketTest {
     }
 
     @Test
-    // TODO: fix implementation and unignore
-    @Ignore
     public void testCloseClosedSocket() throws Exception {
 
         datagramStatsDSocket.connect();
