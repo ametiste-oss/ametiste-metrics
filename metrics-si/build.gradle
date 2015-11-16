@@ -1,0 +1,8 @@
+ext {
+    springIntegrationVersion = "4.2.1.RELEASE"
+}
+
+dependencies {
+    compile project(":metrics-service")
+    compile "org.springframework.integration:spring-integration-core:${springIntegrationVersion}"
+}
