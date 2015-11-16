@@ -10,11 +10,11 @@ public class CountableChannelMetric extends AbstractChannelMetric {
     }
 
     @Override
-	//TODO think we can do that with annotations
-	protected Object doInvoke(ExecutionCallback callback, Object target, Message<?> message) throws Exception {
-		Object result = callback.execute();
-		service.increment(metricName,1);
-		return result;
-	}
+    //TODO think we can do that with annotations
+    protected Object doInvoke(ExecutionCallback callback, Object target, Message<?> message) throws Exception {
+        Object result = callback.execute();
+        service.increment(metricName,1);
+        return result;
+    }
 
 }

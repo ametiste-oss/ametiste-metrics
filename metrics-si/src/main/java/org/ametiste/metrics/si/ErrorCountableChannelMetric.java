@@ -12,12 +12,12 @@ public class ErrorCountableChannelMetric extends AbstractChannelMetric {
 	@Override
 	protected Object doInvoke(ExecutionCallback callback, Object target, Message<?> message) throws Exception {
 		try {
-            return callback.execute();
-        }
-        catch (Exception e) {
-            service.increment(metricName,1);
-            throw  e;
-        }
+			return callback.execute();
+		}
+		catch (Exception e) {
+			service.increment(metricName,1);
+			throw  e;
+		}
 
 
 	}
