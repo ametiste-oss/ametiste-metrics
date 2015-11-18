@@ -18,7 +18,7 @@ class IdentifierResolverTest extends Specification {
         when: "resolver is initialized with null parser"
             new IdentifierResolver(null)
         then: "exception should be thrown"
-            //nothing happens now
+            thrown(IllegalArgumentException)
 
     }
 

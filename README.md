@@ -2,8 +2,19 @@
 
 ## Build Status
 
+**CI Statuses**  
+
 [![Build Status](https://travis-ci.org/ametiste-oss/ametiste-metrics.svg?branch=master)](https://travis-ci.org/ametiste-oss/ametiste-metrics)
 [![Codacy Badge](https://api.codacy.com/project/badge/fdb7b072ff264edcb0bbc72c5ade3b53)](https://www.codacy.com/app/Ametiste-OSS/ametiste-metrics)
+[![codecov.io](https://codecov.io/github/ametiste-oss/ametiste-metrics/coverage.svg?branch=master)](https://codecov.io/github/ametiste-oss/ametiste-metrics?branch=master)  
+
+**Latest Stable**  
+  
+[![Download](https://api.bintray.com/packages/ametiste-oss/maven/metrics-boot/images/download.svg?version=0.1.0-RELEASE)](https://bintray.com/ametiste-oss/maven/metrics-boot/0.1.0-RELEASE)
+
+**Current Development** 
+  
+[ ![Download](https://api.bintray.com/packages/ametiste-oss/maven/metrics-boot/images/download.svg) ](https://bintray.com/ametiste-oss/maven/metrics-boot/_latestVersion)
 
 ##Overview
 Ametiste metrics is a library for easy metrics registration from any point of client code.

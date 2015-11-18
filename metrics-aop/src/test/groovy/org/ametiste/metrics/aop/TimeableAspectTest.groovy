@@ -6,6 +6,7 @@ import org.ametiste.metrics.annotations.Timeable
 import org.ametiste.metrics.annotations.composite.Timeables
 import org.ametiste.metrics.aop.stubs.StubTimeable
 import org.ametiste.metrics.aop.stubs.StubTimeables
+import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.ProceedingJoinPoint
 import spock.lang.Specification
 
@@ -18,6 +19,13 @@ class TimeableAspectTest extends Specification {
     private MetricsService service = Mock()
     private IdentifierResolver resolver = Mock()
     private TimeableAspect aspect = new TimeableAspect(service, resolver)
+    private ProceedingJoinPoint pjp
+
+    def setup() {
+        pjp = Mock()
+        pjp.args >> new Object()
+        pjp.target >> new Object()
+    }
 
     def initialization() {
         when: "aspect is initialized with null metric service"
@@ -32,7 +40,6 @@ class TimeableAspectTest extends Specification {
 
     def processTiming() {
         given: "join point with timeable annotation"
-            ProceedingJoinPoint pjp = Mock()
             Timeable timeable = new StubTimeable("", "", MetricsMode.ERROR_FREE)
         when: "resolver resolves name normally"
             resolver.getTargetIdentifier("", "",_) >> "metricName"
@@ -43,7 +50,6 @@ class TimeableAspectTest extends Specification {
 
     def processTimingErrorFree() {
         given: "join point with timeable with error free mode"
-            ProceedingJoinPoint pjp = Mock()
             Timeable timeable = new StubTimeable("", "", MetricsMode.ERROR_FREE)
             Exception e = new Exception();
         when: "resolver resolves name normally but join point proceeds with error"
@@ -58,7 +64,6 @@ class TimeableAspectTest extends Specification {
 
     def processTimingErrorProne() {
         given: "join point with timeable with error prone mode"
-            ProceedingJoinPoint pjp = Mock()
             Timeable timeable = new StubTimeable("", "", MetricsMode.ERROR_PRONE)
             Exception e = new Exception();
         when: "resolver resolves name normally but join point proceeds with error"
@@ -73,7 +78,6 @@ class TimeableAspectTest extends Specification {
 
     def processTimingWithParserError() {
         given: "join point with timeable"
-            ProceedingJoinPoint pjp = Mock()
             Timeable timeable = new StubTimeable("", "", MetricsMode.ERROR_FREE)
         when: "resolver throws parse exception"
             resolver.getTargetIdentifier("", "",_) >> {throw new MetricExpressionParsingException("")}
@@ -84,7 +88,6 @@ class TimeableAspectTest extends Specification {
 
     def processTimingBatch() {
         given: "join point with timeable"
-            ProceedingJoinPoint pjp = Mock()
             Timeable timeable = new StubTimeable("", "", MetricsMode.ERROR_PRONE)
             Timeables timeables = new StubTimeables(timeable, timeable)
         when: "resolver resolves name normally"

@@ -11,4 +11,6 @@ include 'metrics-filter'
 include 'metrics-filter-boot'
 include 'metrics-experimental'
 include 'integration-tests'
+include 'metrics-si'
+
 

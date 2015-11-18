@@ -52,24 +52,23 @@ public class ChronableAspect {
     public void chronateBatch(Chronables chrons) {
     }
 
-    //TODO rename it, its not timing batch
     @AfterReturning(pointcut = "chronateBatch(chrons)", returning = "returnedObject")
-    public void processTimingBatch(JoinPoint pjp, Object returnedObject, Chronables chrons) {
+    public void processChronablesBatch(JoinPoint pjp, Object returnedObject, Chronables chrons) {
         for (Chronable chron : chrons.value()) {
-            this.processTiming(pjp, returnedObject, chron);
+            this.processChronable(pjp, returnedObject, chron);
         }
     }
 
     @AfterThrowing(pointcut = "chronateBatch(chrons)", throwing = "exception")
-    public void processTimingBatch(JoinPoint pjp, Exception exception, Chronables chrons) {
+    public void processChronablesBatch(JoinPoint pjp, Exception exception, Chronables chrons) {
 
         for (Chronable chron : chrons.value()) {
-            this.processTiming(pjp, exception, chron);
+            this.processChronable(pjp, exception, chron);
         }
     }
 
     @AfterReturning(pointcut = "chronate(chron)", returning = "returnedObject")
-    public void processTiming(JoinPoint pjp, Object returnedObject, Chronable chron) {
+    public void processChronable(JoinPoint pjp, Object returnedObject, Chronable chron) {
         if (chron.exceptionClass().equals(Chronable.NO_EXCEPTION.class)) {
             this.chroneMetric(pjp, returnedObject, chron);
         }
@@ -77,7 +76,7 @@ public class ChronableAspect {
     }
 
     @AfterThrowing(pointcut = "chronate(chron)", throwing = "exception")
-    public void processTiming(JoinPoint pjp, Exception exception, Chronable chron) {
+    public void processChronable(JoinPoint pjp, Exception exception, Chronable chron) {
 
         if (chron.exceptionClass().isAssignableFrom(exception.getClass())) {
             this.chroneMetric(pjp, null, chron);

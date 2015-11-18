@@ -21,12 +21,12 @@ class RequestTimingFilterTest extends Specification {
     def initialization() {
         when: "filter is created with null service"
             new RequestTimingFilter(null, resolver)
-        then: "exception should be thrown but now not :D"
-        //thrown()
+        then: "exception should be thrown"
+            thrown(IllegalArgumentException)
         when: "filter is created with null resolver"
             new RequestTimingFilter(service, null)
-        then: "exception should be thrown but now not :D"
-        //thrown()
+        then: "exception should be thrown"
+            thrown(IllegalArgumentException)
     }
     def defaults() {
         given: "some config"

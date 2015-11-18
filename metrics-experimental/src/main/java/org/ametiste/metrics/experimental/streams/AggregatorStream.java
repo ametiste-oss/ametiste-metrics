@@ -1,7 +1,6 @@
 package org.ametiste.metrics.experimental.streams;
 
 import org.ametiste.metrics.MetricsAggregator;
-import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
 
 /**
  *
@@ -23,6 +22,11 @@ public class AggregatorStream implements MetricsStream {
     @Override
     public void event(String metricId, int value) {
         this.metricsAggregator.event(metricId, value);
+    }
+
+    @Override
+    public void gauge(String metricId, int value) {
+        this.metricsAggregator.gauge(metricId, value);
     }
 
 }

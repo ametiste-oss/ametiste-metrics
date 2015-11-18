@@ -42,7 +42,6 @@ public class ErrorCountableAspect {
     public void errorRequestBatch(ErrorCountables errorCountables) {
     }
 
-    @Deprecated
     @AfterThrowing("errorRequestBatch(errorCountables)")
     public void processCountingBatch(JoinPoint jp, ErrorCountables errorCountables) {
         for (ErrorCountable e : errorCountables.value()) {

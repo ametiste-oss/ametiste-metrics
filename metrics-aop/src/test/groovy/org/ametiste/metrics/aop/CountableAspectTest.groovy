@@ -16,6 +16,13 @@ class CountableAspectTest extends Specification {
     private MetricsService service = Mock()
     private IdentifierResolver resolver = Mock()
     private CountableAspect aspect = new CountableAspect(service, resolver)
+    private JoinPoint jp
+
+    def setup() {
+        jp = Mock()
+        jp.args >> new Object()
+        jp.target >> new Object()
+    }
 
     def initialization() {
         when: "aspect is initialized with null metric service"
@@ -30,7 +37,6 @@ class CountableAspectTest extends Specification {
 
     def processCounting() {
         given: "join point with normal result and countable annotation"
-            JoinPoint jp = Mock()
             Object result = Mock()
             Countable countable = new StubCountable("","", 5)
         when: "resolver resolves identifier normally"
@@ -42,7 +48,6 @@ class CountableAspectTest extends Specification {
 
     def processCountingParserException() {
         given: "join point with normal result and countable annotation"
-            JoinPoint jp = Mock()
             Object result = Mock()
             Countable countable = new StubCountable("","", 5)
         when: "resolver throws excetion"
@@ -54,7 +59,6 @@ class CountableAspectTest extends Specification {
 
     def processCountingBatch() {
         given: "join point with normal result and countable annotation"
-            JoinPoint jp = Mock()
             Object result = Mock()
             Countable countable = new StubCountable("","", 5)
             Countables batch = new StubCountables(countable, countable)

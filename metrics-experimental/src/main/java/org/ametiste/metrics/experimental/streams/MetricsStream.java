@@ -13,4 +13,6 @@ public interface MetricsStream {
 
     void event(String metricId, int value);
 
+    void gauge(String metricId, int value);
+
 }

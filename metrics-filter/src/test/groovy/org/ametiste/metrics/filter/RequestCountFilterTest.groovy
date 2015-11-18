@@ -22,12 +22,12 @@ class RequestCountFilterTest extends Specification {
     def initialization() {
         when: "filter is created with null service"
             new RequestCountFilter(null, resolver)
-        then: "exception should be thrown but now not :D"
-            //thrown()
+        then: "exception should be thrown"
+            thrown(IllegalArgumentException)
         when: "filter is created with null resolver"
             new RequestCountFilter(service, null)
-        then: "exception should be thrown but now not :D"
-            //thrown()
+        then: "exception should be thrown"
+            thrown(IllegalArgumentException)
     }
     def defaults() {
         given: "some config"

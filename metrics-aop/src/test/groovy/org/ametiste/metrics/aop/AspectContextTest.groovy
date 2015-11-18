@@ -16,24 +16,24 @@ class AspectContextTest extends Specification {
     def initialization() {
         when: "context is initialized with null args object"
             new AspectContext(null, target);
-        then: "nothin happens, but exception should be"
-            // will be exception after fixes
+        then: "exception is thrown"
+            thrown(IllegalArgumentException)
         when: "context is initialized with null target object"
             new AspectContext(args, null);
-        then: "nothin happens, but exception should be"
-        // will be exception after fixes
+        then: "exception is thrown"
+            thrown(IllegalArgumentException)
         when: "context is initialized with null args object"
             new AspectContext(null, target, result);
-        then: "nothin happens, but exception should be"
-        // will be exception after fixes
+        then: "exception is thrown"
+            thrown(IllegalArgumentException)
         when: "context is initialized with null target object"
             new AspectContext(args, null, result);
-        then: "nothin happens, but exception should be"
-        // will be exception after fixes
+        then: "exception is thrown"
+            thrown(IllegalArgumentException)
         when: "context is initialized with null target object"
             new AspectContext(args, target, null);
-        then: "nothin happens, but exception should be"
-        // will be exception after fixes
+        then: "is legit, one of usage cases"
+
 
     }
 

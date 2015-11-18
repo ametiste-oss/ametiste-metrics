@@ -17,6 +17,13 @@ class GaugeableAspectTest extends Specification {
     private MetricsService service = Mock()
     private IdentifierResolver resolver = Mock()
     private GaugeableAspect aspect = new GaugeableAspect(service, resolver)
+    private JoinPoint jp
+
+    def setup() {
+        jp = Mock()
+        jp.args >> new Object()
+        jp.target >> new Object()
+    }
 
     def initialization() {
         when: "aspect is initialized with null metric service"
@@ -31,7 +38,6 @@ class GaugeableAspectTest extends Specification {
 
     def processCounting() {
         given: "join point and gaugeable annotation"
-            JoinPoint jp = Mock()
             Gaugeable gaugeable = new StubGaugeable("","", 6)
             Object result = Mock()
         when: "resolver resolves identifier normally"
@@ -43,7 +49,6 @@ class GaugeableAspectTest extends Specification {
 
     def processCountingParserException() {
         given: "join point and gaugeable  annotation"
-            JoinPoint jp = Mock()
             Gaugeable gaugeable = new StubGaugeable("","", 6)
             Object result = Mock()
         when: "resolver resolves identifier normally"
@@ -55,7 +60,6 @@ class GaugeableAspectTest extends Specification {
 
     def processCountingBatch() {
         given: "join point and gaugeable annotation"
-            JoinPoint jp = Mock()
             Object result = Mock()
             Gaugeable gaugeable = new StubGaugeable("","", 6)
             Gaugeables batch = new StubGaugables(gaugeable, gaugeable)

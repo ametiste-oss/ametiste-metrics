@@ -2,9 +2,13 @@ package org.ametiste.metrics.router;
 
 import org.ametiste.metrics.MetricsAggregator;
 import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * {@link AggregatorsRouter} implementation based on routing map,
@@ -25,6 +29,7 @@ public class MappingAggregatorsRouter implements AggregatorsRouter {
     private final Map<String, List<MetricsAggregator>> aggregatorsMap;
 
     private boolean hasWildCards = false;
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Requires routing map with "__default" key route at least.
@@ -53,6 +58,8 @@ public class MappingAggregatorsRouter implements AggregatorsRouter {
      * if metricIdentifier didnt match any specific routes, default route aggregator list is returned.
      */
     @Override
+    @Deprecated
+    //change visibility, the logic is kept but it should not be part of interface in future
     public List<MetricsAggregator> getAggregatorsForMetric(String metricIdentifier) {
         if (aggregatorsMap.containsKey(metricIdentifier)) {
             return aggregatorsMap.get(metricIdentifier);
@@ -66,6 +73,29 @@ public class MappingAggregatorsRouter implements AggregatorsRouter {
             }
         }
         return aggregatorsMap.get(DEFAULT_ROUTE_NAME);
+    }
+
+    /**
+     * Matches list of aggregators either by key or by prefixed key. Example of keys:
+     * "metric.that.needs.to.be.routed" matches as to key "metric.that.needs.to.be.routed" as to
+     * "metric.that.needs*" and "*"
+     * when "metric.is.to.be.routed" matches only "*" of those route keys
+     *
+     * @param metricIdentifier - id of metric for that route is defined. Note: id is
+     *                         already resolved one, in case if {@link MetricsIdentifierResolver}
+     *                         had a match for metric identifier, identifier might be different from initial name
+     * @param function - consumer that should be applied to each of aggregators .
+     */
+    @Override
+    public void aggregate(String metricIdentifier, Consumer<MetricsAggregator> function) {
+        this.getAggregatorsForMetric(metricIdentifier).forEach(a -> {
+            try {
+                function.accept(a);
+            } catch (Exception e) {
+                logger.debug("Aggregator threw exception. Aggregator: " + a.getClass(), e);
+            }
+
+        });
     }
 
 }

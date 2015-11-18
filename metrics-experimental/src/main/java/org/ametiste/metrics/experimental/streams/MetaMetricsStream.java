@@ -29,6 +29,8 @@ public class MetaMetricsStream implements MetricsStream {
 
     public final static String META_EVENT_METRIC = "ame.metrics.meta.event";
 
+    public final static String META_GAUGE_METRIC = "ame.metrics.meta.gauge";
+
     private final MetricsStream upstream;
 
     private final TimeMeasurement timeMeasurement;
@@ -50,6 +52,12 @@ public class MetaMetricsStream implements MetricsStream {
     public void event(String metricId, int value) {
         this.timeMeasurement
                 .measureTimeOf(META_EVENT_METRIC, () -> upstream.event(metricId, value));
+    }
+
+    @Override
+    public void gauge(String metricId, int value) {
+        this.timeMeasurement
+                .measureTimeOf(META_GAUGE_METRIC, () -> upstream.gauge(metricId, value));
     }
 
 }

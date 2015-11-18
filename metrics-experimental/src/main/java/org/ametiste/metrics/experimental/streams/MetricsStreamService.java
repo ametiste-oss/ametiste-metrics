@@ -8,27 +8,25 @@ import org.ametiste.metrics.MetricsService;
  */
 public class MetricsStreamService implements MetricsService {
 
-    private MetricsStream metricsStreams;
+    private MetricsStream metricsStream;
 
-    public MetricsStreamService(MetricsStream metricsStreams) {
-        this.metricsStreams = metricsStreams;
+    public MetricsStreamService(MetricsStream metricsStream) {
+        this.metricsStream = metricsStream;
     }
 
     @Override
     public void increment(String metricId, int incrementValue) {
-        this.metricsStreams.increment(metricId, incrementValue);
+        this.metricsStream.increment(metricId, incrementValue);
     }
 
     @Override
     public void gauge(String metricId, int gaugeValue) {
-        //TODO implement it
-        throw new UnsupportedOperationException("Not implemented");
+        this.metricsStream.gauge(metricId, gaugeValue);
     }
-
 
     @Override
     public void createEvent(String metricId, int eventValue) {
-        this.metricsStreams.event(metricId, eventValue);
+        this.metricsStream.event(metricId, eventValue);
     }
 
 }

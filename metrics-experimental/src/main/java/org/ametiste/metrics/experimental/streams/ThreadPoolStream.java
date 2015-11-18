@@ -34,4 +34,11 @@ public class ThreadPoolStream implements MetricsStream {
         );
     }
 
+    @Override
+    public void gauge(String metricId, int value) {
+        executorService.submit(
+                () -> upstream.event(metricId, value)
+        );
+    }
+
 }
