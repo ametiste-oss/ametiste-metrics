@@ -1,0 +1,30 @@
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:0.5.3.RELEASE"
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+
+    }
+}
+
+dependencies {
+
+    compile project(':metrics-boot')
+    compile project(':metrics-service-mock')
+    testCompile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}") {
+        exclude module: "spring-boot-starter-tomcat"
+    }
+    testCompile(
+
+       "org.springframework.boot:spring-boot-starter-jetty:${springBootVersion}",
+        "org.springframework.boot:spring-boot:${springBootVersion}",
+        'org.spockframework:spock-spring:1.0-groovy-2.4',
+        "org.hamcrest:hamcrest-core:${hamcrestVersion}",
+        "org.springframework:spring-web",
+        "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    )
+
+}
