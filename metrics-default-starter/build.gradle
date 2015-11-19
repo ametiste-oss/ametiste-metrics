@@ -4,10 +4,10 @@ plugins {
 
 apply from: "https://raw.githubusercontent.com/ametiste-oss/ametiste-bintray-gradle/master/bintray.gradle"
 
-
 dependencies {
-    compile project(":metrics-filter")
+
+    compile project(":metrics-jmx-starter")
+    compile project(":metrics-statsd-starter")
     compile project(":metrics-starter")
-    //TODO not sure STARTER should be here, maybe service is enough?
 
 }

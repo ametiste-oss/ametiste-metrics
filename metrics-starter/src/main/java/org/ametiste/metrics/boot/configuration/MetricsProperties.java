@@ -1,6 +1,5 @@
 package org.ametiste.metrics.boot.configuration;
 
-import org.ametiste.metrics.statsd.client.ErrorMode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -48,7 +47,7 @@ public class MetricsProperties {
 
         private String host = "localhost";
         private int port = 8125;
-        private ErrorMode mode = ErrorMode.MODERATE;
+        private String mode = "MODERATE";
 
         public String getHost() {
             return host;
@@ -66,11 +65,11 @@ public class MetricsProperties {
             this.port = port;
         }
 
-        public ErrorMode getMode() {
+        public String getMode() {
             return mode;
         }
 
-        public void setMode(ErrorMode mode) {
+        public void setMode(String mode) {
             this.mode = mode;
         }
     }

@@ -45,7 +45,6 @@ public class MetricsIntegrationTestJ {
 
     @Before
     public void setUp() {
-//        Object bean = this.wac.getBean("mockService");
         this.mockMvc = webAppContextSetup(this.wac).build();
     }
 

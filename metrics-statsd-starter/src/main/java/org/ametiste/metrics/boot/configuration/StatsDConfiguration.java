@@ -2,6 +2,7 @@ package org.ametiste.metrics.boot.configuration;
 
 import org.ametiste.metrics.MetricsAggregator;
 import org.ametiste.metrics.statsd.StatsDMetricAggregator;
+import org.ametiste.metrics.statsd.client.ErrorMode;
 import org.ametiste.metrics.statsd.client.SimpleStatsDClient;
 import org.ametiste.metrics.statsd.client.StatsDClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class StatsDConfiguration {
     public StatsDClient statsDClient() {
 
         return new SimpleStatsDClient(properties.getStatsd().getHost(),
-                properties.getStatsd().getPort(), properties.getStatsd().getMode());
+                properties.getStatsd().getPort(), ErrorMode.valueOf(properties.getStatsd().getMode()));
     }
 
     @Bean

@@ -16,7 +16,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 
 @Configuration
 @Import({
-        DefaultAggreagtorsConfiguration.class,
+        EmptyAggregatorsConfiguration.class,
         DefaultRoutingConfiguration.class,
         MetricsRoutingCoreConfiguration.class,
         MetricsIdentifierResolverCoreConfguration.class})
