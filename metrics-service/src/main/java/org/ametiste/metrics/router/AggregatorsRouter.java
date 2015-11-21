@@ -5,7 +5,6 @@ import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
 
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 /**
  * Metrics allow configuration with different routes for specific metrics.

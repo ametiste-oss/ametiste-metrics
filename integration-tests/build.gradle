@@ -12,7 +12,7 @@ buildscript {
 
 dependencies {
 
-    compile project(':metrics-boot')
+    compile project(':metrics-starter')
     compile project(':metrics-service-mock')
     testCompile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}") {
         exclude module: "spring-boot-starter-tomcat"

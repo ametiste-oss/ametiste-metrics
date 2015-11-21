@@ -6,8 +6,9 @@ apply from: "https://raw.githubusercontent.com/ametiste-oss/ametiste-bintray-gra
 
 
 dependencies {
-    compile project(":metrics-filter")
+    compile project(":metrics-jmx")
     compile project(":metrics-starter")
-    //TODO not sure STARTER should be here, maybe service is enough?
 
+    compile "org.springframework.boot:spring-boot:${springBootVersion}"
+    compile "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"
 }

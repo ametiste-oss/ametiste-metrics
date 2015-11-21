@@ -2,28 +2,20 @@ package org.ametiste.metrics.boot.configuration;
 
 import org.ametiste.metrics.MetricsAggregator;
 import org.ametiste.metrics.NullMetricsAggregator;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
 /**
- * <p>
- * Defines default configured aggreagtors. See concrete aggregators configurations for details.
- * </p>
- *
- * @see JmxConfiguration
- * @see StatsDConfiguration
+ * Defines empty configured aggregator if any else are missing. Provides successful test launch
  * @since 0.2.0
  */
-@Import({
-        JmxConfiguration.class,
-        StatsDConfiguration.class
-})
 @Configuration
-public class DefaultAggreagtorsConfiguration {
+public class EmptyAggregatorsConfiguration {
 
     @Bean
     @CoreAggregator
+    @ConditionalOnMissingBean(MetricsAggregator.class)
     public MetricsAggregator nullAggregator() {
         return new NullMetricsAggregator();
     }

@@ -5,15 +5,9 @@ plugins {
 apply from: "https://raw.githubusercontent.com/ametiste-oss/ametiste-bintray-gradle/master/bintray.gradle"
 
 
-ext {
-    springBootVersion="1.2.5.RELEASE"
-}
-
 dependencies {
 
     compile project(":metrics-aop")
-    compile project(":metrics-statsd")
-    compile project(":metrics-jmx")
 
     compile "org.springframework.boot:spring-boot:${springBootVersion}"
     compile "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"

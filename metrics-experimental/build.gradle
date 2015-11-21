@@ -4,10 +4,6 @@ plugins {
 
 apply from: "https://raw.githubusercontent.com/ametiste-oss/ametiste-bintray-gradle/master/bintray.gradle"
 
-ext {
-    springBootVersion="1.2.5.RELEASE"
-}
-
 dependencies {
 
     compile()
@@ -18,5 +14,5 @@ dependencies {
     compile "org.springframework.boot:spring-boot-actuator:${springBootVersion}"
 
     compile project(":metrics-service")
-    compile project(":metrics-boot")
+    compile project(":metrics-starter")
 }
