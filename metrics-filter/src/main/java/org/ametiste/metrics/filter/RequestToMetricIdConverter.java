@@ -1,5 +1,6 @@
 package org.ametiste.metrics.filter;
 
+import org.ametiste.metrics.filter.extractor.PathExtractor;
 import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
 
 import javax.servlet.ServletException;
@@ -14,13 +15,22 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class RequestToMetricIdConverter {
 
-    public static String convert(ServletRequest request, MetricsIdentifierResolver resolver) throws ServletException {
+    private PathExtractor extractor;
+
+    public RequestToMetricIdConverter(PathExtractor extractor) {
+        if(extractor ==null) {
+            throw new IllegalArgumentException("PathExtractor cant be null");
+        }
+        this.extractor = extractor;
+    }
+
+    public String convert(ServletRequest request, MetricsIdentifierResolver resolver) throws ServletException {
 
         if (!(request instanceof HttpServletRequest)) {
             throw new ServletException("Filter only supports HTTP requests");
         }
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        return resolver.resolveMetricId(httpRequest.getPathInfo());
+        return resolver.resolveMetricId(extractor.getPath(httpRequest));
 
     }
 }

@@ -17,14 +17,17 @@ public class RequestCountFilter implements Filter {
 
     private final MetricsIdentifierResolver resolver;
     private final MetricsService service;
+    private final RequestToMetricIdConverter converter;
 
-    public RequestCountFilter(MetricsService service, MetricsIdentifierResolver resolver) {
-        if(service ==null || resolver ==null) {
-            throw new IllegalArgumentException("MetricService and MetricIdentifierResolver cant be null, " +
+    public RequestCountFilter(MetricsService service, MetricsIdentifierResolver resolver, RequestToMetricIdConverter converter) {
+
+        if(service ==null || resolver ==null || converter ==null) {
+            throw new IllegalArgumentException("MetricService, MetricIdentifierResolver and RequestToMetricIdConverter cant be null, " +
                     "however at least one is null");
         }
         this.service = service;
         this.resolver = resolver;
+        this.converter = converter;
     }
 
     @Override
@@ -36,7 +39,7 @@ public class RequestCountFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
             ServletException {
 
-        String metricName = RequestToMetricIdConverter.convert(request, resolver);
+        String metricName = converter.convert(request, resolver);
         service.increment(metricName, 1);
 
         chain.doFilter(request, response);

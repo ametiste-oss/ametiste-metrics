@@ -1,6 +1,7 @@
 package org.ametiste.metrics.filter
 
 import org.ametiste.metrics.MetricsService
+import org.ametiste.metrics.filter.extractor.PathExtractor
 import org.ametiste.metrics.resolver.MetricsIdentifierResolver
 import spock.lang.Specification
 
@@ -16,19 +17,25 @@ class RequestCountFilterTest extends Specification {
 
     private MetricsService service = Mock()
     private MetricsIdentifierResolver resolver = Mock()
-    private RequestCountFilter filter = new RequestCountFilter(service, resolver)
+    private RequestToMetricIdConverter converter = Mock()
+    private RequestCountFilter filter = new RequestCountFilter(service, resolver, converter)
 
 
     def initialization() {
         when: "filter is created with null service"
-            new RequestCountFilter(null, resolver)
+            new RequestCountFilter(null, resolver, converter)
         then: "exception should be thrown"
             thrown(IllegalArgumentException)
         when: "filter is created with null resolver"
-            new RequestCountFilter(service, null)
+            new RequestCountFilter(service, null, converter)
+        then: "exception should be thrown"
+            thrown(IllegalArgumentException)
+        when: "filter is created with null converter"
+            new RequestCountFilter(service, resolver, null)
         then: "exception should be thrown"
             thrown(IllegalArgumentException)
     }
+
     def defaults() {
         given: "some config"
             FilterConfig config = Mock()
@@ -44,6 +51,7 @@ class RequestCountFilterTest extends Specification {
             HttpServletResponse response = Mock()
             FilterChain chain = Mock()
         when: "request is called"
+            converter.convert(request,resolver) >> "metricName"
             resolver.resolveMetricId(_) >> "metricName"
             filter.doFilter(request, response, chain)
         then: "service is called with increment, and chain proceeds"
