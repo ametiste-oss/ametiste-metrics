@@ -4,6 +4,8 @@ import org.ametiste.metrics.MetricsService;
 import org.ametiste.metrics.boot.configuration.MetricsServiceConfiguration;
 import org.ametiste.metrics.filter.RequestCountFilter;
 import org.ametiste.metrics.filter.RequestTimingFilter;
+import org.ametiste.metrics.filter.RequestToMetricIdConverter;
+import org.ametiste.metrics.filter.extractor.SpringPathExtractor;
 import org.ametiste.metrics.resolver.MetricsIdentifierResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -26,14 +28,19 @@ public class MetricFilterConfiguration {
     @Bean
     public RequestTimingFilter metricTimingFilter() {
 
-        return new RequestTimingFilter(metricsService, timingResolver);
+        return new RequestTimingFilter(metricsService, timingResolver, getSpringConverter());
     }
 
     @Bean
     public RequestCountFilter metricCountFilter() {
 
-        return new RequestCountFilter(metricsService, countResolver);
+        return new RequestCountFilter(metricsService, countResolver, getSpringConverter());
     }
 
+
+    @Bean
+    public RequestToMetricIdConverter getSpringConverter() {
+        return new RequestToMetricIdConverter(new SpringPathExtractor());
+    }
 
 }

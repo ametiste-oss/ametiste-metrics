@@ -1,5 +1,6 @@
 package org.ametiste.metrics.filter
 
+import org.ametiste.metrics.filter.extractor.PathExtractor
 import org.ametiste.metrics.resolver.MetricsIdentifierResolver
 import spock.lang.Specification
 
@@ -13,14 +14,23 @@ import javax.servlet.http.HttpServletRequest
 class RequestToMetricIdConverterTest extends Specification {
 
     private MetricsIdentifierResolver resolver = Mock()
+    private PathExtractor extractor = Mock()
+    private RequestToMetricIdConverter converter = new RequestToMetricIdConverter(extractor)
+
+    def init() {
+        when: "Converter is initialized with null extractor"
+            new RequestToMetricIdConverter(null)
+        then: "Exception is thrown"
+            thrown(IllegalArgumentException)
+    }
 
     def convertNormal() {
         given: "Good http request"
             HttpServletRequest request = Mock()
         when: ""
-            request.getPathInfo() >> "resolveMe"
+            extractor.getPath(request) >> "resolveMe"
             resolver.resolveMetricId("resolveMe") >> "metricName"
-            String name = RequestToMetricIdConverter.convert(request, resolver)
+            String name = converter.convert(request, resolver)
         then: ""
             "metricName" == name
     }
@@ -29,7 +39,7 @@ class RequestToMetricIdConverterTest extends Specification {
             ServletRequest request = Mock()
         when: ""
             resolver.resolveMetricId("resolveMe") >> "metricName"
-            String name = RequestToMetricIdConverter.convert(request, resolver)
+            String name = converter.convert(request, resolver)
         then: ""
             thrown(ServletException)
     }

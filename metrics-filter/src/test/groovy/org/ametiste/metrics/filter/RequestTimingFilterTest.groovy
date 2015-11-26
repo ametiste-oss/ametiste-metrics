@@ -16,15 +16,20 @@ class RequestTimingFilterTest extends Specification {
 
     private MetricsService service = Mock()
     private MetricsIdentifierResolver resolver = Mock()
-    private RequestTimingFilter filter = new RequestTimingFilter(service, resolver)
+    private RequestToMetricIdConverter converter = Mock()
+    private RequestTimingFilter filter = new RequestTimingFilter(service, resolver, converter)
 
     def initialization() {
         when: "filter is created with null service"
-            new RequestTimingFilter(null, resolver)
+            new RequestTimingFilter(null, resolver, converter)
         then: "exception should be thrown"
             thrown(IllegalArgumentException)
         when: "filter is created with null resolver"
-            new RequestTimingFilter(service, null)
+            new RequestTimingFilter(service, null, converter)
+        then: "exception should be thrown"
+            thrown(IllegalArgumentException)
+        when: "filter is created with null converter"
+            new RequestCountFilter(service, resolver, null)
         then: "exception should be thrown"
             thrown(IllegalArgumentException)
     }
@@ -43,6 +48,7 @@ class RequestTimingFilterTest extends Specification {
             HttpServletResponse response = Mock()
             FilterChain chain = Mock()
         when: "request is called"
+            converter.convert(request,resolver) >> "metricName"
             resolver.resolveMetricId(_) >> "metricName"
             filter.doFilter(request, response, chain)
         then: "service is called with increment, and chain proceeds"

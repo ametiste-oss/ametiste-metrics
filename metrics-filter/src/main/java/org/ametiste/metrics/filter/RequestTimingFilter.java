@@ -17,14 +17,16 @@ public class RequestTimingFilter implements Filter {
 
     private final MetricsIdentifierResolver resolver;
     private final MetricsService service;
+    private final RequestToMetricIdConverter converter;
 
-    public RequestTimingFilter(MetricsService service, MetricsIdentifierResolver resolver) {
-        if(service ==null || resolver ==null) {
-            throw new IllegalArgumentException("MetricService and MetricIdentifierResolver cant be null, " +
+    public RequestTimingFilter(MetricsService service, MetricsIdentifierResolver resolver, RequestToMetricIdConverter converter) {
+        if(service ==null || resolver ==null || converter == null) {
+            throw new IllegalArgumentException("MetricService, MetricIdentifierResolver and RequestToMetricIdConverter cant be null, " +
                     "however at least one is null");
         }
         this.service = service;
         this.resolver = resolver;
+        this.converter = converter;
     }
 
     @Override
@@ -40,7 +42,7 @@ public class RequestTimingFilter implements Filter {
         chain.doFilter(request, response);
         long endTime = System.currentTimeMillis();
 
-        String metricName = RequestToMetricIdConverter.convert(request, resolver);
+        String metricName = converter.convert(request, resolver);
         service.createEvent(metricName, (int) (endTime - startTime));
     }
 
