@@ -14,7 +14,7 @@
 
 **Current Development** 
   
-[ ![Download](https://api.bintray.com/packages/ametiste-oss/maven/metrics-boot/images/download.svg) ](https://bintray.com/ametiste-oss/maven/metrics-boot/_latestVersion)
+[ ![Download](https://api.bintray.com/packages/ametiste-oss/maven/metrics-boot/images/download.svg) ](https://bintray.com/ametiste-oss/maven/metrics-default-starter/_latestVersion)
 
 ##Overview
 Ametiste metrics is a library for easy metrics registration from any point of client code.
