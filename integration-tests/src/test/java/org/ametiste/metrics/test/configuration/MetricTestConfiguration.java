@@ -2,7 +2,6 @@ package org.ametiste.metrics.test.configuration;
 
 import org.ametiste.metrics.MetricsAggregator;
 import org.ametiste.metrics.boot.configuration.CoreAggregator;
-import org.ametiste.metrics.mock.MockMetricsService;
 import org.ametiste.metrics.mock.aggregator.MockMetricsAggregator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
