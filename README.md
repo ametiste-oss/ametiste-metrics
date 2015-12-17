@@ -66,7 +66,7 @@ repositories {
      mavenCentral()
      jcenter()
 }
-compile "org.ametiste.metrics:metrics-boot:${metricsVersion}"
+compile ""org.ametiste.metrics:metrics-default-starter:${metricsVersion}"
 ```
 
 #####Maven
@@ -85,7 +85,7 @@ compile "org.ametiste.metrics:metrics-boot:${metricsVersion}"
 
 <dependency>
 	<groupId>org.ametiste.metrics</groupId>
-	<artifactId>metrics-boot</artifactId>
+	<artifactId>metrics-default-starter</artifactId>
 	<version>metrics.version</version>
 </dependency>
 ```
@@ -94,5 +94,5 @@ Aspects and metric service should be configured to start using metrics annotatio
 
 ###Metrics service with spring boot
 
-Adding `'org.ametiste.metrics:metrics-boot:{metricsVersion}'` dependency in classpath of spring boot project provides it with default most commonly used configuration, and if autoconfiguration is enabled, it requires no further actions for usage. For more details and alternative usages view [Installation and configuration](https://github.com/ametiste-oss/ametiste-metrics/wiki/Installation-and-configuration) wiki page
+Adding `'org.ametiste.metrics:metrics-default-starter:{metricsVersion}'` dependency in classpath of spring boot project provides it with default most commonly used configuration, and if autoconfiguration is enabled, it requires no further actions for usage. For more details and alternative usages view [Installation and configuration](https://github.com/ametiste-oss/ametiste-metrics/wiki/Installation-and-configuration) wiki page
 
