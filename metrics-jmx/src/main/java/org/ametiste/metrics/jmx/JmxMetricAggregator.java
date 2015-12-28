@@ -1,6 +1,5 @@
 package org.ametiste.metrics.jmx;
 
-import com.codahale.metrics.Gauge;
 import com.codahale.metrics.JmxReporter;
 import com.codahale.metrics.MetricRegistry;
 import org.ametiste.metrics.MetricsAggregator;
@@ -17,8 +16,10 @@ public class JmxMetricAggregator implements MetricsAggregator {
 
     private final MetricRegistry metrics;
     private final JmxReporter reporter;
+    private final boolean gaugeEnabled;
 
-    public JmxMetricAggregator(String domain) {
+    public JmxMetricAggregator(String domain, boolean gaugeEnabled) {
+        this.gaugeEnabled = gaugeEnabled;
         metrics = new MetricRegistry();
         reporter = JmxReporter.forRegistry(metrics).inDomain(domain).build();
         reporter.start();
@@ -26,7 +27,18 @@ public class JmxMetricAggregator implements MetricsAggregator {
 
     @Override
     public void gauge(String metricId, int gaugeValue) {
-        metrics.register(metricId, (Gauge)() -> gaugeValue);
+        //NOTE! experimental method that should be checked in production, by default gauge is disabled in jmx
+        if(gaugeEnabled) {
+            doGauge(metricId, gaugeValue);
+        }
+    }
+
+    private void doGauge(String metricId, int gaugeValue) {
+        if(!metrics.getGauges().containsKey(metricId)) {
+            metrics.register(metricId, new UpdateableGauge(gaugeValue));
+        } else {
+            ((UpdateableGauge)(metrics.getGauges().get(metricId))).update(gaugeValue);
+        }
     }
 
     @Override

@@ -19,7 +19,7 @@ public class JmxConfiguration {
     @Bean
     @CoreAggregator
     public MetricsAggregator jmxAggregator() {
-        return new JmxMetricAggregator(properties.getJmx().getDomain());
+        return new JmxMetricAggregator(properties.getJmx().getDomain(), properties.getJmx().isGaugeEnabled()) ;
     }
 
 }
