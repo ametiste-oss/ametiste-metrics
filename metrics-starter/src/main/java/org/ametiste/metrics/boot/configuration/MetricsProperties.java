@@ -77,6 +77,7 @@ public class MetricsProperties {
     public static class Jmx {
 
         private String domain = "org.ametiste.metrics";
+        private boolean gaugeEnabled = false;
 
         public String getDomain() {
             return domain;
@@ -84,6 +85,14 @@ public class MetricsProperties {
 
         public void setDomain(String domain) {
             this.domain = domain;
+        }
+
+        public boolean isGaugeEnabled() {
+            return gaugeEnabled;
+        }
+
+        public void setGaugeEnabled(boolean gaugeEnabled) {
+            this.gaugeEnabled = gaugeEnabled;
         }
     }
 }
