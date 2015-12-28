@@ -7,7 +7,7 @@ import spock.lang.Specification
  */
 class JmxMetricAggregatorTest extends Specification {
 
-    private JmxMetricAggregator aggregator = new JmxMetricAggregator("domain");
+    private JmxMetricAggregator aggregator = new JmxMetricAggregator("domain", true);
 
     def gaugeTwice() {
         when: "gauge is called twice "
