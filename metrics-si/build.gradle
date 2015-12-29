@@ -4,10 +4,6 @@ plugins {
 
 apply from: "https://raw.githubusercontent.com/ametiste-oss/ametiste-bintray-gradle/master/bintray.gradle"
 
-ext {
-    springIntegrationVersion = "4.2.1.RELEASE"
-}
-
 dependencies {
     compile project(":metrics-service")
     compile "org.springframework.integration:spring-integration-core:${springIntegrationVersion}"
