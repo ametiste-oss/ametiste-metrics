@@ -132,6 +132,20 @@ class ChronableAspectTest extends Specification {
            1 * service.createEvent("metricName", 5);
     }
 
+    def processTimingWithOtherException() {
+        given: "metric with illegal argument exception and annotation"
+        Exception exception = new IllegalStateException()
+        Chronable annotation = new StubChronable("metricName", "", "5", "", "'true'", IllegalArgumentException.class)
+        when: "metric is processed"
+        Expression expression = Mock()
+        parser.parseExpression("'true'") >> expression
+        resolver.getTargetIdentifier(_,_,_) >> "metricName"
+        expression.getValue(_, boolean.class) >> true
+        aspect.processChronable(jp, exception, annotation)
+        then: "service method is not called"
+        0 * service.createEvent(_, _);
+    }
+
     def processTimingBatchWithException() {
         given: "metric with illegal argument exception and annotation"
             Exception exception = new IllegalArgumentException()

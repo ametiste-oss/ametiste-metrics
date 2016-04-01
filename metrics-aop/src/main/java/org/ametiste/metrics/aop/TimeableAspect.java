@@ -11,6 +11,8 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static java.util.Arrays.stream;
+
 /**
  * Aspect for registration of method execution time for methods that annotated with
  * {@link Timeable} annotation. Increments metric with identifier, resolved from
@@ -44,25 +46,19 @@ public class TimeableAspect {
 
     @Around("countTimeBatch(timeables)")
     public Object processTimingBatch(ProceedingJoinPoint pjp, Timeables timeables) throws Throwable {
-
-        // TODO: I guess we should generalize measurement logic, for example
-        // TODO: within the metrics-measurement module
-        // TODO: see MetaMetricsCounter, I have some generic solution here
-
-        long startTime = System.currentTimeMillis();
-        Object object = pjp.proceed();
-        long endTime = System.currentTimeMillis();
-
-        for (Timeable timeable : timeables.value()) {
-            AspectContext context = new AspectContext(pjp.getArgs(), pjp.getTarget(), object);
-            this.saveTime(timeable, context, (int) (endTime - startTime));
-        }
-
-        return object;
+        return process(pjp, timeables.value());
     }
 
     @Around("countTime(timeable)")
     public Object processTiming(ProceedingJoinPoint pjp, Timeable timeable) throws Throwable {
+        return process(pjp, timeable);
+    }
+
+    private Object process(ProceedingJoinPoint pjp, Timeable... timeables) throws Throwable {
+
+        // TODO: I guess we should generalize measurement logic, for example
+        // TODO: within the metrics-measurement module
+        // TODO: see MetaMetricsCounter, I have some generic solution here
 
         long endTime;
         Object object;
@@ -72,22 +68,26 @@ public class TimeableAspect {
             object = pjp.proceed();
             endTime = System.currentTimeMillis();
         } catch (Exception e) {
-            if (timeable.mode().equals(MetricsMode.ERROR_PRONE)) {
-                endTime = System.currentTimeMillis();
-                AspectContext context = new AspectContext(pjp.getArgs(), pjp.getTarget());
+            final long errorEndTime = System.currentTimeMillis();
+            stream(timeables)
+                  .filter(t -> t.mode().equals(MetricsMode.ERROR_PRONE))
+                  .forEach(t -> {
+                      AspectContext context = new AspectContext(pjp.getArgs(), pjp.getTarget());
+                      saveTime(t, context, (int) (errorEndTime - startTime));
+                  });
 
-                this.saveTime(timeable, context, (int) (endTime - startTime));
-            }
             throw e;
         }
 
-        AspectContext context = new AspectContext(pjp.getArgs(), pjp.getTarget(), object);
-        this.saveTime(timeable, context, (int) (endTime - startTime));
+        for (Timeable timeable : timeables) {
+            AspectContext context = new AspectContext(pjp.getArgs(), pjp.getTarget(), object);
+            saveTime(timeable, context, (int) (endTime - startTime));
+        }
+
         return object;
     }
 
-
-    public void saveTime(Timeable timeable, AspectContext context, int eventTime) {
+    private void saveTime(Timeable timeable, AspectContext context, int eventTime) {
 
         String name;
         try {
