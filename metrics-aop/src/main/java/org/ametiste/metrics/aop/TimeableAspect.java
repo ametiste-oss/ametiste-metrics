@@ -54,7 +54,7 @@ public class TimeableAspect {
         return process(pjp, timeable);
     }
 
-    public Object process(ProceedingJoinPoint pjp, Timeable... timeables) throws Throwable {
+    private Object process(ProceedingJoinPoint pjp, Timeable... timeables) throws Throwable {
 
         // TODO: I guess we should generalize measurement logic, for example
         // TODO: within the metrics-measurement module
