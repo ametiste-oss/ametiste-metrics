@@ -1,4 +1,4 @@
-#Ametiste metrics library
+# Ametiste metrics library
 
 ## Build Status
 
@@ -16,13 +16,13 @@
   
 [ ![Download](https://api.bintray.com/packages/ametiste-oss/maven/metrics-default-starter/images/download.svg) ](https://bintray.com/ametiste-oss/maven/metrics-default-starter/_latestVersion)
 
-##Overview
+## Overview
 Ametiste metrics is a library for easy metrics registration from any point of client code.
 
-##Documentation 
+## Documentation 
 Library at a glance is described here, for more detailed description view [wiki](https://github.com/ametiste-oss/ametiste-metrics/wiki)
 
-##Usage example
+## Usage example
 
 To register a metric for a method, one of following annotations may be applied to it:
 
@@ -54,12 +54,12 @@ For further annotation usage details view  [Annotation examples](https://github.
 Metrics library can be used directly, without annotations, by injecting metrics service to client code.
 For more detailed library description and custom configuration view [Ametiste metrics wiki](https://github.com/ametiste-oss/ametiste-metrics/wiki)
 
-##Binaries
+## Binaries
 All non experimental dependencies is accessible at bintray central.
 
-####Usage snippets
+#### Usage snippets
 
-#####Gradle
+##### Gradle
 
 ```
 repositories {
@@ -69,7 +69,7 @@ repositories {
 compile ""org.ametiste.metrics:metrics-default-starter:${metricsVersion}"
 ```
 
-#####Maven
+##### Maven
 
 ```
 <repositories>
@@ -92,7 +92,7 @@ compile ""org.ametiste.metrics:metrics-default-starter:${metricsVersion}"
 
 Aspects and metric service should be configured to start using metrics annotations. There are several ways to use metrics service, from easiest to most specific. 
 
-###Metrics service with spring boot
+### Metrics service with spring boot
 
 Adding `'org.ametiste.metrics:metrics-default-starter:{metricsVersion}'` dependency in classpath of spring boot project provides it with default most commonly used configuration, and if autoconfiguration is enabled, it requires no further actions for usage. For more details and alternative usages view [Installation and configuration](https://github.com/ametiste-oss/ametiste-metrics/wiki/Installation-and-configuration) wiki page
 
