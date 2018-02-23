@@ -1,6 +1,7 @@
 .*
 !.gitignore
 !.travis.yml
+!.codecov.yml
 *.class
 *.war
 *.iml
