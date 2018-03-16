@@ -2,6 +2,7 @@
 !.gitignore
 !.travis.yml
 !.codecov.yml
+!.codeclimate.yml
 *.class
 *.war
 *.iml
