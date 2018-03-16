@@ -3,3 +3,11 @@ coverage:
   ignore:
     - "*/src/test/.*"
     - "metrics-experimental/.*"
+  notify:
+    slack:
+      default:
+        url: "https://hooks.slack.com/services/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"
+        only_pulls: false
+        branches: null
+        flags: null
+        paths: null
