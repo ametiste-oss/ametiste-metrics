@@ -1,6 +1,6 @@
 language: java
 jdk:
-  - oraclejdk8
+  - openjdk8
 notifications:
   slack: ametiste:5jB3wwx1BF5AfCno1e5ZLvAi
 after_success:
