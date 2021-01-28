@@ -6,9 +6,9 @@ apply from: "https://raw.githubusercontent.com/ametiste-oss/ametiste-bintray-gra
 
 
 dependencies {
-    compile project(":metrics-jmx-starter")
-    compile project(":metrics-statsd-starter")
-    compile project(":metrics-prometheus-starter")
-    compile project(":metrics-prometheus-server-starter")
+    compile project(":metrics-prometheus")
     compile project(":metrics-starter")
+
+    compile "org.springframework.boot:spring-boot:${springBootVersion}"
+    compile "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}"
 }

@@ -14,7 +14,8 @@ import org.springframework.context.annotation.Import;
  */
 @Import({
         JmxConfiguration.class,
-        StatsDConfiguration.class
+        StatsDConfiguration.class,
+        PrometheusConfiguration.class
 })
 @Configuration
 public class DefaultAggregatorsConfiguration {

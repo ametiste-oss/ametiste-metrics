@@ -16,6 +16,8 @@ public class MetricsProperties {
 
     private Jmx jmx = new Jmx();
 
+    private Prometheus prometheus = new Prometheus();
+
     private String prefix = "";
 
     public Statsd getStatsd() {
@@ -32,6 +34,14 @@ public class MetricsProperties {
 
     public void setJmx(Jmx jmx) {
         this.jmx = jmx;
+    }
+
+    public Prometheus getPrometheus() {
+        return prometheus;
+    }
+
+    public void setPrometheus(Prometheus prometheus) {
+        this.prometheus = prometheus;
     }
 
     public String getPrefix() {
@@ -93,6 +103,19 @@ public class MetricsProperties {
 
         public void setGaugeEnabled(boolean gaugeEnabled) {
             this.gaugeEnabled = gaugeEnabled;
+        }
+    }
+
+    public static class Prometheus {
+
+        private Integer port = null;
+
+        public int getPort() {
+            return port;
+        }
+
+        public void setPort(int port) {
+            this.port = port;
         }
     }
 }
